@@ -22,22 +22,22 @@ type (
 		logger         *log.Logger
 
 		// Node name
-		Node string `json:"node"`
+		Node string
 
 		// Node group
-		Group string `json:"group"`
+		Group string
 
 		// LabStack API key
-		APIKey string `json:"api_key"`
+		APIKey string
 
 		// Number of requests in a batch
-		BatchSize int `json:"batch_size"`
+		BatchSize int
 
 		// Interval in seconds to dispatch the batch
-		DispatchInterval time.Duration `json:"dispatch_interval"`
+		DispatchInterval time.Duration
 
 		// TODO: To be implemented
-		ClientLookup string `json:"client_lookup"`
+		ClientLookup string
 	}
 
 	// Request defines a request payload to be recorded.
