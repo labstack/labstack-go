@@ -73,14 +73,30 @@ func (c *Cube) appendRequest(r *Request) {
 	c.requests = append(c.requests, r)
 }
 
+func (c *Cube) listRequests() []*Request {
+	c.mutex.Lock()
+	defer c.mutex.Unlock()
+	requests := make([]*Request, len(c.requests))
+	for i, r := range c.requests {
+		requests[i] = r
+	}
+	return requests
+}
+
+func (c *Cube) requestsLength() int {
+	c.mutex.RLock()
+	defer c.mutex.RUnlock()
+	return len(c.requests)
+}
+
 func (c *Cube) dispatch() (err error) {
 	if len(c.requests) == 0 {
 		return
 	}
-	c.mutex.RLock()
-	res, err := c.sling.Post("/cube").BodyJSON(c.requests).Receive(nil, nil)
-	c.mutex.RUnlock()
-	c.resetRequests()
+	res, err := c.sling.Post("/cube").BodyJSON(c.listRequests()).Receive(nil, nil)
+	if err != nil {
+		return
+	}
 	if res.StatusCode != http.StatusNoContent {
 		return fmt.Errorf("cube: requests dispatching error=%s", err)
 	}
@@ -141,11 +157,12 @@ func (c *Cube) Stop(request *Request, status int, size int64) {
 	request.Latency = int64(time.Now().Sub(request.Time))
 
 	// Dispatch batch
-	if len(c.requests) >= c.BatchSize {
+	if c.requestsLength() >= c.BatchSize {
 		go func() {
 			if err := c.dispatch(); err != nil {
 				c.logger.Error(err)
 			}
+			c.resetRequests()
 		}()
 	}
 }
