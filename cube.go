@@ -98,7 +98,7 @@ func (c *Cube) dispatch() (err error) {
 		return
 	}
 	if res.StatusCode != http.StatusNoContent {
-		return fmt.Errorf("cube: requests dispatching error=%s", err)
+		return fmt.Errorf("cube: error dispatching requests, status=%d, message=%v", res.StatusCode, err)
 	}
 	return
 }

@@ -85,7 +85,7 @@ func (l *Logging) dispatch() (err error) {
 		return
 	}
 	if res.StatusCode != http.StatusNoContent {
-		return fmt.Errorf("cube: requests dispatching error=%s", err)
+		return fmt.Errorf("logging: error dispatching logs, status=%d, message=%v", res.StatusCode, err)
 	}
 	return
 }
@@ -112,35 +112,45 @@ func (c *Client) Logging() (logging *Logging) {
 
 // Debug logs a debug message.
 func (l *Logging) Debug(format string, args ...interface{}) {
-	l.Log(DEBUG, format, args)
+	l.Log(DEBUG, format, args...)
 }
 
 // Info logs an informational message.
 func (l *Logging) Info(format string, args ...interface{}) {
-	l.Log(INFO, format, args)
+	l.Log(INFO, format, args...)
 }
 
 // Warn logs a warning message.
 func (l *Logging) Warn(format string, args ...interface{}) {
-	l.Log(WARN, format, args)
+	l.Log(WARN, format, args...)
 }
 
 // Error logs an error message.
 func (l *Logging) Error(format string, args ...interface{}) {
-	l.Log(ERROR, format, args)
+	l.Log(ERROR, format, args...)
 }
 
 // Log logs a message with log level.
 func (l *Logging) Log(level, format string, args ...interface{}) {
-	if levels[l.Level] < levels[level] {
+	if levels[level] < levels[l.Level] {
 		return
 	}
-	message := fmt.Sprintf(format, args)
+	message := fmt.Sprintf(format, args...)
 	log := &Log{
-		Time:    time.Now().Format(time.RFC3339),
+		Time:    time.Now().Format(RFC3339Milli),
 		Module:  l.Module,
 		Level:   level,
 		Message: message,
 	}
-	l.sling.Post("").BodyJSON(log).ReceiveSuccess(nil)
+	l.appendLog(log)
+
+	// Dispatch batch
+	if l.logsLength() >= l.BatchSize {
+		go func() {
+			if err := l.dispatch(); err != nil {
+				l.logger.Error(err)
+			}
+			l.resetLogs()
+		}()
+	}
 }

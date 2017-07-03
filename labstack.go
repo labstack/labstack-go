@@ -15,7 +15,7 @@ type (
 	}
 )
 
-const (
+var (
 	apiURL = "https://api.labstack.com"
 )
 
