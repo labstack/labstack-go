@@ -13,7 +13,7 @@ import (
 )
 
 type (
-	// Cube defines the Cube service.
+	// Cube defines the LabStack cube service.
 	Cube struct {
 		sling          *sling.Sling
 		requests       []*Request
@@ -103,7 +103,7 @@ func (c *Cube) dispatch() (err error) {
 	return
 }
 
-// Cube returns the Cube service.
+// Cube returns the cube service.
 func (c *Client) Cube() (cube *Cube) {
 	cube = &Cube{
 		sling:            c.sling.Path("/cube"),

@@ -6,10 +6,9 @@ import (
 	"strings"
 )
 
-// Time layouts
 const (
-	RFC3339Milli = "2006-01-02T15:04:05.000Z07:00"
-	RFC3339Micro = "2006-01-02T15:04:05.000000Z07:00"
+	rfc3339Milli = "2006-01-02T15:04:05.000Z07:00"
+	rfc3339Micro = "2006-01-02T15:04:05.000000Z07:00"
 )
 
 func realIP(r *http.Request) string {

@@ -11,7 +11,7 @@ import (
 )
 
 type (
-	// Logging defines the Logging service.
+	// Logging defines the LabStack logging service.
 	Logging struct {
 		sling            *sling.Sling
 		logs             []*Log
@@ -90,7 +90,7 @@ func (l *Logging) dispatch() (err error) {
 	return
 }
 
-// Logging returns the Logging service.
+// Logging returns the logging service.
 func (c *Client) Logging() (logging *Logging) {
 	logging = &Logging{
 		sling:            c.sling.Path("/logging"),
@@ -137,7 +137,7 @@ func (l *Logging) Log(level, format string, args ...interface{}) {
 	}
 	message := fmt.Sprintf(format, args...)
 	log := &Log{
-		Time:    time.Now().Format(RFC3339Milli),
+		Time:    time.Now().Format(rfc3339Milli),
 		Module:  l.Module,
 		Level:   level,
 		Message: message,
