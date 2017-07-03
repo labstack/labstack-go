@@ -1,27 +1,17 @@
 package labstack
 
 import (
-	"time"
-
 	"github.com/dghubble/sling"
+	"github.com/labstack/gommon/log"
 )
 
 type (
 	Client struct {
-		sling *sling.Sling
-		// LoggingBatchSize        int
-		// LoggingDispatchInterval int
+		sling  *sling.Sling
+		logger *log.Logger
 	}
 
 	Error struct {
-	}
-
-	Log struct {
-		ID      string    `json:"id,omitempty"`
-		Time    time.Time `json:"time"`
-		Module  string    `json:"module"`
-		Level   string    `json:"level"`
-		Message string    `json:"message"`
 	}
 )
 
@@ -29,13 +19,10 @@ const (
 	apiURL = "https://api.labstack.com"
 )
 
+// NewClient creates a new client for the LabStack API.
 func NewClient(apiKey string) *Client {
 	return &Client{
-		sling: sling.New().Base(apiURL).Add("Authorization", "Bearer "+apiKey),
+		sling:  sling.New().Base(apiURL).Add("Authorization", "Bearer "+apiKey),
+		logger: log.New("labstack"),
 	}
-}
-
-func (c *Client) WriteLog(l *Log) (err error) {
-	_, err = c.sling.New().Post("/logging").BodyJSON(l).ReceiveSuccess(l)
-	return
 }

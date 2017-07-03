@@ -93,7 +93,7 @@ func (c *Cube) dispatch() (err error) {
 	if len(c.requests) == 0 {
 		return
 	}
-	res, err := c.sling.Post("/cube").BodyJSON(c.listRequests()).Receive(nil, nil)
+	res, err := c.sling.Post("").BodyJSON(c.listRequests()).Receive(nil, nil)
 	if err != nil {
 		return
 	}
@@ -107,7 +107,7 @@ func (c *Cube) dispatch() (err error) {
 func (c *Client) Cube() (cube *Cube) {
 	cube = &Cube{
 		sling:            c.sling.Path("/cube"),
-		logger:           log.New("cube"),
+		logger:           c.logger,
 		BatchSize:        60,
 		DispatchInterval: 60,
 	}
