@@ -37,7 +37,6 @@ func TestLogging(t *testing.T) {
 	for _, level := range []string{DEBUG, INFO, WARN, ERROR} {
 		l := NewClient("").Logging()
 		l.Level = DEBUG
-		l.BatchSize = 1
 		switch level {
 		case DEBUG:
 			l.Debug("%s", DEBUG)
