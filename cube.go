@@ -16,7 +16,7 @@ type (
 	// Cube defines the LabStack cube service.
 	Cube struct {
 		sling          *sling.Sling
-		requests       []*Request
+		requests       []*CubeRequest
 		activeRequests int64
 		mutex          sync.RWMutex
 		logger         *log.Logger
@@ -40,8 +40,8 @@ type (
 		ClientLookup string
 	}
 
-	// Request defines a request payload to be recorded.
-	Request struct {
+	// CubeRequest defines a request payload to be recorded.
+	CubeRequest struct {
 		ID        string    `json:"id"`
 		Time      time.Time `json:"time"`
 		Node      string    `json:"node"`
@@ -64,19 +64,19 @@ type (
 func (c *Cube) resetRequests() {
 	c.mutex.Lock()
 	defer c.mutex.Unlock()
-	c.requests = make([]*Request, 0, c.BatchSize)
+	c.requests = make([]*CubeRequest, 0, c.BatchSize)
 }
 
-func (c *Cube) appendRequest(r *Request) {
+func (c *Cube) appendRequest(cr *CubeRequest) {
 	c.mutex.Lock()
 	defer c.mutex.Unlock()
-	c.requests = append(c.requests, r)
+	c.requests = append(c.requests, cr)
 }
 
-func (c *Cube) listRequests() []*Request {
+func (c *Cube) listRequests() []*CubeRequest {
 	c.mutex.Lock()
 	defer c.mutex.Unlock()
-	requests := make([]*Request, len(c.requests))
+	requests := make([]*CubeRequest, len(c.requests))
 	for i, r := range c.requests {
 		requests[i] = r
 	}
@@ -122,8 +122,8 @@ func (c *Client) Cube() (cube *Cube) {
 }
 
 // Start starts recording an HTTP request.
-func (c *Cube) Start(r *http.Request, w http.ResponseWriter) (request *Request) {
-	request = &Request{
+func (c *Cube) Start(r *http.Request, w http.ResponseWriter) (cr *CubeRequest) {
+	cr = &CubeRequest{
 		Time:      time.Now(),
 		Node:      c.Node,
 		Group:     c.Group,
@@ -133,9 +133,9 @@ func (c *Cube) Start(r *http.Request, w http.ResponseWriter) (request *Request) 
 		UserAgent: r.UserAgent(),
 		RemoteIP:  realIP(r),
 	}
-	request.ClientID = request.RemoteIP
+	cr.ClientID = cr.RemoteIP
 	atomic.AddInt64(&c.activeRequests, 1)
-	request.Active = c.activeRequests
+	cr.Active = c.activeRequests
 	cl := r.Header.Get("Content-Length")
 	if cl == "" {
 		cl = "0"
@@ -144,17 +144,17 @@ func (c *Cube) Start(r *http.Request, w http.ResponseWriter) (request *Request) 
 	if err != nil {
 		c.logger.Error(err)
 	}
-	request.BytesIn = l
-	c.appendRequest(request)
+	cr.BytesIn = l
+	c.appendRequest(cr)
 	return
 }
 
 // Stop stops recording an HTTP request.
-func (c *Cube) Stop(request *Request, status int, size int64) {
+func (c *Cube) Stop(cr *CubeRequest, status int, size int64) {
 	atomic.AddInt64(&c.activeRequests, -1)
-	request.Status = status
-	request.BytesOut = size
-	request.Latency = int64(time.Now().Sub(request.Time))
+	cr.Status = status
+	cr.BytesOut = size
+	cr.Latency = int64(time.Now().Sub(cr.Time))
 
 	// Dispatch batch
 	if c.requestsLength() >= c.BatchSize {

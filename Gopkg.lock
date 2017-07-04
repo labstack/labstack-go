@@ -2,6 +2,12 @@
 
 
 [[projects]]
+  name = "github.com/davecgh/go-spew"
+  packages = ["spew"]
+  revision = "346938d642f2ec3594ed81d874461961cd0faa76"
+  version = "v1.1.0"
+
+[[projects]]
   name = "github.com/dghubble/sling"
   packages = ["."]
   revision = "eb56e89ac5088bebb12eef3cb4b293300f43608b"
@@ -32,6 +38,18 @@
   version = "v0.0.2"
 
 [[projects]]
+  name = "github.com/pmezard/go-difflib"
+  packages = ["difflib"]
+  revision = "792786c7400a136282c1664665ae0a8db921c6c2"
+  version = "v1.0.0"
+
+[[projects]]
+  name = "github.com/stretchr/testify"
+  packages = ["assert"]
+  revision = "69483b4bd14f5845b5a1e55bca19e954e827f1d0"
+  version = "v1.1.4"
+
+[[projects]]
   branch = "master"
   name = "github.com/valyala/bytebufferpool"
   packages = ["."]
@@ -47,11 +65,11 @@
   branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix"]
-  revision = "0e0164865330d5cf1c00247be08330bf96e2f87c"
+  revision = "94b76065f2d2081d0fef24a6e67c571f51a6408a"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "a0c53531fe80555a98671a9a8c3b9efd9f77a4b2e64da7263c269bf627134263"
+  inputs-digest = "40fab73aa65230875fc2daa57aa7fa30ee5fd90d0109e3280f8183df0b36fa4b"
   solver-name = "gps-cdcl"
   solver-version = 1

@@ -14,7 +14,7 @@ type (
 	// Logging defines the LabStack logging service.
 	Logging struct {
 		sling            *sling.Sling
-		logs             []*Log
+		logs             []*LoggingMessage
 		mutex            sync.RWMutex
 		logger           *log.Logger
 		Module           string
@@ -23,8 +23,8 @@ type (
 		DispatchInterval int
 	}
 
-	// Log defines a log message.
-	Log struct {
+	// LoggingMessage defines a log message.
+	LoggingMessage struct {
 		ID      string `json:"id,omitempty"`
 		Time    string `json:"time"`
 		Module  string `json:"module"`
@@ -51,19 +51,19 @@ var levels = map[string]int{
 func (l *Logging) resetLogs() {
 	l.mutex.Lock()
 	defer l.mutex.Unlock()
-	l.logs = make([]*Log, 0, l.BatchSize)
+	l.logs = make([]*LoggingMessage, 0, l.BatchSize)
 }
 
-func (l *Logging) appendLog(log *Log) {
+func (l *Logging) appendLog(lm *LoggingMessage) {
 	l.mutex.Lock()
 	defer l.mutex.Unlock()
-	l.logs = append(l.logs, log)
+	l.logs = append(l.logs, lm)
 }
 
-func (l *Logging) listLogs() []*Log {
+func (l *Logging) listLogs() []*LoggingMessage {
 	l.mutex.Lock()
 	defer l.mutex.Unlock()
-	logs := make([]*Log, len(l.logs))
+	logs := make([]*LoggingMessage, len(l.logs))
 	for i, log := range l.logs {
 		logs[i] = log
 	}
@@ -136,13 +136,13 @@ func (l *Logging) Log(level, format string, args ...interface{}) {
 		return
 	}
 	message := fmt.Sprintf(format, args...)
-	log := &Log{
+	lm := &LoggingMessage{
 		Time:    time.Now().Format(rfc3339Milli),
 		Module:  l.Module,
 		Level:   level,
 		Message: message,
 	}
-	l.appendLog(log)
+	l.appendLog(lm)
 
 	// Dispatch batch
 	if l.logsLength() >= l.BatchSize {

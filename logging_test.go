@@ -12,7 +12,7 @@ import (
 func TestLogging(t *testing.T) {
 	// dispatch
 	handler := func(w http.ResponseWriter, r *http.Request) {
-		logs := []*Log{}
+		logs := []*LoggingMessage{}
 		if err := json.NewDecoder(r.Body).Decode(&logs); err == nil {
 			if assert.Len(t, logs, 1) {
 				assert.Equal(t, INFO, logs[0].Level)
@@ -27,7 +27,7 @@ func TestLogging(t *testing.T) {
 	defer ts.Close()
 	apiURL = ts.URL
 	l := NewClient("").Logging()
-	l.appendLog(&Log{
+	l.appendLog(&LoggingMessage{
 		Level:   INFO,
 		Message: INFO,
 	})
