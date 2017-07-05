@@ -14,22 +14,26 @@ type (
 	// Logging defines the LabStack logging service.
 	Logging struct {
 		sling            *sling.Sling
-		logs             []*LoggingMessage
+		logs             []*Log
 		mutex            sync.RWMutex
 		logger           *log.Logger
-		Module           string
+		AppID            string
+		AppName          string
+		Tags             []string
 		Level            string
 		BatchSize        int
 		DispatchInterval int
 	}
 
-	// LoggingMessage defines a log message.
-	LoggingMessage struct {
-		ID      string `json:"id,omitempty"`
-		Time    string `json:"time"`
-		Module  string `json:"module"`
-		Level   string `json:"level"`
-		Message string `json:"message"`
+	// Log defines a log message.
+	Log struct {
+		// ID      string `json:"id,omitempty"`
+		Time    string   `json:"time"`
+		AppID   string   `json:"app_id"`
+		AppName string   `json:"app_name"`
+		Tags    []string `json:"tags"`
+		Level   string   `json:"level"`
+		Message string   `json:"message"`
 	}
 )
 
@@ -51,19 +55,19 @@ var levels = map[string]int{
 func (l *Logging) resetLogs() {
 	l.mutex.Lock()
 	defer l.mutex.Unlock()
-	l.logs = make([]*LoggingMessage, 0, l.BatchSize)
+	l.logs = make([]*Log, 0, l.BatchSize)
 }
 
-func (l *Logging) appendLog(lm *LoggingMessage) {
+func (l *Logging) appendLog(lm *Log) {
 	l.mutex.Lock()
 	defer l.mutex.Unlock()
 	l.logs = append(l.logs, lm)
 }
 
-func (l *Logging) listLogs() []*LoggingMessage {
+func (l *Logging) listLogs() []*Log {
 	l.mutex.Lock()
 	defer l.mutex.Unlock()
-	logs := make([]*LoggingMessage, len(l.logs))
+	logs := make([]*Log, len(l.logs))
 	for i, log := range l.logs {
 		logs[i] = log
 	}
@@ -87,26 +91,6 @@ func (l *Logging) dispatch() (err error) {
 	if res.StatusCode != http.StatusNoContent {
 		return fmt.Errorf("logging: error dispatching logs, status=%d, message=%v", res.StatusCode, err)
 	}
-	return
-}
-
-// Logging returns the logging service.
-func (c *Client) Logging() (logging *Logging) {
-	logging = &Logging{
-		sling:            c.sling.Path("/logging"),
-		logger:           c.logger,
-		Module:           "*",
-		Level:            INFO,
-		BatchSize:        60,
-		DispatchInterval: 60,
-	}
-	logging.resetLogs()
-	go func() {
-		d := time.Duration(logging.DispatchInterval) * time.Second
-		for range time.Tick(d) {
-			logging.dispatch()
-		}
-	}()
 	return
 }
 
@@ -136,9 +120,11 @@ func (l *Logging) Log(level, format string, args ...interface{}) {
 		return
 	}
 	message := fmt.Sprintf(format, args...)
-	lm := &LoggingMessage{
+	lm := &Log{
 		Time:    time.Now().Format(rfc3339Milli),
-		Module:  l.Module,
+		AppID:   l.AppID,
+		AppName: l.AppName,
+		Tags:    l.Tags,
 		Level:   level,
 		Message: message,
 	}

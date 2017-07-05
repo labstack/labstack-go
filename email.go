@@ -15,19 +15,19 @@ type (
 		logger *log.Logger
 	}
 
-	// EmailMessage defines the email message.
-	EmailMessage struct {
-		ID          string       `json:"id,omitempty"`
-		From        string       `json:"from,omitempty"`
-		To          string       `json:"to,omitempty"`
-		Subject     string       `json:"subject,omitempty"`
-		Body        string       `json:"body,omitempty"`
-		Inlines     []*EmailFile `json:"inlines,omitempty"`
-		Attachments []*EmailFile `json:"attachments,omitempty"`
+	// Message defines the email message.
+	Message struct {
+		ID          string  `json:"id,omitempty"`
+		From        string  `json:"from,omitempty"`
+		To          string  `json:"to,omitempty"`
+		Subject     string  `json:"subject,omitempty"`
+		Body        string  `json:"body,omitempty"`
+		Inlines     []*File `json:"inlines,omitempty"`
+		Attachments []*File `json:"attachments,omitempty"`
 	}
 
-	// EmailFile defines the email message attachment/inline.
-	EmailFile struct {
+	// File defines the email message attachment/inline.
+	File struct {
 		// File name
 		Name string `json:"name"`
 
@@ -39,17 +39,9 @@ type (
 	}
 )
 
-// Email returns the email service.
-func (c *Client) Email() *Email {
-	return &Email{
-		sling:  c.sling.Path("/email"),
-		logger: c.logger,
-	}
-}
-
 // Send sends the email message.
-func (e *Email) Send(em *EmailMessage) (err error) {
-	res, err := e.sling.Post("").BodyJSON(em).Receive(nil, nil)
+func (e *Email) Send(m *Message) (err error) {
+	res, err := e.sling.Post("").BodyJSON(m).Receive(nil, nil)
 	if err != nil {
 		return
 	}
