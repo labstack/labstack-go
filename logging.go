@@ -39,17 +39,17 @@ type (
 
 // Log levels
 const (
-	DEBUG = "debug"
-	INFO  = "info"
-	WARN  = "warn"
-	ERROR = "error"
+	DEBUG = "DEBUG"
+	INFO  = "INFO"
+	WARN  = "WARN"
+	ERROR = "ERROR"
 )
 
 var levels = map[string]int{
-	"debug": 1,
-	"info":  2,
-	"warn":  3,
-	"error": 4,
+	"DEBUG": 1,
+	"INFO":  2,
+	"WARN":  3,
+	"ERROR": 4,
 }
 
 func (l *Logging) resetLogs() {
