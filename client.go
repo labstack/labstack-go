@@ -65,12 +65,6 @@ func (c *Client) Logging() (logging *Logging) {
 		DispatchInterval: 60,
 	}
 	logging.resetLogs()
-	go func() {
-		d := time.Duration(logging.DispatchInterval) * time.Second
-		for range time.Tick(d) {
-			logging.dispatch()
-		}
-	}()
 	return
 }
 
