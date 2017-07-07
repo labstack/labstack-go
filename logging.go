@@ -122,15 +122,12 @@ func (l *Logging) Log(level, format string, args ...interface{}) {
 	}
 
 	if l.timer == nil {
+		l.timer = time.Tick(time.Duration(l.DispatchInterval) * time.Second)
 		go func() {
-			l.timer = time.Tick(time.Duration(l.DispatchInterval) * time.Second)
 			for range l.timer {
-				go func() {
-					if err := l.dispatch(); err != nil {
-						l.logger.Error(err)
-					}
-					l.resetLogs()
-				}()
+				if err := l.dispatch(); err != nil {
+					l.logger.Error(err)
+				}
 			}
 		}()
 	}
