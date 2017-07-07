@@ -9,8 +9,10 @@ import (
 
 type (
 	Client struct {
-		sling  *sling.Sling
-		logger *log.Logger
+		sling   *sling.Sling
+		logger  *log.Logger
+		AppID   string
+		AppName string
 	}
 
 	Error struct {
@@ -34,6 +36,8 @@ func (c *Client) Cube() (cube *Cube) {
 	cube = &Cube{
 		sling:            c.sling.Path("/cube"),
 		logger:           c.logger,
+		AppID:            c.AppID,
+		AppName:          c.AppName,
 		BatchSize:        60,
 		DispatchInterval: 60,
 	}
@@ -60,6 +64,8 @@ func (c *Client) Logging() (logging *Logging) {
 	logging = &Logging{
 		sling:            c.sling.Path("/logging"),
 		logger:           c.logger,
+		AppID:            c.AppID,
+		AppName:          c.AppName,
 		Level:            INFO,
 		BatchSize:        60,
 		DispatchInterval: 60,
