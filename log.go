@@ -7,17 +7,17 @@ import (
 	"time"
 
 	"github.com/dghubble/sling"
-	"github.com/labstack/gommon/log"
+	glog "github.com/labstack/gommon/log"
 )
 
 type (
-	// Logging defines the LabStack logging service.
-	Logging struct {
+	// Log defines the LabStack log service.
+	Log struct {
 		sling            *sling.Sling
-		logs             []*Log
+		logs             []*LogEntry
 		timer            <-chan time.Time
 		mutex            sync.RWMutex
-		logger           *log.Logger
+		logger           *glog.Logger
 		AppID            string
 		AppName          string
 		Tags             []string
@@ -26,9 +26,8 @@ type (
 		DispatchInterval int
 	}
 
-	// Log defines a log message.
-	Log struct {
-		// ID      string `json:"id,omitempty"`
+	// LogEntry defines a log entry.
+	LogEntry struct {
 		Time    string   `json:"time"`
 		AppID   string   `json:"app_id"`
 		AppName string   `json:"app_name"`
@@ -53,35 +52,35 @@ var levels = map[string]int{
 	"ERROR": 4,
 }
 
-func (l *Logging) resetLogs() {
+func (l *Log) resetLogs() {
 	l.mutex.Lock()
 	defer l.mutex.Unlock()
-	l.logs = make([]*Log, 0, l.BatchSize)
+	l.logs = make([]*LogEntry, 0, l.BatchSize)
 }
 
-func (l *Logging) appendLog(lm *Log) {
+func (l *Log) appendLog(lm *LogEntry) {
 	l.mutex.Lock()
 	defer l.mutex.Unlock()
 	l.logs = append(l.logs, lm)
 }
 
-func (l *Logging) listLogs() []*Log {
+func (l *Log) listLogs() []*LogEntry {
 	l.mutex.Lock()
 	defer l.mutex.Unlock()
-	logs := make([]*Log, len(l.logs))
+	logs := make([]*LogEntry, len(l.logs))
 	for i, log := range l.logs {
 		logs[i] = log
 	}
 	return logs
 }
 
-func (l *Logging) logsLength() int {
+func (l *Log) logsLength() int {
 	l.mutex.RLock()
 	defer l.mutex.RUnlock()
 	return len(l.logs)
 }
 
-func (l *Logging) dispatch() (err error) {
+func (l *Log) dispatch() (err error) {
 	if len(l.logs) == 0 {
 		return
 	}
@@ -96,27 +95,27 @@ func (l *Logging) dispatch() (err error) {
 }
 
 // Debug logs a debug message.
-func (l *Logging) Debug(format string, args ...interface{}) {
+func (l *Log) Debug(format string, args ...interface{}) {
 	l.Log(DEBUG, format, args...)
 }
 
 // Info logs an informational message.
-func (l *Logging) Info(format string, args ...interface{}) {
+func (l *Log) Info(format string, args ...interface{}) {
 	l.Log(INFO, format, args...)
 }
 
 // Warn logs a warning message.
-func (l *Logging) Warn(format string, args ...interface{}) {
+func (l *Log) Warn(format string, args ...interface{}) {
 	l.Log(WARN, format, args...)
 }
 
 // Error logs an error message.
-func (l *Logging) Error(format string, args ...interface{}) {
+func (l *Log) Error(format string, args ...interface{}) {
 	l.Log(ERROR, format, args...)
 }
 
 // Log logs a message with log level.
-func (l *Logging) Log(level, format string, args ...interface{}) {
+func (l *Log) Log(level, format string, args ...interface{}) {
 	if levels[level] < levels[l.Level] {
 		return
 	}
@@ -133,7 +132,7 @@ func (l *Logging) Log(level, format string, args ...interface{}) {
 	}
 
 	message := fmt.Sprintf(format, args...)
-	lm := &Log{
+	lm := &LogEntry{
 		Time:    time.Now().Format(rfc3339Milli),
 		AppID:   l.AppID,
 		AppName: l.AppName,

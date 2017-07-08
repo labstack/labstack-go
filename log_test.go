@@ -9,10 +9,10 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestLogging(t *testing.T) {
+func TestLog(t *testing.T) {
 	// dispatch
 	handler := func(w http.ResponseWriter, r *http.Request) {
-		logs := []*Log{}
+		logs := []*LogEntry{}
 		if err := json.NewDecoder(r.Body).Decode(&logs); err == nil {
 			if assert.Len(t, logs, 1) {
 				assert.Equal(t, INFO, logs[0].Level)
@@ -26,8 +26,8 @@ func TestLogging(t *testing.T) {
 	ts := httptest.NewServer(http.HandlerFunc(handler))
 	defer ts.Close()
 	apiURL = ts.URL
-	l := NewClient("").Logging()
-	l.appendLog(&Log{
+	l := NewClient("").Log()
+	l.appendLog(&LogEntry{
 		Level:   INFO,
 		Message: INFO,
 	})
@@ -35,7 +35,7 @@ func TestLogging(t *testing.T) {
 
 	// Log
 	for _, level := range []string{DEBUG, INFO, WARN, ERROR} {
-		l := NewClient("").Logging()
+		l := NewClient("").Log()
 		l.Level = DEBUG
 		switch level {
 		case DEBUG:
@@ -55,7 +55,7 @@ func TestLogging(t *testing.T) {
 	}
 
 	// Level
-	l = NewClient("").Logging()
+	l = NewClient("").Log()
 	l.Level = ERROR
 	l.Debug("debug")
 	l.Info("info")

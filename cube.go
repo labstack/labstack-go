@@ -16,7 +16,7 @@ type (
 	// Cube defines the LabStack cube service.
 	Cube struct {
 		sling          *sling.Sling
-		requests       []*Request
+		requests       []*CubeRequest
 		activeRequests int64
 		mutex          sync.RWMutex
 		logger         *log.Logger
@@ -40,8 +40,8 @@ type (
 		ClientLookup string
 	}
 
-	// Request defines a request payload to be recorded.
-	Request struct {
+	// CubeRequest defines a request payload to be recorded.
+	CubeRequest struct {
 		ID        string    `json:"id"`
 		Time      time.Time `json:"time"`
 		AppID     string    `json:"app_id"`
@@ -64,19 +64,19 @@ type (
 func (c *Cube) resetRequests() {
 	c.mutex.Lock()
 	defer c.mutex.Unlock()
-	c.requests = make([]*Request, 0, c.BatchSize)
+	c.requests = make([]*CubeRequest, 0, c.BatchSize)
 }
 
-func (c *Cube) appendRequest(r *Request) {
+func (c *Cube) appendRequest(r *CubeRequest) {
 	c.mutex.Lock()
 	defer c.mutex.Unlock()
 	c.requests = append(c.requests, r)
 }
 
-func (c *Cube) listRequests() []*Request {
+func (c *Cube) listRequests() []*CubeRequest {
 	c.mutex.Lock()
 	defer c.mutex.Unlock()
-	requests := make([]*Request, len(c.requests))
+	requests := make([]*CubeRequest, len(c.requests))
 	for i, r := range c.requests {
 		requests[i] = r
 	}
@@ -104,8 +104,8 @@ func (c *Cube) dispatch() (err error) {
 }
 
 // Start starts recording an HTTP request.
-func (c *Cube) Start(r *http.Request, w http.ResponseWriter) (request *Request) {
-	request = &Request{
+func (c *Cube) Start(r *http.Request, w http.ResponseWriter) (request *CubeRequest) {
+	request = &CubeRequest{
 		Time:      time.Now(),
 		AppID:     c.AppID,
 		AppName:   c.AppName,
@@ -132,7 +132,7 @@ func (c *Cube) Start(r *http.Request, w http.ResponseWriter) (request *Request) 
 }
 
 // Stop stops recording an HTTP request.
-func (c *Cube) Stop(r *Request, status int, size int64) {
+func (c *Cube) Stop(r *CubeRequest, status int, size int64) {
 	atomic.AddInt64(&c.activeRequests, -1)
 	r.Status = status
 	r.BytesOut = size

@@ -4,13 +4,13 @@ import (
 	"time"
 
 	"github.com/dghubble/sling"
-	"github.com/labstack/gommon/log"
+	glog "github.com/labstack/gommon/log"
 )
 
 type (
 	Client struct {
 		sling   *sling.Sling
-		logger  *log.Logger
+		logger  *glog.Logger
 		AppID   string
 		AppName string
 	}
@@ -27,7 +27,7 @@ var (
 func NewClient(apiKey string) *Client {
 	return &Client{
 		sling:  sling.New().Base(apiURL).Add("Authorization", "Bearer "+apiKey),
-		logger: log.New("labstack"),
+		logger: glog.New("labstack"),
 	}
 }
 
@@ -59,10 +59,10 @@ func (c *Client) Email() *Email {
 	}
 }
 
-// Logging returns the logging service.
-func (c *Client) Logging() (logging *Logging) {
-	logging = &Logging{
-		sling:            c.sling.Path("/logging"),
+// Log returns the log service.
+func (c *Client) Log() (log *Log) {
+	log = &Log{
+		sling:            c.sling.Path("/log"),
 		logger:           c.logger,
 		AppID:            c.AppID,
 		AppName:          c.AppName,
@@ -70,7 +70,7 @@ func (c *Client) Logging() (logging *Logging) {
 		BatchSize:        60,
 		DispatchInterval: 60,
 	}
-	logging.resetLogs()
+	log.resetLogs()
 	return
 }
 

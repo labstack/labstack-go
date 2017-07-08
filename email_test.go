@@ -14,25 +14,25 @@ import (
 
 func TestEmail(t *testing.T) {
 	data, _ := ioutil.ReadFile("_fixture/logo.svg")
-	file := &File{
+	file := &EmailFile{
 		Name:    "logo",
 		Type:    "image/svg+xml",
 		Content: base64.StdEncoding.EncodeToString(data),
 	}
-	msg := &Message{
+	msg := &EmailMessage{
 		From:    "Jack",
 		To:      "jill@labstack.com",
 		Subject: "Hello",
 		Body:    "How are you doing?",
-		Attachments: []*File{
+		Attachments: []*EmailFile{
 			file,
 		},
-		Inlines: []*File{
+		Inlines: []*EmailFile{
 			file,
 		},
 	}
 	handler := func(w http.ResponseWriter, r *http.Request) {
-		m := new(Message)
+		m := new(EmailMessage)
 		if err := json.NewDecoder(r.Body).Decode(m); err == nil {
 			if assert.EqualValues(t, msg, m) {
 				if assert.Len(t, m.Attachments, 1) && assert.Len(t, m.Inlines, 1) {

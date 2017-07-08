@@ -16,30 +16,30 @@ type (
 		logger *log.Logger
 	}
 
-	// Entry defines the Store entry
-	Entry struct {
+	// StoreEntry defines the store entry
+	StoreEntry struct {
 		Key       string      `json:"key"`
 		Value     interface{} `json:"value"`
 		CreatedAt time.Time   `json:"created_at"`
 		UpdatedAt time.Time   `json:"updated_at"`
 	}
 
-	// EntryQueryParams defines the query parameters for find entries.
-	EntryQueryParams struct {
+	// StoreQueryParams defines the query parameters for find entries.
+	StoreQueryParams struct {
 		Filters string
 		Limit   int
 		Offset  int
 	}
 
-	// EntryQueryResponse defines the query response.
-	EntryQueryResponse struct {
-		Total   int64    `json:"total"`
-		Entries []*Entry `json:"entries"`
+	// StoreQueryResponse defines the query response.
+	StoreQueryResponse struct {
+		Total   int64         `json:"total"`
+		Entries []*StoreEntry `json:"entries"`
 	}
 )
 
-func (s *Store) Insert(key string, value interface{}) (e *Entry, err error) {
-	e = &Entry{
+func (s *Store) Insert(key string, value interface{}) (e *StoreEntry, err error) {
+	e = &StoreEntry{
 		Key:   key,
 		Value: value,
 	}
@@ -53,8 +53,8 @@ func (s *Store) Insert(key string, value interface{}) (e *Entry, err error) {
 	return
 }
 
-func (s *Store) Get(key string) (e *Entry, err error) {
-	e = new(Entry)
+func (s *Store) Get(key string) (e *StoreEntry, err error) {
+	e = new(StoreEntry)
 	res, err := s.sling.Get("/store/"+key).Receive(e, nil)
 	if res.StatusCode != http.StatusOK {
 		err = fmt.Errorf("store: error getting entry, status=%d, message=%v", res.StatusCode, err)
@@ -62,8 +62,8 @@ func (s *Store) Get(key string) (e *Entry, err error) {
 	return
 }
 
-func (s *Store) Query() (entries []*Entry, err error) {
-	qr := new(EntryQueryResponse)
+func (s *Store) Query() (entries []*StoreEntry, err error) {
+	qr := new(StoreQueryResponse)
 	res, err := s.sling.Get("/store").Receive(qr, nil)
 	if res.StatusCode != http.StatusOK {
 		err = fmt.Errorf("store: error getting entries, status=%d, message=%v", res.StatusCode, err)
@@ -72,8 +72,8 @@ func (s *Store) Query() (entries []*Entry, err error) {
 	return
 }
 
-func (s *Store) QueryWithParams(params *EntryQueryParams) (entries []*Entry, err error) {
-	qr := new(EntryQueryResponse)
+func (s *Store) QueryWithParams(params *StoreQueryParams) (entries []*StoreEntry, err error) {
+	qr := new(StoreQueryResponse)
 	res, err := s.sling.Get("/store").QueryStruct(params).Receive(qr, nil)
 	if res.StatusCode != http.StatusOK {
 		err = fmt.Errorf("store: error getting entries, status=%d, message=%v", res.StatusCode, err)
@@ -82,7 +82,7 @@ func (s *Store) QueryWithParams(params *EntryQueryParams) (entries []*Entry, err
 }
 
 func (s *Store) Update(key string, value interface{}) (err error) {
-	res, err := s.sling.Put("/store/"+key).BodyJSON(&Entry{
+	res, err := s.sling.Put("/store/"+key).BodyJSON(&StoreEntry{
 		Value: value,
 	}).Receive(nil, nil)
 	if res.StatusCode != http.StatusNoContent {
