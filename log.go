@@ -14,20 +14,23 @@ type (
 	// Log defines the LabStack log service.
 	Log struct {
 		sling            *sling.Sling
-		logs             []*LogEntry
+		logs             []*logEntry
 		timer            <-chan time.Time
 		mutex            sync.RWMutex
 		logger           *glog.Logger
 		AppID            string
 		AppName          string
 		Tags             []string
-		Level            string
+		Level            LogLevel
 		BatchSize        int
 		DispatchInterval int
 	}
 
-	// LogEntry defines a log entry.
-	LogEntry struct {
+	// LogLevel defines the log level.
+	LogLevel int
+
+	// logEntry defines a log entry.
+	logEntry struct {
 		Time    string   `json:"time"`
 		AppID   string   `json:"app_id"`
 		AppName string   `json:"app_name"`
@@ -39,35 +42,38 @@ type (
 
 // Log levels
 const (
-	DEBUG = "DEBUG"
-	INFO  = "INFO"
-	WARN  = "WARN"
-	ERROR = "ERROR"
+	LogLevelDebug = iota
+	LogLevelInfo
+	LogLevelWarn
+	LogLevelError
+	LogLevelFatal
+	LogLevelOff
 )
 
-var levels = map[string]int{
-	"DEBUG": 1,
-	"INFO":  2,
-	"WARN":  3,
-	"ERROR": 4,
+var levels = map[LogLevel]string{
+	LogLevelDebug: "DEBUG",
+	LogLevelInfo:  "INFO",
+	LogLevelWarn:  "WARN",
+	LogLevelError: "ERROR",
+	LogLevelFatal: "FATAL",
 }
 
 func (l *Log) resetLogs() {
 	l.mutex.Lock()
 	defer l.mutex.Unlock()
-	l.logs = make([]*LogEntry, 0, l.BatchSize)
+	l.logs = make([]*logEntry, 0, l.BatchSize)
 }
 
-func (l *Log) appendLog(lm *LogEntry) {
+func (l *Log) appendLog(lm *logEntry) {
 	l.mutex.Lock()
 	defer l.mutex.Unlock()
 	l.logs = append(l.logs, lm)
 }
 
-func (l *Log) listLogs() []*LogEntry {
+func (l *Log) listLogs() []*logEntry {
 	l.mutex.Lock()
 	defer l.mutex.Unlock()
-	logs := make([]*LogEntry, len(l.logs))
+	logs := make([]*logEntry, len(l.logs))
 	for i, log := range l.logs {
 		logs[i] = log
 	}
@@ -89,34 +95,39 @@ func (l *Log) dispatch() (err error) {
 		return
 	}
 	if res.StatusCode != http.StatusNoContent {
-		return fmt.Errorf("logging: error dispatching logs, status=%d, message=%v", res.StatusCode, err)
+		return fmt.Errorf("log: error dispatching entries, status=%d, message=%v", res.StatusCode, err)
 	}
 	return
 }
 
-// Debug logs a debug message.
+// Debug logs a message with DEBUG level.
 func (l *Log) Debug(format string, args ...interface{}) {
-	l.Log(DEBUG, format, args...)
+	l.Log(LogLevelDebug, format, args...)
 }
 
-// Info logs an informational message.
+// Info logs a message with INFO level.
 func (l *Log) Info(format string, args ...interface{}) {
-	l.Log(INFO, format, args...)
+	l.Log(LogLevelInfo, format, args...)
 }
 
-// Warn logs a warning message.
+// Warn logs a message with WARN level.
 func (l *Log) Warn(format string, args ...interface{}) {
-	l.Log(WARN, format, args...)
+	l.Log(LogLevelWarn, format, args...)
 }
 
-// Error logs an error message.
+// Error logs a message with ERROR level.
 func (l *Log) Error(format string, args ...interface{}) {
-	l.Log(ERROR, format, args...)
+	l.Log(LogLevelError, format, args...)
+}
+
+// Fatal logs a message with FATAL level.
+func (l *Log) Fatal(format string, args ...interface{}) {
+	l.Log(LogLevelError, format, args...)
 }
 
 // Log logs a message with log level.
-func (l *Log) Log(level, format string, args ...interface{}) {
-	if levels[level] < levels[l.Level] {
+func (l *Log) Log(level LogLevel, format string, args ...interface{}) {
+	if level < l.Level {
 		return
 	}
 
@@ -132,12 +143,12 @@ func (l *Log) Log(level, format string, args ...interface{}) {
 	}
 
 	message := fmt.Sprintf(format, args...)
-	lm := &LogEntry{
+	lm := &logEntry{
 		Time:    time.Now().Format(rfc3339Milli),
 		AppID:   l.AppID,
 		AppName: l.AppName,
 		Tags:    l.Tags,
-		Level:   level,
+		Level:   levels[level],
 		Message: message,
 	}
 	l.appendLog(lm)
