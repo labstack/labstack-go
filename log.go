@@ -90,6 +90,7 @@ func (l *Log) dispatch() (err error) {
 	if len(l.logs) == 0 {
 		return
 	}
+
 	res, err := l.sling.Post("").BodyJSON(l.listLogs()).Receive(nil, nil)
 	if err != nil {
 		return
@@ -97,6 +98,7 @@ func (l *Log) dispatch() (err error) {
 	if res.StatusCode != http.StatusNoContent {
 		return fmt.Errorf("log: error dispatching entries, status=%d, message=%v", res.StatusCode, err)
 	}
+	l.resetLogs()
 	return
 }
 
@@ -159,7 +161,6 @@ func (l *Log) Log(level LogLevel, format string, args ...interface{}) {
 			if err := l.dispatch(); err != nil {
 				l.logger.Error(err)
 			}
-			l.resetLogs()
 		}()
 	}
 }
