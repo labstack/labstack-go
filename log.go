@@ -2,7 +2,6 @@ package labstack
 
 import (
 	"fmt"
-	"net/http"
 	"sync"
 	"time"
 
@@ -37,6 +36,12 @@ type (
 		Tags    []string `json:"tags"`
 		Level   string   `json:"level"`
 		Message string   `json:"message"`
+	}
+
+	// LogError defines the log error.
+	LogError struct {
+		Code    int    `json:"code"`
+		Message string `json:"message"`
 	}
 )
 
@@ -86,20 +91,17 @@ func (l *Log) logsLength() int {
 	return len(l.logs)
 }
 
-func (l *Log) dispatch() (err error) {
+func (l *Log) dispatch() error {
 	if len(l.logs) == 0 {
-		return
+		return nil
 	}
 
-	res, err := l.sling.Post("").BodyJSON(l.listLogs()).Receive(nil, nil)
+	le := new(LogError)
+	_, err := l.sling.Post("").BodyJSON(l.listLogs()).Receive(nil, le)
 	if err != nil {
-		return
+		return err
 	}
-	if res.StatusCode != http.StatusNoContent {
-		return fmt.Errorf("log: error dispatching entries, status=%d, message=%v", res.StatusCode, err)
-	}
-	l.resetLogs()
-	return
+	return le
 }
 
 // Debug logs a message with DEBUG level.
@@ -163,4 +165,8 @@ func (l *Log) Log(level LogLevel, format string, args ...interface{}) {
 			}
 		}()
 	}
+}
+
+func (e *LogError) Error() string {
+	return fmt.Sprintf("log error, code=%d, message=%s", e.Code, e.Message)
 }

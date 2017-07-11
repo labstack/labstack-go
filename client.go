@@ -14,12 +14,9 @@ type (
 		AppID   string
 		AppName string
 	}
-
-	Error struct {
-	}
 )
 
-var (
+const (
 	apiURL = "https://api.labstack.com"
 )
 

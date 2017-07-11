@@ -2,7 +2,6 @@ package labstack
 
 import (
 	"fmt"
-	"net/http"
 
 	"github.com/dghubble/sling"
 	"github.com/labstack/gommon/log"
@@ -17,7 +16,6 @@ type (
 
 	// EmailMessage defines the email message.
 	EmailMessage struct {
-		ID          string       `json:"id,omitempty"`
 		From        string       `json:"from,omitempty"`
 		To          string       `json:"to,omitempty"`
 		Subject     string       `json:"subject,omitempty"`
@@ -26,7 +24,7 @@ type (
 		Attachments []*EmailFile `json:"attachments,omitempty"`
 	}
 
-	// EmailFile defines the email message attachment/inline.
+	// EmailFile defines the email message's attachment/inline.
 	EmailFile struct {
 		// File name
 		Name string `json:"name"`
@@ -37,16 +35,31 @@ type (
 		// Base64 encoded file content
 		Content string `json:"content"`
 	}
+
+	// EmailStatus defines the email status.
+	EmailStatus struct {
+		ID     string `json:"id"`
+		Status string `json:"status"`
+	}
+
+	// EmailError defines the email error.
+	EmailError struct {
+		Code    int    `json:"code"`
+		Message string `json:"message"`
+	}
 )
 
 // Send sends the email message.
-func (e *Email) Send(m *EmailMessage) (err error) {
-	res, err := e.sling.Post("").BodyJSON(m).Receive(nil, nil)
+func (e *Email) Send(m *EmailMessage) (*EmailStatus, error) {
+	es := new(EmailStatus)
+	ee := new(EmailError)
+	_, err := e.sling.Post("").BodyJSON(m).Receive(es, ee)
 	if err != nil {
-		return
+		return nil, err
 	}
-	if res.StatusCode != http.StatusCreated {
-		return fmt.Errorf("email: error sending email, status=%d, message=%v", res.StatusCode, err)
-	}
-	return
+	return es, ee
+}
+
+func (e *EmailError) Error() string {
+	return fmt.Sprintf("email error, code=%d, message=%s", e.Code, e.Message)
 }

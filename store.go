@@ -2,7 +2,6 @@ package labstack
 
 import (
 	"fmt"
-	"net/http"
 	"time"
 
 	"github.com/dghubble/sling"
@@ -36,65 +35,77 @@ type (
 		Total   int64         `json:"total"`
 		Entries []*StoreEntry `json:"entries"`
 	}
+
+	// StoreError defines the store error.
+	StoreError struct {
+		Code    int    `json:"code"`
+		Message string `json:"message"`
+	}
 )
 
-func (s *Store) Insert(key string, value interface{}) (e *StoreEntry, err error) {
-	e = &StoreEntry{
+func (s *Store) Insert(key string, value interface{}) (*StoreEntry, error) {
+	e := &StoreEntry{
 		Key:   key,
 		Value: value,
 	}
-	res, err := s.sling.Post("/store").BodyJSON(e).Receive(e, nil)
+	se := new(StoreError)
+	_, err := s.sling.Post("/store").BodyJSON(e).Receive(e, se)
 	if err != nil {
-		return
+		return nil, err
 	}
-	if res.StatusCode != http.StatusCreated {
-		err = fmt.Errorf("store: error inserting entry, status=%d, message=%v", res.StatusCode, err)
-	}
-	return
+	return e, se
 }
 
-func (s *Store) Get(key string) (e *StoreEntry, err error) {
-	e = new(StoreEntry)
-	res, err := s.sling.Get("/store/"+key).Receive(e, nil)
-	if res.StatusCode != http.StatusOK {
-		err = fmt.Errorf("store: error getting entry, status=%d, message=%v", res.StatusCode, err)
+func (s *Store) Get(key string) (*StoreEntry, error) {
+	e := new(StoreEntry)
+	se := new(StoreError)
+	_, err := s.sling.Get("/store/"+key).Receive(e, se)
+	if err != nil {
+		return nil, err
 	}
-	return
+	return e, se
 }
 
-func (s *Store) Query() (entries []*StoreEntry, err error) {
+func (s *Store) Query() (*StoreQueryResponse, error) {
 	qr := new(StoreQueryResponse)
-	res, err := s.sling.Get("/store").Receive(qr, nil)
-	if res.StatusCode != http.StatusOK {
-		err = fmt.Errorf("store: error getting entries, status=%d, message=%v", res.StatusCode, err)
+	se := new(StoreError)
+	_, err := s.sling.Get("/store").Receive(qr, se)
+	if err != nil {
+		return nil, err
 	}
-	entries = qr.Entries
-	return
+	return qr, se
 }
 
-func (s *Store) QueryWithParams(params *StoreQueryParams) (entries []*StoreEntry, err error) {
+func (s *Store) QueryWithParams(params *StoreQueryParams) (*StoreQueryResponse, error) {
 	qr := new(StoreQueryResponse)
-	res, err := s.sling.Get("/store").QueryStruct(params).Receive(qr, nil)
-	if res.StatusCode != http.StatusOK {
-		err = fmt.Errorf("store: error getting entries, status=%d, message=%v", res.StatusCode, err)
+	se := new(StoreError)
+	_, err := s.sling.Get("/store").QueryStruct(params).Receive(qr, se)
+	if err != nil {
+		return nil, err
 	}
-	return
+	return qr, se
 }
 
-func (s *Store) Update(key string, value interface{}) (err error) {
-	res, err := s.sling.Put("/store/"+key).BodyJSON(&StoreEntry{
+func (s *Store) Update(key string, value interface{}) error {
+	se := new(StoreError)
+	_, err := s.sling.Put("/store/"+key).BodyJSON(&StoreEntry{
 		Value: value,
-	}).Receive(nil, nil)
-	if res.StatusCode != http.StatusNoContent {
-		err = fmt.Errorf("store: error updating entry, status=%d, message=%v", res.StatusCode, err)
+	}).Receive(nil, se)
+	if err != nil {
+		return err
 	}
-	return
+	return se
 }
 
-func (s *Store) Delete(key string) (err error) {
-	res, err := s.sling.Delete("/store/"+key).Receive(nil, nil)
-	if res.StatusCode != http.StatusNoContent {
-		err = fmt.Errorf("store: error deleting entry, status=%d, message=%v", res.StatusCode, err)
+func (s *Store) Delete(key string) error {
+	se := new(StoreError)
+	_, err := s.sling.Delete("/store/"+key).Receive(nil, se)
+	if err != nil {
+		return err
 	}
-	return
+	return se
+}
+
+func (e *StoreError) Error() string {
+	return fmt.Sprintf("store error, code=%d, message=%s", e.Code, e.Message)
 }

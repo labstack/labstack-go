@@ -59,6 +59,12 @@ type (
 		Active    int64     `json:"active"`
 		// TODO: CPU, Uptime, Memory
 	}
+
+	// CubeError defines the cube error.
+	CubeError struct {
+		Code    int    `json:"code"`
+		Message string `json:"message"`
+	}
 )
 
 func (c *Cube) resetRequests() {
@@ -89,18 +95,17 @@ func (c *Cube) requestsLength() int {
 	return len(c.requests)
 }
 
-func (c *Cube) dispatch() (err error) {
+func (c *Cube) dispatch() error {
 	if len(c.requests) == 0 {
-		return
+		return nil
 	}
-	res, err := c.sling.Post("").BodyJSON(c.listRequests()).Receive(nil, nil)
+
+	ce := new(CubeError)
+	_, err := c.sling.Post("").BodyJSON(c.listRequests()).Receive(nil, ce)
 	if err != nil {
-		return
+		return err
 	}
-	if res.StatusCode != http.StatusNoContent {
-		return fmt.Errorf("cube: error dispatching requests, status=%d, message=%v", res.StatusCode, err)
-	}
-	return
+	return ce
 }
 
 // Start starts recording an HTTP request.
@@ -147,4 +152,8 @@ func (c *Cube) Stop(r *CubeRequest, status int, size int64) {
 			c.resetRequests()
 		}()
 	}
+}
+
+func (e *CubeError) Error() string {
+	return fmt.Sprintf("cube error, code=%d, message=%s", e.Code, e.Message)
 }
