@@ -3,6 +3,11 @@ package labstack
 import (
 	"fmt"
 
+	"encoding/base64"
+	"io/ioutil"
+	"mime"
+	"path/filepath"
+
 	"github.com/dghubble/sling"
 	"github.com/labstack/gommon/log"
 )
@@ -20,26 +25,16 @@ type (
 		To          string       `json:"to,omitempty"`
 		Subject     string       `json:"subject,omitempty"`
 		Body        string       `json:"body,omitempty"`
-		Inlines     []*EmailFile `json:"inlines,omitempty"`
-		Attachments []*EmailFile `json:"attachments,omitempty"`
+		Inlines     []*emailFile `json:"inlines,omitempty"`
+		Attachments []*emailFile `json:"attachments,omitempty"`
+		inlines     []string
+		attachments []string
 	}
 
-	// EmailFile defines the email message's attachment/inline.
-	EmailFile struct {
-		// File name
-		Name string `json:"name"`
-
-		// File type
-		Type string `json:"type"`
-
-		// Base64 encoded file content
+	emailFile struct {
+		Name    string `json:"name"`
+		Type    string `json:"type"`
 		Content string `json:"content"`
-	}
-
-	// EmailStatus defines the email status.
-	EmailStatus struct {
-		ID     string `json:"id"`
-		Status string `json:"status"`
 	}
 
 	// EmailError defines the email error.
@@ -49,15 +44,56 @@ type (
 	}
 )
 
-// Send sends the email message.
-func (e *Email) Send(m *EmailMessage) (*EmailStatus, error) {
-	es := new(EmailStatus)
-	ee := new(EmailError)
-	_, err := e.sling.Post("").BodyJSON(m).Receive(es, ee)
+func emailFileFromPath(path string) (*emailFile, error) {
+	data, err := ioutil.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
-	return es, ee
+	return &emailFile{
+		Name:    filepath.Base(path),
+		Type:    mime.TypeByExtension(filepath.Ext(path)),
+		Content: base64.StdEncoding.EncodeToString(data),
+	}, nil
+}
+
+func (m *EmailMessage) addFiles() error {
+	for _, path := range m.inlines {
+		file, err := emailFileFromPath(path)
+		if err != nil {
+			return err
+		}
+		m.Inlines = append(m.Inlines, file)
+	}
+	for _, path := range m.attachments {
+		file, err := emailFileFromPath(path)
+		if err != nil {
+			return err
+		}
+		m.Attachments = append(m.Attachments, file)
+	}
+	return nil
+}
+
+func (m *EmailMessage) AddInline(path string) {
+	m.inlines = append(m.inlines, path)
+}
+
+func (m *EmailMessage) AddAttachment(path string) {
+	m.attachments = append(m.attachments, path)
+}
+
+// Send sends the email message.
+func (e *Email) Send(m *EmailMessage) (*EmailMessage, error) {
+	if err := m.addFiles(); err != nil {
+		return nil, err
+	}
+	em := new(EmailMessage)
+	ee := new(EmailError)
+	_, err := e.sling.Post("").BodyJSON(m).Receive(em, ee)
+	if err != nil {
+		return nil, err
+	}
+	return em, ee
 }
 
 func (e *EmailError) Error() string {
