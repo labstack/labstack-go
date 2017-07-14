@@ -21,10 +21,12 @@ type (
 
 	// EmailMessage defines the email message.
 	EmailMessage struct {
+		Time        string       `json:"time,omitempty"`
 		From        string       `json:"from,omitempty"`
 		To          string       `json:"to,omitempty"`
 		Subject     string       `json:"subject,omitempty"`
 		Body        string       `json:"body,omitempty"`
+		Status      string       `json:"status,omitempty"`
 		Inlines     []*emailFile `json:"inlines,omitempty"`
 		Attachments []*emailFile `json:"attachments,omitempty"`
 		inlines     []string
