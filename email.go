@@ -5,7 +5,6 @@ import (
 
 	"encoding/base64"
 	"io/ioutil"
-	"mime"
 	"path/filepath"
 
 	"github.com/dghubble/sling"
@@ -21,16 +20,16 @@ type (
 
 	// EmailMessage defines the email message.
 	EmailMessage struct {
-		Time        string       `json:"time,omitempty"`
-		From        string       `json:"from,omitempty"`
-		To          string       `json:"to,omitempty"`
-		Subject     string       `json:"subject,omitempty"`
-		Body        string       `json:"body,omitempty"`
-		Status      string       `json:"status,omitempty"`
-		Inlines     []*emailFile `json:"inlines,omitempty"`
-		Attachments []*emailFile `json:"attachments,omitempty"`
 		inlines     []string
 		attachments []string
+		Time        string       `json:"time,omitempty"`
+		To          string       `json:"to,omitempty"`
+		From        string       `json:"from,omitempty"`
+		Subject     string       `json:"subject,omitempty"`
+		Body        string       `json:"body,omitempty"`
+		Inlines     []*emailFile `json:"inlines,omitempty"`
+		Attachments []*emailFile `json:"attachments,omitempty"`
+		Status      string       `json:"status,omitempty"`
 	}
 
 	emailFile struct {
@@ -53,9 +52,16 @@ func emailFileFromPath(path string) (*emailFile, error) {
 	}
 	return &emailFile{
 		Name:    filepath.Base(path),
-		Type:    mime.TypeByExtension(filepath.Ext(path)),
 		Content: base64.StdEncoding.EncodeToString(data),
 	}, nil
+}
+
+func NewEmailMessage(to, from, subject string) *EmailMessage {
+	return &EmailMessage{
+		To:      to,
+		From:    from,
+		Subject: subject,
+	}
 }
 
 func (m *EmailMessage) addFiles() error {
