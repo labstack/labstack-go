@@ -23,8 +23,8 @@ type (
 		UpdatedAt time.Time   `json:"updated_at"`
 	}
 
-	// StoreQueryParams defines the query parameters for find entries.
-	StoreQueryParams struct {
+	// storeQueryParams defines the query parameters for find entries.
+	storeQueryParams struct {
 		Filters string `url:"filters"`
 		Limit   int    `url:"limit"`
 		Offset  int    `url:"offset"`
@@ -72,14 +72,14 @@ func (s *Store) Get(key string) (*StoreEntry, error) {
 	return nil, se
 }
 
-func (s *Store) Query() (*StoreQueryResponse, error) {
-	return s.QueryWithParams(StoreQueryParams{})
-}
-
-func (s *Store) QueryWithParams(params StoreQueryParams) (*StoreQueryResponse, error) {
+func (s *Store) Query(filters string, limit, offset int) (*StoreQueryResponse, error) {
 	qr := new(StoreQueryResponse)
 	se := new(StoreError)
-	_, err := s.sling.Get("/store").QueryStruct(&params).Receive(qr, se)
+	_, err := s.sling.Get("/store").QueryStruct(&storeQueryParams{
+		Filters: filters,
+		Limit:   limit,
+		Offset:  offset,
+	}).Receive(qr, se)
 	if err != nil {
 		return nil, err
 	}
