@@ -101,7 +101,10 @@ func (e *Email) Send(m *EmailMessage) (*EmailMessage, error) {
 	if err != nil {
 		return nil, err
 	}
-	return em, ee
+	if ee.Code == 0 {
+		return em, nil
+	}
+	return nil, ee
 }
 
 func (e *EmailError) Error() string {

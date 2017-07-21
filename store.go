@@ -25,9 +25,9 @@ type (
 
 	// StoreQueryParams defines the query parameters for find entries.
 	StoreQueryParams struct {
-		Filters string
-		Limit   int
-		Offset  int
+		Filters string `url:"filters"`
+		Limit   int    `url:"limit"`
+		Offset  int    `url:"offset"`
 	}
 
 	// StoreQueryResponse defines the query response.
@@ -53,7 +53,10 @@ func (s *Store) Insert(key string, value interface{}) (*StoreEntry, error) {
 	if err != nil {
 		return nil, err
 	}
-	return e, se
+	if se.Code == 0 {
+		return e, nil
+	}
+	return nil, se
 }
 
 func (s *Store) Get(key string) (*StoreEntry, error) {
@@ -63,27 +66,27 @@ func (s *Store) Get(key string) (*StoreEntry, error) {
 	if err != nil {
 		return nil, err
 	}
-	return e, se
+	if se.Code == 0 {
+		return e, nil
+	}
+	return nil, se
 }
 
 func (s *Store) Query() (*StoreQueryResponse, error) {
-	qr := new(StoreQueryResponse)
-	se := new(StoreError)
-	_, err := s.sling.Get("/store").Receive(qr, se)
-	if err != nil {
-		return nil, err
-	}
-	return qr, se
+	return s.QueryWithParams(StoreQueryParams{})
 }
 
-func (s *Store) QueryWithParams(params *StoreQueryParams) (*StoreQueryResponse, error) {
+func (s *Store) QueryWithParams(params StoreQueryParams) (*StoreQueryResponse, error) {
 	qr := new(StoreQueryResponse)
 	se := new(StoreError)
-	_, err := s.sling.Get("/store").QueryStruct(params).Receive(qr, se)
+	_, err := s.sling.Get("/store").QueryStruct(&params).Receive(qr, se)
 	if err != nil {
 		return nil, err
 	}
-	return qr, se
+	if se.Code == 0 {
+		return qr, nil
+	}
+	return nil, se
 }
 
 func (s *Store) Update(key string, value interface{}) error {
@@ -94,6 +97,9 @@ func (s *Store) Update(key string, value interface{}) error {
 	if err != nil {
 		return err
 	}
+	if se.Code == 0 {
+		return nil
+	}
 	return se
 }
 
@@ -102,6 +108,9 @@ func (s *Store) Delete(key string) error {
 	_, err := s.sling.Delete("/store/"+key).Receive(nil, se)
 	if err != nil {
 		return err
+	}
+	if se.Code == 0 {
+		return nil
 	}
 	return se
 }

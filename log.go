@@ -101,6 +101,9 @@ func (l *Log) dispatch() error {
 	if err != nil {
 		return err
 	}
+	if le.Code == 0 {
+		return nil
+	}
 	return le
 }
 
@@ -126,7 +129,7 @@ func (l *Log) Error(format string, args ...interface{}) {
 
 // Fatal logs a message with FATAL level.
 func (l *Log) Fatal(format string, args ...interface{}) {
-	l.Log(LogLevelError, format, args...)
+	l.Log(LogLevelFatal, format, args...)
 }
 
 // Log logs a message with log level.
