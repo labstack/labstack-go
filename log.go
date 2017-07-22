@@ -20,13 +20,13 @@ type (
 		AppID            string
 		AppName          string
 		Tags             []string
-		Level            LogLevel
+		Level            Level
 		BatchSize        int
 		DispatchInterval int
 	}
 
-	// LogLevel defines the log level.
-	LogLevel int
+	// Level defines the log level.
+	Level int
 
 	// logEntry defines a log entry.
 	logEntry struct {
@@ -47,20 +47,20 @@ type (
 
 // Log levels
 const (
-	LogLevelDebug = iota
-	LogLevelInfo
-	LogLevelWarn
-	LogLevelError
-	LogLevelFatal
+	LevelDebug = iota
+	LevelInfo
+	LevelWarn
+	LevelError
+	LevelFatal
 	LogLevelOff
 )
 
-var levels = map[LogLevel]string{
-	LogLevelDebug: "DEBUG",
-	LogLevelInfo:  "INFO",
-	LogLevelWarn:  "WARN",
-	LogLevelError: "ERROR",
-	LogLevelFatal: "FATAL",
+var levels = map[Level]string{
+	LevelDebug: "DEBUG",
+	LevelInfo:  "INFO",
+	LevelWarn:  "WARN",
+	LevelError: "ERROR",
+	LevelFatal: "FATAL",
 }
 
 func (l *Log) resetLogs() {
@@ -109,31 +109,31 @@ func (l *Log) dispatch() error {
 
 // Debug logs a message with DEBUG level.
 func (l *Log) Debug(format string, args ...interface{}) {
-	l.Log(LogLevelDebug, format, args...)
+	l.Log(LevelDebug, format, args...)
 }
 
 // Info logs a message with INFO level.
 func (l *Log) Info(format string, args ...interface{}) {
-	l.Log(LogLevelInfo, format, args...)
+	l.Log(LevelInfo, format, args...)
 }
 
 // Warn logs a message with WARN level.
 func (l *Log) Warn(format string, args ...interface{}) {
-	l.Log(LogLevelWarn, format, args...)
+	l.Log(LevelWarn, format, args...)
 }
 
 // Error logs a message with ERROR level.
 func (l *Log) Error(format string, args ...interface{}) {
-	l.Log(LogLevelError, format, args...)
+	l.Log(LevelError, format, args...)
 }
 
 // Fatal logs a message with FATAL level.
 func (l *Log) Fatal(format string, args ...interface{}) {
-	l.Log(LogLevelFatal, format, args...)
+	l.Log(LevelFatal, format, args...)
 }
 
 // Log logs a message with log level.
-func (l *Log) Log(level LogLevel, format string, args ...interface{}) {
+func (l *Log) Log(level Level, format string, args ...interface{}) {
 	if level < l.Level {
 		return
 	}

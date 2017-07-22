@@ -63,7 +63,7 @@ func (c *Client) Log() (log *Log) {
 		logger:           c.logger,
 		AppID:            c.AppID,
 		AppName:          c.AppName,
-		Level:            LogLevelInfo,
+		Level:            LevelInfo,
 		BatchSize:        60,
 		DispatchInterval: 60,
 	}
