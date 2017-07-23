@@ -143,7 +143,8 @@ func (l *Log) Log(level Level, format string, args ...interface{}) {
 		go func() {
 			for range l.timer {
 				if err := l.dispatch(); err != nil {
-					l.logger.Error(err)
+					err := err.(*LogError)
+					fmt.Printf("log error: code=%d, message=%s", err.Code, err.Message)
 				}
 			}
 		}()
@@ -164,7 +165,8 @@ func (l *Log) Log(level Level, format string, args ...interface{}) {
 	if l.logsLength() >= l.BatchSize {
 		go func() {
 			if err := l.dispatch(); err != nil {
-				l.logger.Error(err)
+				err := err.(*LogError)
+				fmt.Printf("log error: code=%d, message=%s", err.Code, err.Message)
 			}
 		}()
 	}
