@@ -1,7 +1,6 @@
 package labstack
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/dghubble/sling"
@@ -116,5 +115,5 @@ func (s *Store) Delete(key string) error {
 }
 
 func (e *StoreError) Error() string {
-	return fmt.Sprintf("store error, code=%d, message=%s", e.Code, e.Message)
+	return e.Message
 }

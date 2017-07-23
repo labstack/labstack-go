@@ -1,8 +1,6 @@
 package labstack
 
 import (
-	"fmt"
-
 	"encoding/base64"
 	"io/ioutil"
 	"path/filepath"
@@ -108,5 +106,5 @@ func (e *Email) Send(m *EmailMessage) (*EmailMessage, error) {
 }
 
 func (e *EmailError) Error() string {
-	return fmt.Sprintf("email error, code=%d, message=%s", e.Code, e.Message)
+	return e.Message
 }

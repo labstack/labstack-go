@@ -171,5 +171,5 @@ func (l *Log) Log(level Level, format string, args ...interface{}) {
 }
 
 func (e *LogError) Error() string {
-	return fmt.Sprintf("log error, code=%d, message=%s", e.Code, e.Message)
+	return e.Message
 }
