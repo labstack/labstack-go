@@ -67,7 +67,7 @@ func (c *Client) Log() (log *Log) {
 		BatchSize:        60,
 		DispatchInterval: 60,
 	}
-	log.resetLogs()
+	log.resetLogEntries()
 	return
 }
 

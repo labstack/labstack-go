@@ -43,17 +43,6 @@ type (
 	}
 )
 
-func emailFileFromPath(path string) (*emailFile, error) {
-	data, err := ioutil.ReadFile(path)
-	if err != nil {
-		return nil, err
-	}
-	return &emailFile{
-		Name:    filepath.Base(path),
-		Content: base64.StdEncoding.EncodeToString(data),
-	}, nil
-}
-
 func NewEmailMessage(to, from, subject string) *EmailMessage {
 	return &EmailMessage{
 		To:      to,
@@ -62,20 +51,30 @@ func NewEmailMessage(to, from, subject string) *EmailMessage {
 	}
 }
 
-func (m *EmailMessage) addFiles() error {
-	for _, path := range m.inlines {
-		file, err := emailFileFromPath(path)
+func (m *EmailMessage) addInlines() error {
+	for _, inline := range m.inlines {
+		data, err := ioutil.ReadFile(inline)
 		if err != nil {
 			return err
 		}
-		m.Inlines = append(m.Inlines, file)
+		m.Inlines = append(m.Inlines, &emailFile{
+			Name:    filepath.Base(inline),
+			Content: base64.StdEncoding.EncodeToString(data),
+		})
 	}
-	for _, path := range m.attachments {
-		file, err := emailFileFromPath(path)
+	return nil
+}
+
+func (m *EmailMessage) addAttachments() error {
+	for _, attachment := range m.attachments {
+		data, err := ioutil.ReadFile(attachment)
 		if err != nil {
 			return err
 		}
-		m.Attachments = append(m.Attachments, file)
+		m.Inlines = append(m.Attachments, &emailFile{
+			Name:    filepath.Base(attachment),
+			Content: base64.StdEncoding.EncodeToString(data),
+		})
 	}
 	return nil
 }
@@ -90,7 +89,10 @@ func (m *EmailMessage) AddAttachment(path string) {
 
 // Send sends the email message.
 func (e *Email) Send(m *EmailMessage) (*EmailMessage, error) {
-	if err := m.addFiles(); err != nil {
+	if err := m.addInlines(); err != nil {
+		return nil, err
+	}
+	if err := m.addAttachments(); err != nil {
 		return nil, err
 	}
 	em := new(EmailMessage)

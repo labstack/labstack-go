@@ -63,19 +63,19 @@ var levels = map[Level]string{
 	LevelFatal: "FATAL",
 }
 
-func (l *Log) resetLogs() {
+func (l *Log) resetLogEntries() {
 	l.mutex.Lock()
 	defer l.mutex.Unlock()
 	l.logs = make([]*logEntry, 0, l.BatchSize)
 }
 
-func (l *Log) appendLog(lm *logEntry) {
+func (l *Log) appendLogEntry(lm *logEntry) {
 	l.mutex.Lock()
 	defer l.mutex.Unlock()
 	l.logs = append(l.logs, lm)
 }
 
-func (l *Log) listLogs() []*logEntry {
+func (l *Log) listLogEntries() []*logEntry {
 	l.mutex.Lock()
 	defer l.mutex.Unlock()
 	logs := make([]*logEntry, len(l.logs))
@@ -96,8 +96,10 @@ func (l *Log) dispatch() error {
 		return nil
 	}
 
+	defer l.resetLogEntries()
+
 	le := new(LogError)
-	_, err := l.sling.Post("").BodyJSON(l.listLogs()).Receive(nil, le)
+	_, err := l.sling.Post("").BodyJSON(l.listLogEntries()).Receive(nil, le)
 	if err != nil {
 		return err
 	}
@@ -159,7 +161,7 @@ func (l *Log) Log(level Level, format string, args ...interface{}) {
 		Level:   levels[level],
 		Message: message,
 	}
-	l.appendLog(lm)
+	l.appendLogEntry(lm)
 
 	// Dispatch batch
 	if l.logsLength() >= l.BatchSize {
