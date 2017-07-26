@@ -1,7 +1,7 @@
 package labstack
 
 import (
-	"time"
+	"fmt"
 
 	"github.com/dghubble/sling"
 	"github.com/labstack/gommon/log"
@@ -14,25 +14,12 @@ type (
 		logger *log.Logger
 	}
 
-	// StoreEntry defines the store entry
-	StoreEntry struct {
-		Key       string      `json:"key"`
-		Value     interface{} `json:"value"`
-		CreatedAt time.Time   `json:"created_at"`
-		UpdatedAt time.Time   `json:"updated_at"`
-	}
+	Document Fields
 
-	// storeQueryParams defines the query parameters for find entries.
-	storeQueryParams struct {
-		Filters string `url:"filters"`
-		Limit   int    `url:"limit"`
-		Offset  int    `url:"offset"`
-	}
-
-	// StoreQueryResponse defines the query response.
-	StoreQueryResponse struct {
-		Total   int64         `json:"total"`
-		Entries []*StoreEntry `json:"entries"`
+	// StoreSearchResponse defines the query response.
+	StoreSearchResponse struct {
+		Total     int64      `json:"total"`
+		Documents []Document `json:"documents"`
 	}
 
 	// StoreError defines the store error.
@@ -42,57 +29,54 @@ type (
 	}
 )
 
-func (s *Store) Insert(key string, value interface{}) (*StoreEntry, error) {
-	e := &StoreEntry{
-		Key:   key,
-		Value: value,
-	}
+func (s *Store) Insert(collection string, document Document) (Document, error) {
 	se := new(StoreError)
-	_, err := s.sling.Post("/store").BodyJSON(e).Receive(e, se)
+	_, err := s.sling.Post("/store/"+collection).
+		BodyJSON(&document).
+		Receive(&document, se)
 	if err != nil {
 		return nil, err
 	}
 	if se.Code == 0 {
-		return e, nil
+		return document, nil
 	}
 	return nil, se
 }
 
-func (s *Store) Get(key string) (*StoreEntry, error) {
-	e := new(StoreEntry)
+func (s *Store) Get(collection, id string) (Document, error) {
+	doc := Document{}
 	se := new(StoreError)
-	_, err := s.sling.Get("/store/"+key).Receive(e, se)
+	_, err := s.sling.Get(fmt.Sprintf("/store/%s/%s", collection, id)).
+		Receive(&doc, se)
 	if err != nil {
 		return nil, err
 	}
 	if se.Code == 0 {
-		return e, nil
+		return doc, nil
 	}
 	return nil, se
 }
 
-func (s *Store) Query(filters string, limit, offset int) (*StoreQueryResponse, error) {
-	qr := new(StoreQueryResponse)
+func (s *Store) Search(collection string, parameters *SearchParameters) (*StoreSearchResponse, error) {
+	sr := new(StoreSearchResponse)
 	se := new(StoreError)
-	_, err := s.sling.Get("/store").QueryStruct(&storeQueryParams{
-		Filters: filters,
-		Limit:   limit,
-		Offset:  offset,
-	}).Receive(qr, se)
+	_, err := s.sling.Post(fmt.Sprintf("/store/%s/query", collection)).
+		BodyJSON(parameters).
+		Receive(sr, se)
 	if err != nil {
 		return nil, err
 	}
 	if se.Code == 0 {
-		return qr, nil
+		return sr, nil
 	}
 	return nil, se
 }
 
-func (s *Store) Update(key string, value interface{}) error {
+func (s *Store) Update(collection string, id string, document Document) error {
 	se := new(StoreError)
-	_, err := s.sling.Put("/store/"+key).BodyJSON(&StoreEntry{
-		Value: value,
-	}).Receive(nil, se)
+	_, err := s.sling.Patch(fmt.Sprintf("/store/%s/%s", collection, id)).
+		BodyJSON(&document).
+		Receive(nil, se)
 	if err != nil {
 		return err
 	}
@@ -102,9 +86,10 @@ func (s *Store) Update(key string, value interface{}) error {
 	return se
 }
 
-func (s *Store) Delete(key string) error {
+func (s *Store) Delete(collection string, id string) error {
 	se := new(StoreError)
-	_, err := s.sling.Delete("/store/"+key).Receive(nil, se)
+	_, err := s.sling.Delete(fmt.Sprintf("/store/%s/%s", collection, id)).
+		Receive(nil, se)
 	if err != nil {
 		return err
 	}

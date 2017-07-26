@@ -13,13 +13,12 @@ type (
 	// Log defines the LabStack log service.
 	Log struct {
 		sling            *sling.Sling
-		logs             []*logEntry
+		entries          []Fields
 		timer            <-chan time.Time
 		mutex            sync.RWMutex
 		logger           *glog.Logger
 		AppID            string
 		AppName          string
-		Tags             []string
 		Level            Level
 		BatchSize        int
 		DispatchInterval int
@@ -27,16 +26,6 @@ type (
 
 	// Level defines the log level.
 	Level int
-
-	// logEntry defines a log entry.
-	logEntry struct {
-		Time    string   `json:"time"`
-		AppID   string   `json:"app_id"`
-		AppName string   `json:"app_name"`
-		Tags    []string `json:"tags"`
-		Level   string   `json:"level"`
-		Message string   `json:"message"`
-	}
 
 	// LogError defines the log error.
 	LogError struct {
@@ -63,43 +52,43 @@ var levels = map[Level]string{
 	LevelFatal: "FATAL",
 }
 
-func (l *Log) resetLogEntries() {
+func (l *Log) resetEntries() {
 	l.mutex.Lock()
 	defer l.mutex.Unlock()
-	l.logs = make([]*logEntry, 0, l.BatchSize)
+	l.entries = make([]Fields, 0, l.BatchSize)
 }
 
-func (l *Log) appendLogEntry(lm *logEntry) {
+func (l *Log) appendEntry(f Fields) {
 	l.mutex.Lock()
 	defer l.mutex.Unlock()
-	l.logs = append(l.logs, lm)
+	l.entries = append(l.entries, f)
 }
 
-func (l *Log) listLogEntries() []*logEntry {
+func (l *Log) listEntries() []Fields {
 	l.mutex.Lock()
 	defer l.mutex.Unlock()
-	logs := make([]*logEntry, len(l.logs))
-	for i, log := range l.logs {
-		logs[i] = log
+	entries := make([]Fields, len(l.entries))
+	for i, entry := range l.entries {
+		entries[i] = entry
 	}
-	return logs
+	return entries
 }
 
 func (l *Log) logsLength() int {
 	l.mutex.RLock()
 	defer l.mutex.RUnlock()
-	return len(l.logs)
+	return len(l.entries)
 }
 
 func (l *Log) dispatch() error {
-	if len(l.logs) == 0 {
+	if len(l.entries) == 0 {
 		return nil
 	}
 
-	defer l.resetLogEntries()
+	defer l.resetEntries()
 
 	le := new(LogError)
-	_, err := l.sling.Post("").BodyJSON(l.listLogEntries()).Receive(nil, le)
+	_, err := l.sling.Post("").BodyJSON(l.listEntries()).Receive(nil, le)
 	if err != nil {
 		return err
 	}
@@ -110,32 +99,32 @@ func (l *Log) dispatch() error {
 }
 
 // Debug logs a message with DEBUG level.
-func (l *Log) Debug(format string, args ...interface{}) {
-	l.Log(LevelDebug, format, args...)
+func (l *Log) Debug(fields Fields) {
+	l.Log(LevelDebug, fields)
 }
 
 // Info logs a message with INFO level.
-func (l *Log) Info(format string, args ...interface{}) {
-	l.Log(LevelInfo, format, args...)
+func (l *Log) Info(fields Fields) {
+	l.Log(LevelInfo, fields)
 }
 
 // Warn logs a message with WARN level.
-func (l *Log) Warn(format string, args ...interface{}) {
-	l.Log(LevelWarn, format, args...)
+func (l *Log) Warn(fields Fields) {
+	l.Log(LevelWarn, fields)
 }
 
 // Error logs a message with ERROR level.
-func (l *Log) Error(format string, args ...interface{}) {
-	l.Log(LevelError, format, args...)
+func (l *Log) Error(fields Fields) {
+	l.Log(LevelError, fields)
 }
 
 // Fatal logs a message with FATAL level.
-func (l *Log) Fatal(format string, args ...interface{}) {
-	l.Log(LevelFatal, format, args...)
+func (l *Log) Fatal(fields Fields) {
+	l.Log(LevelFatal, fields)
 }
 
 // Log logs a message with log level.
-func (l *Log) Log(level Level, format string, args ...interface{}) {
+func (l *Log) Log(level Level, fields Fields) {
 	if level < l.Level {
 		return
 	}
@@ -152,16 +141,11 @@ func (l *Log) Log(level Level, format string, args ...interface{}) {
 		}()
 	}
 
-	message := fmt.Sprintf(format, args...)
-	lm := &logEntry{
-		Time:    time.Now().Format(rfc3339Milli),
-		AppID:   l.AppID,
-		AppName: l.AppName,
-		Tags:    l.Tags,
-		Level:   levels[level],
-		Message: message,
-	}
-	l.appendLogEntry(lm)
+	fields.Add("time", time.Now().Format(rfc3339Milli)).
+		Add("app_id", l.AppID).
+		Add("app_name", l.AppName).
+		Add("level", levels[level])
+	l.appendEntry(fields)
 
 	// Dispatch batch
 	if l.logsLength() >= l.BatchSize {

@@ -14,6 +14,17 @@ type (
 		AppID   string
 		AppName string
 	}
+
+	Fields map[string]interface{}
+
+	SearchParameters struct {
+		Query       string   `json:"query"`
+		QueryString string   `json:"query_string"`
+		Since       string   `json:"since"`
+		Sort        []string `json:"sort"`
+		Size        int      `json:"size"`
+		From        int      `json:"from"`
+	}
 )
 
 const (
@@ -67,7 +78,7 @@ func (c *Client) Log() (log *Log) {
 		BatchSize:        60,
 		DispatchInterval: 60,
 	}
-	log.resetLogEntries()
+	log.resetEntries()
 	return
 }
 
@@ -77,4 +88,13 @@ func (c *Client) Store() *Store {
 		sling:  c.sling,
 		logger: c.logger,
 	}
+}
+
+func (f Fields) Add(key string, value interface{}) Fields {
+	f[key] = value
+	return f
+}
+
+func (f Fields) Get(key string) interface{} {
+	return f[key]
 }
