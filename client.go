@@ -73,6 +73,7 @@ func (c *Client) Log() (log *Log) {
 		sling:            c.sling.Path("/log"),
 		logger:           c.logger,
 		Level:            LevelInfo,
+		Fields:           Fields{},
 		BatchSize:        60,
 		DispatchInterval: 60,
 	}
