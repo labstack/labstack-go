@@ -9,10 +9,8 @@ import (
 
 type (
 	Client struct {
-		sling   *sling.Sling
-		logger  *glog.Logger
-		AppID   string
-		AppName string
+		sling  *sling.Sling
+		logger *glog.Logger
 	}
 
 	Fields map[string]interface{}
@@ -44,8 +42,6 @@ func (c *Client) Cube() (cube *Cube) {
 	cube = &Cube{
 		sling:            c.sling.Path("/cube"),
 		logger:           c.logger,
-		AppID:            c.AppID,
-		AppName:          c.AppName,
 		BatchSize:        60,
 		DispatchInterval: 60,
 	}
