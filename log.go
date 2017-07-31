@@ -17,9 +17,8 @@ type (
 		timer            <-chan time.Time
 		mutex            sync.RWMutex
 		logger           *glog.Logger
-		AppID            string
-		AppName          string
 		Level            Level
+		Fields           Fields
 		BatchSize        int
 		DispatchInterval int
 	}
@@ -142,9 +141,10 @@ func (l *Log) Log(level Level, fields Fields) {
 	}
 
 	fields.Add("time", time.Now().Format(rfc3339Milli)).
-		Add("app_id", l.AppID).
-		Add("app_name", l.AppName).
 		Add("level", levels[level])
+	for k, v := range l.Fields {
+		fields.Add(k, v)
+	}
 	l.appendEntry(fields)
 
 	// Dispatch batch

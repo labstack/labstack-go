@@ -72,8 +72,6 @@ func (c *Client) Log() (log *Log) {
 	log = &Log{
 		sling:            c.sling.Path("/log"),
 		logger:           c.logger,
-		AppID:            c.AppID,
-		AppName:          c.AppName,
 		Level:            LevelInfo,
 		BatchSize:        60,
 		DispatchInterval: 60,
