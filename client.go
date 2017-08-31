@@ -9,8 +9,10 @@ import (
 
 type (
 	Client struct {
-		sling  *sling.Sling
-		logger *glog.Logger
+		accountID string
+		apiKey    string
+		sling     *sling.Sling
+		logger    *glog.Logger
 	}
 
 	Fields map[string]interface{}
@@ -30,10 +32,12 @@ const (
 )
 
 // NewClient creates a new client for the LabStack API.
-func NewClient(apiKey string) *Client {
+func NewClient(accountID, apiKey string) *Client {
 	return &Client{
-		sling:  sling.New().Base(apiURL).Add("Authorization", "Bearer "+apiKey),
-		logger: glog.New("labstack"),
+		accountID: accountID,
+		apiKey:    apiKey,
+		sling:     sling.New().Base(apiURL).Add("Authorization", "Bearer "+apiKey),
+		logger:    glog.New("labstack"),
 	}
 }
 

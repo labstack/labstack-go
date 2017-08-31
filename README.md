@@ -1,10 +1,44 @@
-# LabStack Go Client
+<a href="https://labstack.com"><img height="80" src="https://cdn.labstack.com/images/labstack-logo.svg"></a>
 
+## Go Client
 
-[![GoDoc](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](http://godoc.org/github.com/labstack/labstack-go)
-[![Go Report Card](https://goreportcard.com/badge/github.com/labstack/labstack-go?style=flat-square)](https://goreportcard.com/report/github.com/labstack/labstack-go)
-[![Build Status](http://img.shields.io/travis/labstack/labstack-go.svg?style=flat-square)](https://travis-ci.org/labstack/labstack-go)
-[![Codecov](https://img.shields.io/codecov/c/github/labstack/labstack-go.svg?style=flat-square)](https://codecov.io/gh/labstack/labstack-go)
-[![Forum](https://img.shields.io/badge/community-forum-00afd1.svg?style=flat-square)](https://forum.labstack.com)
-[![Twitter](https://img.shields.io/badge/twitter-@labstack-55acee.svg?style=flat-square)](https://twitter.com/labstack)
-[![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://raw.githubusercontent.com/labstack/labstack-go/master/LICENSE)
+## Installation
+
+`go get github.com/labstack/labstack-go`
+
+## Quick Start
+
+[Sign up](https://labstack.com/signup) to get an API key
+
+Create a file `app.go` with the following content:
+
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/labstack/labstack-go"
+)
+
+func main() {
+	client := labstack.NewClient("<ACCOUNT_ID>", "<API_KEY>")
+	store := client.Store()
+	doc, err := store.Insert("users", labstack.Document{
+		"name":     "Jack",
+		"location": "Disney",
+	})
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("%+v", doc)
+}
+```
+
+From terminal run your app:
+
+```sh
+go run app.go
+```
+
+## [Docs](https://labstack.com/docs) | [Forum](https://forum.labstack.com)
