@@ -69,16 +69,12 @@ func (c *Client) Email() *Email {
 
 // Log returns the log service.
 func (c *Client) Log() (log *Log) {
-	log = &Log{
-		sling:            c.sling.Path("/log"),
-		logger:           c.logger,
-		Level:            LevelInfo,
-		Fields:           Fields{},
-		BatchSize:        60,
-		DispatchInterval: 60,
+	return &Log{
+		sling:  c.sling.Path("/log"),
+		logger: c.logger,
+		Level:  LevelInfo,
+		Fields: Fields{},
 	}
-	log.resetEntries()
-	return
 }
 
 // Store returns the store service.

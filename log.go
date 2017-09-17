@@ -12,15 +12,11 @@ import (
 type (
 	// Log defines the LabStack log service.
 	Log struct {
-		sling            *sling.Sling
-		entries          []Fields
-		timer            <-chan time.Time
-		mutex            sync.RWMutex
-		logger           *glog.Logger
-		Level            Level
-		Fields           Fields
-		BatchSize        int
-		DispatchInterval int
+		sling  *sling.Sling
+		mutex  sync.RWMutex
+		logger *glog.Logger
+		Level  Level
+		Fields Fields
 	}
 
 	// Level defines the log level.
@@ -51,50 +47,17 @@ var levels = map[Level]string{
 	LevelFatal: "FATAL",
 }
 
-func (l *Log) resetEntries() {
-	l.mutex.Lock()
-	defer l.mutex.Unlock()
-	l.entries = make([]Fields, 0, l.BatchSize)
-}
-
-func (l *Log) appendEntry(f Fields) {
-	l.mutex.Lock()
-	defer l.mutex.Unlock()
-	l.entries = append(l.entries, f)
-}
-
-func (l *Log) listEntries() []Fields {
-	l.mutex.Lock()
-	defer l.mutex.Unlock()
-	entries := make([]Fields, len(l.entries))
-	for i, entry := range l.entries {
-		entries[i] = entry
-	}
-	return entries
-}
-
-func (l *Log) logsLength() int {
-	l.mutex.RLock()
-	defer l.mutex.RUnlock()
-	return len(l.entries)
-}
-
-func (l *Log) dispatch() error {
-	if len(l.entries) == 0 {
-		return nil
-	}
-
-	defer l.resetEntries()
-
+func (l *Log) write(entry Fields) error {
 	le := new(LogError)
-	_, err := l.sling.Post("").BodyJSON(l.listEntries()).Receive(nil, le)
+	_, err := l.sling.Post("").BodyJSON(entry).Receive(nil, le)
 	if err != nil {
+		le.Message = err.Error()
 		return err
 	}
-	if le.Code == 0 {
-		return nil
+	if le.Code != 0 {
+		return le
 	}
-	return le
+	return nil
 }
 
 // Debug logs a message with DEBUG level.
@@ -128,33 +91,17 @@ func (l *Log) Log(level Level, fields Fields) {
 		return
 	}
 
-	if l.timer == nil {
-		l.timer = time.Tick(time.Duration(l.DispatchInterval) * time.Second)
-		go func() {
-			for range l.timer {
-				if err := l.dispatch(); err != nil {
-					err := err.(*LogError)
-					fmt.Printf("log error: code=%d, message=%s", err.Code, err.Message)
-				}
-			}
-		}()
-	}
-
+	// Log fields
 	fields.Add("time", time.Now().Format(rfc3339Milli)).
 		Add("level", levels[level])
 	for k, v := range l.Fields {
 		fields.Add(k, v)
 	}
-	l.appendEntry(fields)
 
-	// Dispatch batch
-	if l.logsLength() >= l.BatchSize {
-		go func() {
-			if err := l.dispatch(); err != nil {
-				err := err.(*LogError)
-				fmt.Printf("log error: code=%d, message=%s", err.Code, err.Message)
-			}
-		}()
+	// Write log
+	if err := l.write(fields); err != nil {
+		err := err.(*LogError)
+		fmt.Printf("log error: code=%d, message=%s", err.Code, err.Message)
 	}
 }
 
