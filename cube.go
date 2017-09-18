@@ -111,6 +111,7 @@ func (c *Cube) dispatch() error {
 // Start starts recording an HTTP request.
 func (c *Cube) Start(r *http.Request, w http.ResponseWriter) (request *CubeRequest) {
 	request = &CubeRequest{
+		ID:        RequestID(r, w),
 		Time:      time.Now(),
 		AppID:     c.AppID,
 		AppName:   c.AppName,
@@ -118,7 +119,7 @@ func (c *Cube) Start(r *http.Request, w http.ResponseWriter) (request *CubeReque
 		Path:      r.URL.Path,
 		Method:    r.Method,
 		UserAgent: r.UserAgent(),
-		RemoteIP:  realIP(r),
+		RemoteIP:  RealIP(r),
 	}
 	request.ClientID = request.RemoteIP
 	atomic.AddInt64(&c.activeRequests, 1)
