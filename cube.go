@@ -58,6 +58,9 @@ type (
 		UserAgent string    `json:"user_agent"`
 		Active    int64     `json:"active"`
 		// TODO: CPU, Uptime, Memory
+		Language   string `json:"language"`
+		Error      string `json:"error"`
+		StackTrace string `json:"stack_trace"`
 	}
 
 	// CubeError defines the cube error.
@@ -95,7 +98,8 @@ func (c *Cube) requestsLength() int {
 	return len(c.requests)
 }
 
-func (c *Cube) dispatch() error {
+// Dispatch dispatches the requests batch.
+func (c *Cube) Dispatch() error {
 	if len(c.requests) == 0 {
 		return nil
 	}
@@ -120,6 +124,7 @@ func (c *Cube) Start(r *http.Request, w http.ResponseWriter) (request *CubeReque
 		Method:    r.Method,
 		UserAgent: r.UserAgent(),
 		RemoteIP:  RealIP(r),
+		Language:  "Go",
 	}
 	request.ClientID = request.RemoteIP
 	atomic.AddInt64(&c.activeRequests, 1)
@@ -147,7 +152,7 @@ func (c *Cube) Stop(r *CubeRequest, status int, size int64) {
 	// Dispatch batch
 	if c.requestsLength() >= c.BatchSize {
 		go func() {
-			if err := c.dispatch(); err != nil {
+			if err := c.Dispatch(); err != nil {
 				c.logger.Error(err)
 			}
 			c.resetRequests()
