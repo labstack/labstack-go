@@ -44,8 +44,6 @@ type (
 	CubeRequest struct {
 		ID        string    `json:"id"`
 		Time      time.Time `json:"time"`
-		AppID     string    `json:"app_id"`
-		AppName   string    `json:"app_name"`
 		Host      string    `json:"host"`
 		Path      string    `json:"path"`
 		Method    string    `json:"method"`
@@ -58,9 +56,10 @@ type (
 		UserAgent string    `json:"user_agent"`
 		Active    int64     `json:"active"`
 		// TODO: CPU, Uptime, Memory
-		Language   string `json:"language"`
-		Error      string `json:"error"`
-		StackTrace string `json:"stack_trace"`
+		Tags       []string `json:"tags"`
+		Language   string   `json:"language"`
+		Error      string   `json:"error"`
+		StackTrace string   `json:"stack_trace"`
 	}
 
 	// CubeError defines the cube error.
@@ -117,8 +116,6 @@ func (c *Cube) Start(r *http.Request, w http.ResponseWriter) (request *CubeReque
 	request = &CubeRequest{
 		ID:        RequestID(r, w),
 		Time:      time.Now(),
-		AppID:     c.AppID,
-		AppName:   c.AppName,
 		Host:      r.Host,
 		Path:      r.URL.Path,
 		Method:    r.Method,
