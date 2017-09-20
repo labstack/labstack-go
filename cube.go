@@ -105,7 +105,11 @@ func (c *Cube) Dispatch() error {
 	if err != nil {
 		return err
 	}
-	return ce
+	if ce.Code != 0 {
+		return ce
+	}
+
+	return nil
 }
 
 // Start starts recording an HTTP request.
@@ -145,7 +149,7 @@ func (c *Cube) Stop(r *CubeRequest, status int, size int64) {
 	r.Latency = int64(time.Now().Sub(r.Time))
 
 	// Dispatch batch
-	if c.requestsLength() >= c.BatchSize {
+	if c.requestsLength() >= c.BatchSize || status >= 500 && status < 600 {
 		go func() {
 			if err := c.Dispatch(); err != nil {
 				c.logger.Error(err)
