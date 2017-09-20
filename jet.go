@@ -10,54 +10,54 @@ import (
 )
 
 type (
-	// Email defines the LabStack email service.
-	Email struct {
+	// Jet defines the LabStack jet service.
+	Jet struct {
 		sling  *sling.Sling
 		logger *log.Logger
 	}
 
-	// EmailMessage defines the email message.
-	EmailMessage struct {
+	// JetMessage defines the jet message.
+	JetMessage struct {
 		inlines     []string
 		attachments []string
-		Time        string       `json:"time,omitempty"`
-		To          string       `json:"to,omitempty"`
-		From        string       `json:"from,omitempty"`
-		Subject     string       `json:"subject,omitempty"`
-		Body        string       `json:"body,omitempty"`
-		Inlines     []*emailFile `json:"inlines,omitempty"`
-		Attachments []*emailFile `json:"attachments,omitempty"`
-		Status      string       `json:"status,omitempty"`
+		Time        string     `json:"time,omitempty"`
+		To          string     `json:"to,omitempty"`
+		From        string     `json:"from,omitempty"`
+		Subject     string     `json:"subject,omitempty"`
+		Body        string     `json:"body,omitempty"`
+		Inlines     []*jetFile `json:"inlines,omitempty"`
+		Attachments []*jetFile `json:"attachments,omitempty"`
+		Status      string     `json:"status,omitempty"`
 	}
 
-	emailFile struct {
+	jetFile struct {
 		Name    string `json:"name"`
 		Type    string `json:"type"`
 		Content string `json:"content"`
 	}
 
-	// EmailError defines the email error.
-	EmailError struct {
+	// JetError defines the jet error.
+	JetError struct {
 		Code    int    `json:"code"`
 		Message string `json:"message"`
 	}
 )
 
-func NewEmailMessage(to, from, subject string) *EmailMessage {
-	return &EmailMessage{
+func NewJetMessage(to, from, subject string) *JetMessage {
+	return &JetMessage{
 		To:      to,
 		From:    from,
 		Subject: subject,
 	}
 }
 
-func (m *EmailMessage) addInlines() error {
+func (m *JetMessage) addInlines() error {
 	for _, inline := range m.inlines {
 		data, err := ioutil.ReadFile(inline)
 		if err != nil {
 			return err
 		}
-		m.Inlines = append(m.Inlines, &emailFile{
+		m.Inlines = append(m.Inlines, &jetFile{
 			Name:    filepath.Base(inline),
 			Content: base64.StdEncoding.EncodeToString(data),
 		})
@@ -65,13 +65,13 @@ func (m *EmailMessage) addInlines() error {
 	return nil
 }
 
-func (m *EmailMessage) addAttachments() error {
+func (m *JetMessage) addAttachments() error {
 	for _, attachment := range m.attachments {
 		data, err := ioutil.ReadFile(attachment)
 		if err != nil {
 			return err
 		}
-		m.Inlines = append(m.Attachments, &emailFile{
+		m.Inlines = append(m.Attachments, &jetFile{
 			Name:    filepath.Base(attachment),
 			Content: base64.StdEncoding.EncodeToString(data),
 		})
@@ -79,24 +79,24 @@ func (m *EmailMessage) addAttachments() error {
 	return nil
 }
 
-func (m *EmailMessage) AddInline(path string) {
+func (m *JetMessage) AddInline(path string) {
 	m.inlines = append(m.inlines, path)
 }
 
-func (m *EmailMessage) AddAttachment(path string) {
+func (m *JetMessage) AddAttachment(path string) {
 	m.attachments = append(m.attachments, path)
 }
 
-// Send sends the email message.
-func (e *Email) Send(m *EmailMessage) (*EmailMessage, error) {
+// Send sends the jet message.
+func (e *Jet) Send(m *JetMessage) (*JetMessage, error) {
 	if err := m.addInlines(); err != nil {
 		return nil, err
 	}
 	if err := m.addAttachments(); err != nil {
 		return nil, err
 	}
-	em := new(EmailMessage)
-	ee := new(EmailError)
+	em := new(JetMessage)
+	ee := new(JetError)
 	_, err := e.sling.Post("").BodyJSON(m).Receive(em, ee)
 	if err != nil {
 		return nil, err
@@ -107,6 +107,6 @@ func (e *Email) Send(m *EmailMessage) (*EmailMessage, error) {
 	return nil, ee
 }
 
-func (e *EmailError) Error() string {
+func (e *JetError) Error() string {
 	return e.Message
 }

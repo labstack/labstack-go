@@ -53,43 +53,16 @@ func (c *Client) Cube() (cube *Cube) {
 	go func() {
 		d := time.Duration(cube.DispatchInterval) * time.Second
 		for range time.Tick(d) {
-			cube.dispatch()
+			cube.Dispatch()
 		}
 	}()
 	return
 }
 
-// Email returns the email service.
-func (c *Client) Email() *Email {
-	return &Email{
-		sling:  c.sling.Path("/email"),
+// Jet returns the jet service.
+func (c *Client) Jet() *Jet {
+	return &Jet{
+		sling:  c.sling.Path("/jet"),
 		logger: c.logger,
 	}
-}
-
-// Log returns the log service.
-func (c *Client) Log() (log *Log) {
-	return &Log{
-		sling:  c.sling.Path("/log"),
-		logger: c.logger,
-		Level:  LevelInfo,
-		Fields: Fields{},
-	}
-}
-
-// Store returns the store service.
-func (c *Client) Store() *Store {
-	return &Store{
-		sling:  c.sling,
-		logger: c.logger,
-	}
-}
-
-func (f Fields) Add(key string, value interface{}) Fields {
-	f[key] = value
-	return f
-}
-
-func (f Fields) Get(key string) interface{} {
-	return f[key]
 }
