@@ -21,12 +21,6 @@ type (
 		mutex          sync.RWMutex
 		logger         *log.Logger
 
-		// App ID
-		AppID string
-
-		// App name
-		AppName string
-
 		// LabStack API key
 		APIKey string
 
@@ -35,6 +29,9 @@ type (
 
 		// Interval in seconds to dispatch the batch
 		DispatchInterval time.Duration
+
+		// Additional tags
+		Tags []string `json:"tags"`
 
 		// TODO: To be implemented
 		ClientLookup string
@@ -122,6 +119,7 @@ func (c *Cube) Start(r *http.Request, w http.ResponseWriter) (request *CubeReque
 		UserAgent: r.UserAgent(),
 		RemoteIP:  RealIP(r),
 		Language:  "Go",
+		Tags:      c.Tags,
 	}
 	request.ClientID = request.RemoteIP
 	atomic.AddInt64(&c.activeRequests, 1)
