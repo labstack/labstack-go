@@ -4,6 +4,8 @@ import (
 	"net"
 	"net/http"
 	"strings"
+
+	"github.com/labstack/gommon/random"
 )
 
 const (
@@ -16,6 +18,9 @@ func RequestID(r *http.Request, w http.ResponseWriter) string {
 	id := r.Header.Get("X-Request-ID")
 	if id == "" {
 		id = w.Header().Get("X-Request-ID")
+	}
+	if id == "" {
+		return random.String(32)
 	}
 	return id
 }
