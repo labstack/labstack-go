@@ -42,10 +42,12 @@ func NewClient(accountID, apiKey string) *Client {
 }
 
 // Cube returns the cube service.
-func (c *Client) Cube() (cube *Cube) {
+func (c *Client) Cube(accountID, apiKey string) (cube *Cube) {
 	cube = &Cube{
 		sling:            c.sling.Path("/cube"),
 		logger:           c.logger,
+		AccountID:        accountID,
+		APIKey:           apiKey,
 		BatchSize:        60,
 		DispatchInterval: 60,
 	}
@@ -53,7 +55,7 @@ func (c *Client) Cube() (cube *Cube) {
 	go func() {
 		d := time.Duration(cube.DispatchInterval) * time.Second
 		for range time.Tick(d) {
-			cube.Dispatch()
+			cube.dispatch()
 		}
 	}()
 	return

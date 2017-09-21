@@ -3,6 +3,7 @@ package labstack
 import (
 	"fmt"
 	"net/http"
+	"runtime"
 	"strconv"
 	"sync"
 	"sync/atomic"
@@ -20,6 +21,9 @@ type (
 		activeRequests int64
 		mutex          sync.RWMutex
 		logger         *log.Logger
+
+		// LabStack Account ID
+		AccountID string
 
 		// LabStack API key
 		APIKey string
@@ -39,6 +43,7 @@ type (
 
 	// CubeRequest defines a request payload to be recorded.
 	CubeRequest struct {
+		recovered bool
 		ID        string    `json:"id"`
 		Time      time.Time `json:"time"`
 		Host      string    `json:"host"`
@@ -94,8 +99,8 @@ func (c *Cube) requestsLength() int {
 	return len(c.requests)
 }
 
-// Dispatch dispatches the requests batch.
-func (c *Cube) Dispatch() error {
+// dispatch dispatches the requests batch.
+func (c *Cube) dispatch() error {
 	if len(c.requests) == 0 {
 		return nil
 	}
@@ -141,6 +146,25 @@ func (c *Cube) Start(r *http.Request, w http.ResponseWriter) (request *CubeReque
 	return
 }
 
+// Recover handles a panic
+func (c *Cube) Recover(cr *CubeRequest) {
+	var err error
+
+	if r := recover(); r != nil {
+		switch r := r.(type) {
+		case error:
+			err = r
+		default:
+			err = fmt.Errorf("%v", r)
+		}
+		stack := make([]byte, 4<<10) // 4 KB
+		length := runtime.Stack(stack, false)
+		cr.Error = err.Error()
+		cr.StackTrace = string(stack[:length])
+		cr.recovered = true
+	}
+}
+
 // Stop stops recording an HTTP request.
 func (c *Cube) Stop(r *CubeRequest, status int, size int64) {
 	atomic.AddInt64(&c.activeRequests, -1)
@@ -149,9 +173,9 @@ func (c *Cube) Stop(r *CubeRequest, status int, size int64) {
 	r.Latency = int64(time.Now().Sub(r.Time))
 
 	// Dispatch batch
-	if c.requestsLength() >= c.BatchSize || status >= 500 && status < 600 {
+	if c.requestsLength() >= c.BatchSize || r.recovered {
 		go func() {
-			if err := c.Dispatch(); err != nil {
+			if err := c.dispatch(); err != nil {
 				c.logger.Error(err)
 			}
 			c.resetRequests()
