@@ -147,35 +147,30 @@ func (c *Cube) Start(r *http.Request, w http.ResponseWriter) (request *CubeReque
 }
 
 // Recover handles a panic
-func (c *Cube) Recover(cr *CubeRequest) {
-	var err error
-
-	if r := recover(); r != nil {
-		switch r := r.(type) {
-		case error:
-			err = r
-		default:
-			err = fmt.Errorf("%v", r)
-		}
-		stack := make([]byte, 4<<10) // 4 KB
-		length := runtime.Stack(stack, false)
-		cr.Error = err.Error()
-		cr.StackTrace = string(stack[:length])
-		cr.recovered = true
+func (c *Cube) Recover(r interface{}, cr *CubeRequest) {
+	err, ok := r.(error)
+	if !ok {
+		err = fmt.Errorf("%v", r)
 	}
+	stack := make([]byte, 4<<10) // 4 KB
+	length := runtime.Stack(stack, false)
+	cr.Error = err.Error()
+	cr.StackTrace = string(stack[:length])
+	cr.recovered = true
 }
 
 // Stop stops recording an HTTP request.
 func (c *Cube) Stop(r *CubeRequest, status int, size int64) {
+	if r.recovered {
+		status = http.StatusInternalServerError
+	}
 	atomic.AddInt64(&c.activeRequests, -1)
 	r.Status = status
 	r.BytesOut = size
 	r.Latency = int64(time.Now().Sub(r.Time))
 
 	// Dispatch batch
-	if r.recovered ||
-		r.Status >= 500 && r.Status < 600 ||
-		c.requestsLength() >= c.BatchSize {
+	if r.Status >= 500 && r.Status < 600 || c.requestsLength() >= c.BatchSize {
 		go func() {
 			if err := c.dispatch(); err != nil {
 				c.logger.Error(err)
