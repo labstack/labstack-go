@@ -2,7 +2,6 @@ package labstack
 
 import (
 	"sync"
-	"time"
 
 	"github.com/dghubble/sling"
 	glog "github.com/labstack/gommon/log"
@@ -54,12 +53,6 @@ func (c *Client) Cube() (cube *Cube) {
 		DispatchInterval: 60,
 	}
 	cube.resetRequests()
-	go func() {
-		d := time.Duration(cube.DispatchInterval) * time.Second
-		for range time.Tick(d) {
-			cube.dispatch()
-		}
-	}()
 	return
 }
 

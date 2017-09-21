@@ -19,6 +19,7 @@ type (
 		sling          *sling.Sling
 		requests       []*CubeRequest
 		activeRequests int64
+		started        int64
 		mutex          *sync.RWMutex
 		logger         *log.Logger
 
@@ -119,6 +120,16 @@ func (c *Cube) dispatch() error {
 
 // Start starts recording an HTTP request.
 func (c *Cube) Start(r *http.Request, w http.ResponseWriter) (request *CubeRequest) {
+	if c.started == 0 {
+		go func() {
+			d := time.Duration(c.DispatchInterval) * time.Second
+			for range time.Tick(d) {
+				c.dispatch()
+			}
+		}()
+		atomic.AddInt64(&c.started, 1)
+	}
+
 	request = &CubeRequest{
 		ID:        RequestID(r, w),
 		Time:      time.Now(),
