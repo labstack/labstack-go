@@ -148,6 +148,9 @@ func (c *Cube) Start(r *http.Request, w http.ResponseWriter) (request *CubeReque
 
 // Recover handles a panic
 func (c *Cube) Recover(r interface{}, cr *CubeRequest) {
+	if r == nil {
+		return
+	}
 	err, ok := r.(error)
 	if !ok {
 		err = fmt.Errorf("%v", r)
