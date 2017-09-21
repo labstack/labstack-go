@@ -173,7 +173,9 @@ func (c *Cube) Stop(r *CubeRequest, status int, size int64) {
 	r.Latency = int64(time.Now().Sub(r.Time))
 
 	// Dispatch batch
-	if c.requestsLength() >= c.BatchSize || r.recovered {
+	if r.recovered ||
+		r.Status >= 500 && r.Status < 600 ||
+		c.requestsLength() >= c.BatchSize {
 		go func() {
 			if err := c.dispatch(); err != nil {
 				c.logger.Error(err)
