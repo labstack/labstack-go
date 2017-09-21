@@ -1,6 +1,7 @@
 package labstack
 
 import (
+	"sync"
 	"time"
 
 	"github.com/dghubble/sling"
@@ -45,6 +46,7 @@ func NewClient(accountID, apiKey string) *Client {
 func (c *Client) Cube() (cube *Cube) {
 	cube = &Cube{
 		sling:            c.sling.Path("/cube"),
+		mutex:            new(sync.RWMutex),
 		logger:           c.logger,
 		AccountID:        c.accountID,
 		APIKey:           c.apiKey,
