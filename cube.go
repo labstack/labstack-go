@@ -19,7 +19,7 @@ type (
 		sling          *sling.Sling
 		requests       []*CubeRequest
 		activeRequests int64
-		mutex          sync.RWMutex
+		mutex          *sync.RWMutex
 		logger         *log.Logger
 
 		// LabStack Account ID
