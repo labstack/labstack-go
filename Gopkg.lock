@@ -2,34 +2,28 @@
 
 
 [[projects]]
-  name = "github.com/dghubble/sling"
+  name = "github.com/go-resty/resty"
   packages = ["."]
-  revision = "eb56e89ac5088bebb12eef3cb4b293300f43608b"
-  version = "v1.1.0"
-
-[[projects]]
-  branch = "master"
-  name = "github.com/google/go-querystring"
-  packages = ["query"]
-  revision = "53e6ce116135b80d037921a7fdd5138cf32d7a8a"
+  revision = "9ac9c42358f7c3c69ac9f8610e8790d7c338e85d"
+  version = "v1.0"
 
 [[projects]]
   name = "github.com/labstack/gommon"
-  packages = ["color","log"]
-  revision = "1121fd3e243c202482226a7afe4dcd07ffc4139a"
-  version = "v0.2.1"
+  packages = ["color","log","random"]
+  revision = "57409ada9da0f2afad6664c49502f8c50fbd8476"
+  version = "0.2.3"
 
 [[projects]]
   name = "github.com/mattn/go-colorable"
   packages = ["."]
-  revision = "941b50ebc6efddf4c41c8e4537a5f68a4e686b24"
-  version = "v0.0.8"
+  revision = "167de6bfdfba052fa6b2d3664c8f5272e23c9072"
+  version = "v0.0.9"
 
 [[projects]]
   name = "github.com/mattn/go-isatty"
   packages = ["."]
-  revision = "fc9e8d8ef48496124e79ae0df75490096eccf6fe"
-  version = "v0.0.2"
+  revision = "0360b2af4f38e8d38c7fce2a9f4e702702d73a39"
+  version = "v0.0.3"
 
 [[projects]]
   branch = "master"
@@ -45,13 +39,25 @@
 
 [[projects]]
   branch = "master"
+  name = "golang.org/x/net"
+  packages = ["idna","publicsuffix"]
+  revision = "9dfe39835686865bff950a07b394c12a98ddc811"
+
+[[projects]]
+  branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix"]
-  revision = "94b76065f2d2081d0fef24a6e67c571f51a6408a"
+  revision = "0ac51a24ef1c37380f98ba8b98f56e3bffd59850"
+
+[[projects]]
+  branch = "master"
+  name = "golang.org/x/text"
+  packages = ["collate","collate/build","internal/colltab","internal/gen","internal/tag","internal/triegen","internal/ucd","language","secure/bidirule","transform","unicode/bidi","unicode/cldr","unicode/norm","unicode/rangetable"]
+  revision = "88f656faf3f37f690df1a32515b479415e1a6769"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "a0c53531fe80555a98671a9a8c3b9efd9f77a4b2e64da7263c269bf627134263"
+  inputs-digest = "f0a09aa345526bf92c644524384cb3445111824ce29f86014bd63e5b5b3de4f1"
   solver-name = "gps-cdcl"
   solver-version = 1
