@@ -22,16 +22,16 @@ import (
 )
 
 func main() {
-	client := labstack.NewClient("<ACCOUNT_ID>", "<API_KEY>")
-	store := client.Store()
-	doc, err := store.Insert("users", labstack.Document{
-		"name":     "Jack",
-		"location": "Disney",
+	client := labstack.NewClient("<API_KEY>")
+	res, err := client.BarcodeGenerate(&labstack.BarcodeGenerateRequest{
+		Format:  "qr_code",
+		Content: "https://labstack.com",
 	})
 	if err != nil {
-		panic(err)
+		fmt.Println(err)
+	} else {
+		client.Download(res.ID, "/tmp/"+res.Name)
 	}
-	fmt.Printf("%+v", doc)
 }
 ```
 
@@ -41,4 +41,4 @@ From terminal run your app:
 go run app.go
 ```
 
-## [Documentation](https://labstack.com/docs) | [Forum](https://forum.labstack.com)
+## [API](https://labstack.com/api) | [Forum](https://forum.labstack.com)

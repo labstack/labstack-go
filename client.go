@@ -34,11 +34,11 @@ func NewClient(apiKey string) *Client {
 }
 
 func (c *Client) Download(id string, path string) (err *APIError) {
-	err = new(APIError)
 	_, e := c.resty.R().
 		SetOutput(path).
-		Get(fmt.Sprintf("%s/%s", apiURL, id))
+		Get(fmt.Sprintf("%s/download/%s", apiURL, id))
 	if e != nil {
+		err = new(APIError)
 		err.Message = e.Error()
 	}
 	return

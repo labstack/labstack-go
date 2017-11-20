@@ -32,26 +32,20 @@ type (
 
 func (c *Client) ImageCompress(req *ImageCompressRequest) (res *ImageCompressResponse, err *APIError) {
 	res = new(ImageCompressResponse)
-	err = new(APIError)
-
-	// Request
 	_, e := c.resty.R().
 		SetFile("file", req.File).
 		SetResult(res).
 		SetError(err).
 		Post("/image/compress")
 	if e != nil {
+		err = new(APIError)
 		err.Message = e.Error()
 	}
-
 	return
 }
 
 func (c *Client) ImageResize(req *ImageResizeRequest) (res *ImageResizeResponse, err *APIError) {
 	res = new(ImageResizeResponse)
-	err = new(APIError)
-
-	// Request
 	_, e := c.resty.R().
 		SetFile("file", req.File).
 		SetFormData(map[string]string{
@@ -63,8 +57,8 @@ func (c *Client) ImageResize(req *ImageResizeRequest) (res *ImageResizeResponse,
 		SetError(err).
 		Post("/image/resize")
 	if e != nil {
+		err = new(APIError)
 		err.Message = e.Error()
 	}
-
 	return
 }
