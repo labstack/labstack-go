@@ -6,19 +6,19 @@ type (
 	}
 
 	WordLookupResponse struct {
-		Pronunciation []string
-		Rhymes        []string
-		Noun          []*WordLookupResult
-		Verb          []*WordLookupResult
-		Adverb        []*WordLookupResult
-		Adjective     []*WordLookupResult
+		Pronunciation []string            `json:"pronunciation"`
+		Rhymes        []string            `json:"rhymes"`
+		Nouns         []*WordLookupResult `json:"nouns"`
+		Verbs         []*WordLookupResult `json:"verbs"`
+		Adverbs       []*WordLookupResult `json:"adverbs"`
+		Adjectives    []*WordLookupResult `json:"adjectives"`
 	}
 
 	WordLookupResult struct {
-		Definition string
-		Synonyms   []string
-		Antonyms   []string
-		Examples   []string
+		Definition string   `json:"definition"`
+		Synonyms   []string `json:"synonyms"`
+		Antonyms   []string `json:"antonyms"`
+		Examples   []string `json:"examples"`
 	}
 )
 
