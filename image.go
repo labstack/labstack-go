@@ -3,12 +3,6 @@ package labstack
 import "strconv"
 
 type (
-	Download struct {
-		ID   string `json:"id"`
-		Name string `json:"name"`
-		URL  string `json:"url"`
-	}
-
 	ImageCompressRequest struct {
 		File string
 	}
