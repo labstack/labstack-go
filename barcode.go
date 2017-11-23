@@ -4,7 +4,8 @@ type (
 	BarcodeGenerateRequest struct {
 		Format  string `json:"format"`
 		Content string `json:"content"`
-		Size    string `json:"size"`
+		Width   int    `json:"width"`
+		Height  int    `json:"height"`
 	}
 
 	BarcodeGenerateResponse struct {
