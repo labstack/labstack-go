@@ -1,44 +1,22 @@
 package labstack
 
 type (
-	PDFExtractImageRequest struct {
+	PDFImageRequest struct {
 		File string
 	}
 
-	PDFExtractImageResponse struct {
-		*Download
-	}
-
-	PDFToImageRequest struct {
-		File string
-	}
-
-	PDFToImageResponse struct {
+	PDFImageResponse struct {
 		*Download
 	}
 )
 
-func (c *Client) PDFExtractImage(req *PDFExtractImageRequest) (res *PDFExtractImageResponse, err *APIError) {
-	res = new(PDFExtractImageResponse)
+func (c *Client) PDFImage(req *PDFImageRequest) (res *PDFImageResponse, err *APIError) {
+	res = new(PDFImageResponse)
 	_, e := c.resty.R().
 		SetFile("file", req.File).
 		SetResult(res).
 		SetError(err).
-		Post("/pdf/extract-image")
-	if e != nil {
-		err = new(APIError)
-		err.Message = e.Error()
-	}
-	return
-}
-
-func (c *Client) PDFToImage(req *PDFToImageRequest) (res *PDFToImageResponse, err *APIError) {
-	res = new(PDFToImageResponse)
-	_, e := c.resty.R().
-		SetFile("file", req.File).
-		SetResult(res).
-		SetError(err).
-		Post("/pdf/to-image")
+		Post("/pdf/image")
 	if e != nil {
 		err = new(APIError)
 		err.Message = e.Error()
