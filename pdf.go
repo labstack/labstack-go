@@ -22,9 +22,7 @@ type (
 	}
 
 	PDFCompressRequest struct {
-		File    string
-		Quality int
-		DPI     int
+		File string
 	}
 
 	PDFCompressResponse struct {
@@ -37,10 +35,6 @@ func (c *Client) PDFCompress(req *PDFCompressRequest) (res *PDFCompressResponse,
 	res = new(PDFCompressResponse)
 	_, e := c.resty.R().
 		SetFile("file", req.File).
-		SetFormData(map[string]string{
-			"quality": strconv.Itoa(req.Quality),
-			"dpi":     strconv.Itoa(req.DPI),
-		}).
 		SetResult(res).
 		SetError(err).
 		Post("/pdf/compress")
