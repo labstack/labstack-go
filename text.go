@@ -21,15 +21,15 @@ type (
 		Polarity     float32 `json:"polarity"`
 	}
 
-	TextSpellCheckRequest struct {
+	TextSpellcheckRequest struct {
 		Text string `json:"text"`
 	}
 
-	TextSpellCheckResponse struct {
-		Misspelled []*TextSpellCheckMisspelled `json:"misspelled"`
+	TextSpellcheckResponse struct {
+		Misspelled []*TextSpellcheckMisspelled `json:"misspelled"`
 	}
 
-	TextSpellCheckMisspelled struct {
+	TextSpellcheckMisspelled struct {
 		Word        string   `json:"word"`
 		Offset      int      `json:"offset"`
 		Suggestions []string `json:"suggestions"`
@@ -64,13 +64,13 @@ func (c *Client) TextSentiment(req *TextSentimentRequest) (res *TextSentimentRes
 	return
 }
 
-func (c *Client) TextSpellCheck(req *TextSpellCheckRequest) (res *TextSpellCheckResponse, err *APIError) {
-	res = new(TextSpellCheckResponse)
+func (c *Client) TextSpellcheck(req *TextSpellcheckRequest) (res *TextSpellcheckResponse, err *APIError) {
+	res = new(TextSpellcheckResponse)
 	_, e := c.resty.R().
 		SetBody(req).
 		SetResult(res).
 		SetError(err).
-		Post("/text/spell-check")
+		Post("/text/spellcheck")
 	if e != nil {
 		err = new(APIError)
 		err.Message = e.Error()
