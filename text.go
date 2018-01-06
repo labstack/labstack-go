@@ -9,6 +9,7 @@ type (
 	}
 
 	TextSummaryResponse struct {
+		*Response
 		Summary string `json:"summary"`
 	}
 
@@ -17,6 +18,7 @@ type (
 	}
 
 	TextSentimentResponse struct {
+		*Response
 		Subjectivity float32 `json:"subjectivity"`
 		Polarity     float32 `json:"polarity"`
 	}
@@ -26,6 +28,7 @@ type (
 	}
 
 	TextSpellcheckResponse struct {
+		*Response
 		Misspelled []*TextSpellcheckMisspelled `json:"misspelled"`
 	}
 

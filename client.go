@@ -14,8 +14,12 @@ type (
 		logger *log.Logger
 	}
 
+	Response struct {
+		ID string `json:"id"`
+	}
+
 	Download struct {
-		ID   string `json:"id"`
+		*Response
 		Name string `json:"name"`
 		URL  string `json:"url"`
 	}

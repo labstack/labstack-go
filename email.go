@@ -6,6 +6,7 @@ type (
 	}
 
 	EmailVerifyResponse struct {
+		*Response
 		Syntax     bool   `json:"syntax"`
 		Disposable bool   `json:"disposable"`
 		Domain     bool   `json:"domain"`
