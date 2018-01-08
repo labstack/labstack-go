@@ -52,10 +52,10 @@ func (c *Client) ImageCompress(req *ImageCompressRequest) (*ImageCompressRespons
 			Message: e.Error(),
 		}
 	}
-	if success(r) {
-		return res, nil
+	if c.error(r) {
+		return nil, err
 	}
-	return nil, err
+	return res, nil
 }
 
 func (c *Client) ImageResize(req *ImageResizeRequest) (*ImageResizeResponse, *APIError) {
@@ -76,10 +76,10 @@ func (c *Client) ImageResize(req *ImageResizeRequest) (*ImageResizeResponse, *AP
 			Message: e.Error(),
 		}
 	}
-	if success(r) {
-		return res, nil
+	if c.error(r) {
+		return nil, err
 	}
-	return nil, err
+	return res, nil
 }
 
 func (c *Client) ImageWatermark(req *ImageWatermarkRequest) (*ImageWatermarkResponse, *APIError) {
@@ -104,8 +104,8 @@ func (c *Client) ImageWatermark(req *ImageWatermarkRequest) (*ImageWatermarkResp
 			Message: e.Error(),
 		}
 	}
-	if success(r) {
-		return res, nil
+	if c.error(r) {
+		return nil, err
 	}
-	return nil, err
+	return res, nil
 }

@@ -30,10 +30,6 @@ const (
 	apiURL = "https://api.labstack.com"
 )
 
-func success(r *resty.Response) bool {
-	return r.StatusCode() >= 200 && r.StatusCode() < 300
-}
-
 // NewClient creates a new client for the LabStack API.
 func NewClient(apiKey string) *Client {
 	return &Client{
@@ -41,6 +37,10 @@ func NewClient(apiKey string) *Client {
 		resty:  resty.New().SetHostURL(apiURL).SetAuthToken(apiKey),
 		logger: log.New("labstack"),
 	}
+}
+
+func (c *Client) error(r *resty.Response) bool {
+	return r.StatusCode() < 200 || r.StatusCode() >= 300
 }
 
 func (c *Client) Download(id string, path string) (err *APIError) {

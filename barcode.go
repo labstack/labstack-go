@@ -36,10 +36,10 @@ func (c *Client) BarcodeGenerate(req *BarcodeGenerateRequest) (*BarcodeGenerateR
 			Message: e.Error(),
 		}
 	}
-	if success(r) {
-		return res, nil
+	if c.error(r) {
+		return nil, err
 	}
-	return nil, err
+	return res, nil
 }
 
 func (c *Client) BarcodeScan(req *BarcodeScanRequest) (*BarcodeScanResponse, *APIError) {
@@ -55,8 +55,8 @@ func (c *Client) BarcodeScan(req *BarcodeScanRequest) (*BarcodeScanResponse, *AP
 			Message: e.Error(),
 		}
 	}
-	if success(r) {
-		return res, nil
+	if c.error(r) {
+		return nil, err
 	}
-	return nil, err
+	return res, nil
 }

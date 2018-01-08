@@ -27,8 +27,8 @@ func (c *Client) EmailVerify(req *EmailVerifyRequest) (*EmailVerifyResponse, *AP
 			Message: e.Error(),
 		}
 	}
-	if success(r) {
-		return res, nil
+	if c.error(r) {
+		return nil, err
 	}
-	return nil, err
+	return res, nil
 }

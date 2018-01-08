@@ -49,10 +49,10 @@ func (c *Client) TextSummary(req *TextSummaryRequest) (*TextSummaryResponse, *AP
 			Message: e.Error(),
 		}
 	}
-	if success(r) {
-		return res, nil
+	if c.error(r) {
+		return nil, err
 	}
-	return nil, err
+	return res, nil
 }
 
 func (c *Client) TextSentiment(req *TextSentimentRequest) (*TextSentimentResponse, *APIError) {
@@ -68,10 +68,10 @@ func (c *Client) TextSentiment(req *TextSentimentRequest) (*TextSentimentRespons
 			Message: e.Error(),
 		}
 	}
-	if success(r) {
-		return res, nil
+	if c.error(r) {
+		return nil, err
 	}
-	return nil, err
+	return res, nil
 }
 
 func (c *Client) TextSpellcheck(req *TextSpellcheckRequest) (*TextSpellcheckResponse, *APIError) {
@@ -87,8 +87,8 @@ func (c *Client) TextSpellcheck(req *TextSpellcheckRequest) (*TextSpellcheckResp
 			Message: e.Error(),
 		}
 	}
-	if success(r) {
-		return res, nil
+	if c.error(r) {
+		return nil, err
 	}
-	return nil, err
+	return res, nil
 }

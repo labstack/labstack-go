@@ -34,7 +34,7 @@ type (
 func (c *Client) PDFCompress(req *PDFCompressRequest) (*PDFCompressResponse, *APIError) {
 	res := new(PDFCompressResponse)
 	err := new(APIError)
-	_, e := c.resty.R().
+	r, e := c.resty.R().
 		SetFile("file", req.File).
 		SetResult(res).
 		SetError(err).
@@ -44,13 +44,16 @@ func (c *Client) PDFCompress(req *PDFCompressRequest) (*PDFCompressResponse, *AP
 			Message: e.Error(),
 		}
 	}
-	return res, err
+	if c.error(r) {
+		return nil, err
+	}
+	return res, nil
 }
 
 func (c *Client) PDFImage(req *PDFImageRequest) (*PDFImageResponse, *APIError) {
 	res := new(PDFImageResponse)
 	err := new(APIError)
-	_, e := c.resty.R().
+	r, e := c.resty.R().
 		SetFile("file", req.File).
 		SetFormData(map[string]string{
 			"extract": strconv.FormatBool(req.Extract),
@@ -63,7 +66,10 @@ func (c *Client) PDFImage(req *PDFImageRequest) (*PDFImageResponse, *APIError) {
 			Message: e.Error(),
 		}
 	}
-	return res, err
+	if c.error(r) {
+		return nil, err
+	}
+	return res, nil
 }
 
 func (c *Client) PDFSplit(req *PDFSplitRequest) (*PDFSplitResponse, *APIError) {
@@ -82,8 +88,8 @@ func (c *Client) PDFSplit(req *PDFSplitRequest) (*PDFSplitResponse, *APIError) {
 			Message: e.Error(),
 		}
 	}
-	if success(r) {
-		return res, nil
+	if c.error(r) {
+		return nil, err
 	}
-	return nil, err
+	return res, nil
 }

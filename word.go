@@ -35,8 +35,8 @@ func (c *Client) WordLookup(req *WordLookupRequest) (*WordLookupResponse, *APIEr
 			Message: e.Error(),
 		}
 	}
-	if success(r) {
-		return res, nil
+	if c.error(r) {
+		return nil, err
 	}
-	return nil, err
+	return res, nil
 }

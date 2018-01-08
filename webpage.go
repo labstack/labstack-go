@@ -25,8 +25,8 @@ func (c *Client) WebpagePDF(req *WebpagePDFRequest) (*WebpagePDFResponse, *APIEr
 			Message: e.Error(),
 		}
 	}
-	if success(r) {
-		return res, nil
+	if c.error(r) {
+		return nil, err
 	}
-	return nil, err
+	return res, nil
 }
