@@ -12,16 +12,21 @@ type (
 	}
 )
 
-func (c *Client) WebpagePDF(req *WebpagePDFRequest) (res *WebpagePDFResponse, err *APIError) {
-	res = new(WebpagePDFResponse)
-	_, e := c.resty.R().
+func (c *Client) WebpagePDF(req *WebpagePDFRequest) (*WebpagePDFResponse, *APIError) {
+	res := new(WebpagePDFResponse)
+	err := new(APIError)
+	r, e := c.resty.R().
 		SetBody(req).
 		SetResult(res).
 		SetError(err).
 		Post("/webpage/pdf")
 	if e != nil {
-		err = new(APIError)
-		err.Message = e.Error()
+		return nil, &APIError{
+			Message: e.Error(),
+		}
 	}
-	return
+	if success(r) {
+		return res, nil
+	}
+	return nil, err
 }

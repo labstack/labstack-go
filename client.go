@@ -30,6 +30,10 @@ const (
 	apiURL = "https://api.labstack.com"
 )
 
+func success(r *resty.Response) bool {
+	return r.StatusCode() >= 200 && r.StatusCode() < 300
+}
+
 // NewClient creates a new client for the LabStack API.
 func NewClient(apiKey string) *Client {
 	return &Client{

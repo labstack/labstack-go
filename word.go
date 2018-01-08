@@ -22,16 +22,21 @@ type (
 	}
 )
 
-func (c *Client) WordLookup(req *WordLookupRequest) (res *WordLookupResponse, err *APIError) {
-	res = new(WordLookupResponse)
-	_, e := c.resty.R().
+func (c *Client) WordLookup(req *WordLookupRequest) (*WordLookupResponse, *APIError) {
+	res := new(WordLookupResponse)
+	err := new(APIError)
+	r, e := c.resty.R().
 		SetBody(req).
 		SetResult(res).
 		SetError(err).
 		Post("/word/lookup")
 	if e != nil {
-		err = new(APIError)
-		err.Message = e.Error()
+		return nil, &APIError{
+			Message: e.Error(),
+		}
 	}
-	return
+	if success(r) {
+		return res, nil
+	}
+	return nil, err
 }

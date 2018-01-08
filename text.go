@@ -36,44 +36,59 @@ type (
 	}
 )
 
-func (c *Client) TextSummary(req *TextSummaryRequest) (res *TextSummaryResponse, err *APIError) {
-	res = new(TextSummaryResponse)
-	_, e := c.resty.R().
+func (c *Client) TextSummary(req *TextSummaryRequest) (*TextSummaryResponse, *APIError) {
+	res := new(TextSummaryResponse)
+	err := new(APIError)
+	r, e := c.resty.R().
 		SetBody(req).
 		SetResult(res).
 		SetError(err).
 		Post("/text/summary")
 	if e != nil {
-		err = new(APIError)
-		err.Message = e.Error()
+		return nil, &APIError{
+			Message: e.Error(),
+		}
 	}
-	return
+	if success(r) {
+		return res, nil
+	}
+	return nil, err
 }
 
-func (c *Client) TextSentiment(req *TextSentimentRequest) (res *TextSentimentResponse, err *APIError) {
-	res = new(TextSentimentResponse)
-	_, e := c.resty.R().
+func (c *Client) TextSentiment(req *TextSentimentRequest) (*TextSentimentResponse, *APIError) {
+	res := new(TextSentimentResponse)
+	err := new(APIError)
+	r, e := c.resty.R().
 		SetBody(req).
 		SetResult(res).
 		SetError(err).
 		Post("/text/sentiment")
 	if e != nil {
-		err = new(APIError)
-		err.Message = e.Error()
+		return nil, &APIError{
+			Message: e.Error(),
+		}
 	}
-	return
+	if success(r) {
+		return res, nil
+	}
+	return nil, err
 }
 
-func (c *Client) TextSpellcheck(req *TextSpellcheckRequest) (res *TextSpellcheckResponse, err *APIError) {
-	res = new(TextSpellcheckResponse)
-	_, e := c.resty.R().
+func (c *Client) TextSpellcheck(req *TextSpellcheckRequest) (*TextSpellcheckResponse, *APIError) {
+	res := new(TextSpellcheckResponse)
+	err := new(APIError)
+	r, e := c.resty.R().
 		SetBody(req).
 		SetResult(res).
 		SetError(err).
 		Post("/text/spellcheck")
 	if e != nil {
-		err = new(APIError)
-		err.Message = e.Error()
+		return nil, &APIError{
+			Message: e.Error(),
+		}
 	}
-	return
+	if success(r) {
+		return res, nil
+	}
+	return nil, err
 }

@@ -23,30 +23,40 @@ type (
 	}
 )
 
-func (c *Client) BarcodeGenerate(req *BarcodeGenerateRequest) (res *BarcodeGenerateResponse, err *APIError) {
-	res = new(BarcodeGenerateResponse)
-	_, e := c.resty.R().
+func (c *Client) BarcodeGenerate(req *BarcodeGenerateRequest) (*BarcodeGenerateResponse, *APIError) {
+	res := new(BarcodeGenerateResponse)
+	err := new(APIError)
+	r, e := c.resty.R().
 		SetBody(req).
 		SetResult(res).
 		SetError(err).
 		Post("/barcode/generate")
 	if e != nil {
-		err = new(APIError)
-		err.Message = e.Error()
+		return nil, &APIError{
+			Message: e.Error(),
+		}
 	}
-	return
+	if success(r) {
+		return res, nil
+	}
+	return nil, err
 }
 
-func (c *Client) BarcodeScan(req *BarcodeScanRequest) (res *BarcodeScanResponse, err *APIError) {
-	res = new(BarcodeScanResponse)
-	_, e := c.resty.R().
+func (c *Client) BarcodeScan(req *BarcodeScanRequest) (*BarcodeScanResponse, *APIError) {
+	res := new(BarcodeScanResponse)
+	err := new(APIError)
+	r, e := c.resty.R().
 		SetFile("file", req.File).
 		SetResult(res).
 		SetError(err).
 		Post("/barcode/scan")
 	if e != nil {
-		err = new(APIError)
-		err.Message = e.Error()
+		return nil, &APIError{
+			Message: e.Error(),
+		}
 	}
-	return
+	if success(r) {
+		return res, nil
+	}
+	return nil, err
 }

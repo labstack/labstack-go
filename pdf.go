@@ -31,22 +31,25 @@ type (
 	}
 )
 
-func (c *Client) PDFCompress(req *PDFCompressRequest) (res *PDFCompressResponse, err *APIError) {
-	res = new(PDFCompressResponse)
+func (c *Client) PDFCompress(req *PDFCompressRequest) (*PDFCompressResponse, *APIError) {
+	res := new(PDFCompressResponse)
+	err := new(APIError)
 	_, e := c.resty.R().
 		SetFile("file", req.File).
 		SetResult(res).
 		SetError(err).
 		Post("/pdf/compress")
 	if e != nil {
-		err = new(APIError)
-		err.Message = e.Error()
+		return nil, &APIError{
+			Message: e.Error(),
+		}
 	}
-	return
+	return res, err
 }
 
-func (c *Client) PDFImage(req *PDFImageRequest) (res *PDFImageResponse, err *APIError) {
-	res = new(PDFImageResponse)
+func (c *Client) PDFImage(req *PDFImageRequest) (*PDFImageResponse, *APIError) {
+	res := new(PDFImageResponse)
+	err := new(APIError)
 	_, e := c.resty.R().
 		SetFile("file", req.File).
 		SetFormData(map[string]string{
@@ -56,15 +59,17 @@ func (c *Client) PDFImage(req *PDFImageRequest) (res *PDFImageResponse, err *API
 		SetError(err).
 		Post("/pdf/image")
 	if e != nil {
-		err = new(APIError)
-		err.Message = e.Error()
+		return nil, &APIError{
+			Message: e.Error(),
+		}
 	}
-	return
+	return res, err
 }
 
-func (c *Client) PDFSplit(req *PDFSplitRequest) (res *PDFSplitResponse, err *APIError) {
-	res = new(PDFSplitResponse)
-	_, e := c.resty.R().
+func (c *Client) PDFSplit(req *PDFSplitRequest) (*PDFSplitResponse, *APIError) {
+	res := new(PDFSplitResponse)
+	err := new(APIError)
+	r, e := c.resty.R().
 		SetFile("file", req.File).
 		SetFormData(map[string]string{
 			"pages": req.Pages,
@@ -73,8 +78,12 @@ func (c *Client) PDFSplit(req *PDFSplitRequest) (res *PDFSplitResponse, err *API
 		SetError(err).
 		Post("/pdf/split")
 	if e != nil {
-		err = new(APIError)
-		err.Message = e.Error()
+		return nil, &APIError{
+			Message: e.Error(),
+		}
 	}
-	return
+	if success(r) {
+		return res, nil
+	}
+	return nil, err
 }

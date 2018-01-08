@@ -39,23 +39,29 @@ type (
 	}
 )
 
-func (c *Client) ImageCompress(req *ImageCompressRequest) (res *ImageCompressResponse, err *APIError) {
-	res = new(ImageCompressResponse)
-	_, e := c.resty.R().
+func (c *Client) ImageCompress(req *ImageCompressRequest) (*ImageCompressResponse, *APIError) {
+	res := new(ImageCompressResponse)
+	err := new(APIError)
+	r, e := c.resty.R().
 		SetFile("file", req.File).
 		SetResult(res).
 		SetError(err).
 		Post("/image/compress")
 	if e != nil {
-		err = new(APIError)
-		err.Message = e.Error()
+		return nil, &APIError{
+			Message: e.Error(),
+		}
 	}
-	return
+	if success(r) {
+		return res, nil
+	}
+	return nil, err
 }
 
-func (c *Client) ImageResize(req *ImageResizeRequest) (res *ImageResizeResponse, err *APIError) {
-	res = new(ImageResizeResponse)
-	_, e := c.resty.R().
+func (c *Client) ImageResize(req *ImageResizeRequest) (*ImageResizeResponse, *APIError) {
+	res := new(ImageResizeResponse)
+	err := new(APIError)
+	r, e := c.resty.R().
 		SetFile("file", req.File).
 		SetFormData(map[string]string{
 			"width":  strconv.Itoa(req.Width),
@@ -66,15 +72,20 @@ func (c *Client) ImageResize(req *ImageResizeRequest) (res *ImageResizeResponse,
 		SetError(err).
 		Post("/image/resize")
 	if e != nil {
-		err = new(APIError)
-		err.Message = e.Error()
+		return nil, &APIError{
+			Message: e.Error(),
+		}
 	}
-	return
+	if success(r) {
+		return res, nil
+	}
+	return nil, err
 }
 
-func (c *Client) ImageWatermark(req *ImageWatermarkRequest) (res *ImageWatermarkResponse, err *APIError) {
-	res = new(ImageWatermarkResponse)
-	_, e := c.resty.R().
+func (c *Client) ImageWatermark(req *ImageWatermarkRequest) (*ImageWatermarkResponse, *APIError) {
+	res := new(ImageWatermarkResponse)
+	err := new(APIError)
+	r, e := c.resty.R().
 		SetFile("file", req.File).
 		SetFormData(map[string]string{
 			"text":     req.Text,
@@ -89,8 +100,12 @@ func (c *Client) ImageWatermark(req *ImageWatermarkRequest) (res *ImageWatermark
 		SetError(err).
 		Post("/image/watermark")
 	if e != nil {
-		err = new(APIError)
-		err.Message = e.Error()
+		return nil, &APIError{
+			Message: e.Error(),
+		}
 	}
-	return
+	if success(r) {
+		return res, nil
+	}
+	return nil, err
 }

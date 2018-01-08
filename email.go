@@ -14,16 +14,21 @@ type (
 	}
 )
 
-func (c *Client) EmailVerify(req *EmailVerifyRequest) (res *EmailVerifyResponse, err *APIError) {
-	res = new(EmailVerifyResponse)
-	_, e := c.resty.R().
+func (c *Client) EmailVerify(req *EmailVerifyRequest) (*EmailVerifyResponse, *APIError) {
+	res := new(EmailVerifyResponse)
+	err := new(APIError)
+	r, e := c.resty.R().
 		SetBody(req).
 		SetResult(res).
 		SetError(err).
 		Post("/email/verify")
 	if e != nil {
-		err = new(APIError)
-		err.Message = e.Error()
+		return nil, &APIError{
+			Message: e.Error(),
+		}
 	}
-	return
+	if success(r) {
+		return res, nil
+	}
+	return nil, err
 }

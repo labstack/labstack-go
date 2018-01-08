@@ -35,16 +35,21 @@ type (
 	}
 )
 
-func (c *Client) DNSLookup(req *DNSLookupRequest) (res *DNSLookupResponse, err *APIError) {
-	res = new(DNSLookupResponse)
-	_, e := c.resty.R().
+func (c *Client) DNSLookup(req *DNSLookupRequest) (*DNSLookupResponse, *APIError) {
+	res := new(DNSLookupResponse)
+	err := new(APIError)
+	r, e := c.resty.R().
 		SetBody(req).
 		SetResult(res).
 		SetError(err).
 		Post("/dns/lookup")
 	if e != nil {
-		err = new(APIError)
-		err.Message = e.Error()
+		return nil, &APIError{
+			Message: e.Error(),
+		}
 	}
-	return
+	if success(r) {
+		return res, nil
+	}
+	return nil, err
 }
