@@ -7,7 +7,6 @@ type (
 	}
 
 	DNSLookupResponse struct {
-		*Response
 		Records []DNSRecord `json:"records"`
 	}
 

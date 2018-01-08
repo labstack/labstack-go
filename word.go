@@ -6,7 +6,6 @@ type (
 	}
 
 	WordLookupResponse struct {
-		*Response
 		Pronunciation []string            `json:"pronunciation"`
 		Rhymes        []string            `json:"rhymes"`
 		Nouns         []*WordLookupResult `json:"nouns"`

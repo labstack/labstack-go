@@ -17,7 +17,6 @@ type (
 	}
 
 	BarcodeScanResponse struct {
-		*Response
 		Format      string `json:"format"`
 		Content     string `json:"content"`
 		ContentType string `json:"content_type"`
