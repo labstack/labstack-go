@@ -9,9 +9,10 @@ import (
 
 type (
 	Client struct {
-		apiKey string
-		resty  *resty.Client
-		logger *log.Logger
+		accountID string
+		apiKey    string
+		resty     *resty.Client
+		logger    *log.Logger
 	}
 
 	Download struct {
@@ -31,11 +32,12 @@ const (
 )
 
 // NewClient creates a new client for the LabStack API.
-func NewClient(apiKey string) *Client {
+func NewClient(accountID, apiKey string) *Client {
 	return &Client{
-		apiKey: apiKey,
-		resty:  resty.New().SetHostURL(apiURL).SetAuthToken(apiKey),
-		logger: log.New("labstack"),
+		accountID: accountID,
+		apiKey:    apiKey,
+		resty:     resty.New().SetHostURL(apiURL).SetAuthToken(apiKey),
+		logger:    log.New("labstack"),
 	}
 }
 

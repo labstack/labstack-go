@@ -21,9 +21,9 @@ type (
 		Limit     int     `json:"limit"`
 	}
 
-	GeocodeResponse struct {
-		Type     string            `json:"type"`
-		Features []*GeocodeFeature `json:"features"`
+	GeocodeGeometry struct {
+		Type        string    `json:"type"`
+		Coordinates []float64 `json:"coordinates"`
 	}
 
 	GeocodeFeature struct {
@@ -32,9 +32,9 @@ type (
 		Properties Properties       `json:"properties"`
 	}
 
-	GeocodeGeometry struct {
-		Type        string    `json:"type"`
-		Coordinates []float64 `json:"coordinates"`
+	GeocodeResponse struct {
+		Type     string            `json:"type"`
+		Features []*GeocodeFeature `json:"features"`
 	}
 )
 

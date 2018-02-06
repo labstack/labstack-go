@@ -22,7 +22,7 @@ import (
 )
 
 func main() {
-	client := labstack.NewClient("<API_KEY>")
+	client := labstack.NewClient("<ACCOUNT_ID>", "<API_KEY>")
 	res, err := client.BarcodeGenerate(&labstack.BarcodeGenerateRequest{
 		Format:  "qr_code",
 		Content: "https://labstack.com",
