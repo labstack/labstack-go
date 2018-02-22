@@ -150,7 +150,7 @@ func (c *Cube) Start(r *http.Request, w http.ResponseWriter) (req *Request) {
 		Method:        r.Method,
 		UserAgent:     r.UserAgent(),
 		RemoteIP:      RealIP(r),
-		Uptime:        time.Now().Unix() - start,
+		Uptime:        time.Now().Unix() - start/1000,
 		CPUPercent:    float32(cpu),
 		MemoryPercent: mem,
 	}
