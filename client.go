@@ -2,9 +2,11 @@ package labstack
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/go-resty/resty"
 	"github.com/labstack/gommon/log"
+	"github.com/shirou/gopsutil/process"
 )
 
 type (
@@ -46,8 +48,10 @@ func (c *Client) error(r *resty.Response) bool {
 }
 
 func (c *Client) Cube() *Cube {
+	p, _ := process.NewProcess(int32(os.Getpid()))
 	return &Cube{
-		client: c,
+		process: p,
+		client:  c,
 	}
 }
 

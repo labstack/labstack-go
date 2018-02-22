@@ -8,11 +8,14 @@ import (
 	"sync"
 	"sync/atomic"
 	"time"
+
+	"github.com/shirou/gopsutil/process"
 )
 
 type (
 	// Cube defines the LabStack cube service.
 	Cube struct {
+		process        *process.Process
 		client         *Client
 		requests       []*Request
 		activeRequests int64
@@ -43,25 +46,27 @@ type (
 
 	// Request defines a request payload to be corded.
 	Request struct {
-		ID        string    `json:"id"`
-		Time      time.Time `json:"time"`
-		Node      string    `json:"node"`
-		Group     string    `json:"group"`
-		Tags      []string  `json:"tags,omitempty"`
-		Host      string    `json:"host"`
-		Path      string    `json:"path"`
-		Method    string    `json:"method"`
-		Status    int       `json:"status"`
-		BytesIn   int64     `json:"bytes_in"`
-		BytesOut  int64     `json:"bytes_out"`
-		Latency   int64     `json:"latency"`
-		ClientID  string    `json:"client_id"`
-		RemoteIP  string    `json:"remote_ip"`
-		UserAgent string    `json:"user_agent"`
-		Active    int64     `json:"active"`
-		// TODO: CPU, Uptime, Memory
-		Error      string `json:"error"`
-		StackTrace string `json:"stack_trace"`
+		ID            string    `json:"id"`
+		Time          time.Time `json:"time"`
+		Node          string    `json:"node"`
+		Group         string    `json:"group"`
+		Tags          []string  `json:"tags,omitempty"`
+		Host          string    `json:"host"`
+		Path          string    `json:"path"`
+		Method        string    `json:"method"`
+		Status        int       `json:"status"`
+		BytesIn       int64     `json:"bytes_in"`
+		BytesOut      int64     `json:"bytes_out"`
+		Latency       int64     `json:"latency"`
+		ClientID      string    `json:"client_id"`
+		RemoteIP      string    `json:"remote_ip"`
+		UserAgent     string    `json:"user_agent"`
+		Active        int64     `json:"active"`
+		Error         string    `json:"error"`
+		StackTrace    string    `json:"stack_trace"`
+		Uptime        int64     `json:"uptime"`
+		CPUPercent    float32   `json:"cpu_percent"`
+		MemoryPercent float32   `json:"memory_percent"`
 	}
 )
 
@@ -131,17 +136,23 @@ func (c *Cube) Start(r *http.Request, w http.ResponseWriter) (req *Request) {
 		atomic.AddInt64(&c.started, 1)
 	}
 
+	start, _ := c.process.CreateTime()
+	cpu, _ := c.process.CPUPercent()
+	mem, _ := c.process.MemoryPercent()
 	req = &Request{
-		ID:        RequestID(r, w),
-		Time:      time.Now(),
-		Node:      c.Node,
-		Group:     c.Group,
-		Tags:      c.Tags,
-		Host:      r.Host,
-		Path:      r.URL.Path,
-		Method:    r.Method,
-		UserAgent: r.UserAgent(),
-		RemoteIP:  RealIP(r),
+		ID:            RequestID(r, w),
+		Time:          time.Now(),
+		Node:          c.Node,
+		Group:         c.Group,
+		Tags:          c.Tags,
+		Host:          r.Host,
+		Path:          r.URL.Path,
+		Method:        r.Method,
+		UserAgent:     r.UserAgent(),
+		RemoteIP:      RealIP(r),
+		Uptime:        time.Now().Unix() - start,
+		CPUPercent:    float32(cpu),
+		MemoryPercent: mem,
 	}
 	req.ClientID = req.RemoteIP
 	atomic.AddInt64(&c.activeRequests, 1)
