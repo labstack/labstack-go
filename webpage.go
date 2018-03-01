@@ -2,9 +2,9 @@ package labstack
 
 type (
 	WebpagePDFRequest struct {
-		URL    string `json:"url"`
-		Size   string `json:"size"`
-		Layout string `json:"width"`
+		URL    string
+		Layout string
+		Format string
 	}
 
 	WebpagePDFResponse struct {
@@ -16,10 +16,14 @@ func (c *Client) WebpagePDF(req *WebpagePDFRequest) (*WebpagePDFResponse, *APIEr
 	res := new(WebpagePDFResponse)
 	err := new(APIError)
 	r, e := c.resty.R().
-		SetBody(req).
+		SetQueryParams(map[string]string{
+			"url":    req.URL,
+			"layout": req.Layout,
+			"foramt": req.Format,
+		}).
 		SetResult(res).
 		SetError(err).
-		Post("/webpage/pdf")
+		Get("/webpage/pdf")
 	if e != nil {
 		return nil, &APIError{
 			Message: e.Error(),

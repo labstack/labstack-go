@@ -23,14 +23,13 @@ import (
 
 func main() {
 	client := labstack.NewClient("<ACCOUNT_ID>", "<API_KEY>")
-	res, err := client.BarcodeGenerate(&labstack.BarcodeGenerateRequest{
-		Format:  "qr_code",
-		Content: "https://labstack.com",
+	res, err := client.GeocodeAddress(&labstack.GeocodeAddressRequest{
+		Location:  "eiffel tower",
 	})
 	if err != nil {
 		fmt.Println(err)
 	} else {
-		client.Download(res.ID, "/tmp/"+res.Name)
+		fmt.Printf("%+v", res)
 	}
 }
 ```
@@ -41,4 +40,4 @@ From terminal run your app:
 go run app.go
 ```
 
-## [API](https://labstack.com/api) | [Forum](https://forum.labstack.com)
+## [Docs](https://labstack.com/docs) | [Forum](https://forum.labstack.com)

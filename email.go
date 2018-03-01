@@ -2,7 +2,7 @@ package labstack
 
 type (
 	EmailVerifyRequest struct {
-		Email string `json:"email"`
+		Email string
 	}
 
 	EmailVerifyResponse struct {
@@ -18,10 +18,12 @@ func (c *Client) EmailVerify(req *EmailVerifyRequest) (*EmailVerifyResponse, *AP
 	res := new(EmailVerifyResponse)
 	err := new(APIError)
 	r, e := c.resty.R().
-		SetBody(req).
+		SetQueryParams(map[string]string{
+			"email": req.Email,
+		}).
 		SetResult(res).
 		SetError(err).
-		Post("/email/verify")
+		Get("/email/verify")
 	if e != nil {
 		return nil, &APIError{
 			Message: e.Error(),

@@ -1,24 +1,26 @@
 package labstack
 
+import "strconv"
+
 type (
 	GeocodeAddressRequest struct {
-		Location  string  `json:"location"`
-		Longitude float64 `json:"longitude"`
-		Latitude  float64 `json:"latitude"`
-		OSMTag    string  `json:"osm_tag"`
-		Language  string  `json:"language"`
-		Limit     int     `json:"limit"`
+		Location  string
+		Longitude float64
+		Latitude  float64
+		OSMTag    string
+		Language  string
+		Limit     int
 	}
 
 	GeocodeIPRequest struct {
-		IP string `json:"ip"`
+		IP string
 	}
 
 	GeocodeReverseRequest struct {
-		Longitude float64 `json:"longitude"`
-		Latitude  float64 `json:"latitude"`
-		Language  string  `json:"language"`
-		Limit     int     `json:"limit"`
+		Longitude float64
+		Latitude  float64
+		Language  string
+		Limit     int
 	}
 
 	GeocodeGeometry struct {
@@ -42,10 +44,17 @@ func (c *Client) GeocodeAddress(req *GeocodeAddressRequest) (*GeocodeResponse, *
 	res := new(GeocodeResponse)
 	err := new(APIError)
 	r, e := c.resty.R().
-		SetBody(req).
+		SetQueryParams(map[string]string{
+			"location":  req.Location,
+			"longitude": strconv.FormatFloat(req.Longitude, 'f', -1, 64),
+			"latitude":  strconv.FormatFloat(req.Latitude, 'f', -1, 64),
+			"osm_tag":   req.OSMTag,
+			"language":  req.Language,
+			"limit":     strconv.Itoa(req.Limit),
+		}).
 		SetResult(res).
 		SetError(err).
-		Post("/geocode/address")
+		Get("/geocode/address")
 	if e != nil {
 		return nil, &APIError{
 			Message: e.Error(),
@@ -61,10 +70,12 @@ func (c *Client) GeocodeIP(req *GeocodeIPRequest) (*GeocodeResponse, *APIError) 
 	res := new(GeocodeResponse)
 	err := new(APIError)
 	r, e := c.resty.R().
-		SetBody(req).
+		SetQueryParams(map[string]string{
+			"ip": req.IP,
+		}).
 		SetResult(res).
 		SetError(err).
-		Post("/geocode/ip")
+		Get("/geocode/ip")
 	if e != nil {
 		return nil, &APIError{
 			Message: e.Error(),
@@ -80,10 +91,15 @@ func (c *Client) GeocodeReverse(req *GeocodeReverseRequest) (*GeocodeResponse, *
 	res := new(GeocodeResponse)
 	err := new(APIError)
 	r, e := c.resty.R().
-		SetBody(req).
+		SetQueryParams(map[string]string{
+			"longitude": strconv.FormatFloat(req.Longitude, 'f', -1, 64),
+			"latitude":  strconv.FormatFloat(req.Latitude, 'f', -1, 64),
+			"language":  req.Language,
+			"limit":     strconv.Itoa(req.Limit),
+		}).
 		SetResult(res).
 		SetError(err).
-		Post("/geocode/reverse")
+		Get("/geocode/reverse")
 	if e != nil {
 		return nil, &APIError{
 			Message: e.Error(),
