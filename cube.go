@@ -25,11 +25,11 @@ type (
 		// LabStack API key
 		APIKey string
 
-		// API node
-		Node string
+		// Node name
+		NodeName string
 
-		// API group
-		Group string
+		// Node group
+		NodeGroup string
 
 		// Tags
 		Tags []string
@@ -48,8 +48,6 @@ type (
 	Request struct {
 		ID            string    `json:"id"`
 		Time          time.Time `json:"time"`
-		Node          string    `json:"node"`
-		Group         string    `json:"group"`
 		Tags          []string  `json:"tags,omitempty"`
 		Host          string    `json:"host"`
 		Path          string    `json:"path"`
@@ -64,6 +62,8 @@ type (
 		Active        int64     `json:"active"`
 		Error         string    `json:"error"`
 		StackTrace    string    `json:"stack_trace"`
+		NodeName      string    `json:"node_name"`
+		NodeGroup     string    `json:"node_group"`
 		Uptime        int64     `json:"uptime"`
 		CPUPercent    float32   `json:"cpu_percent"`
 		MemoryPercent float32   `json:"memory_percent"`
@@ -142,14 +142,14 @@ func (c *Cube) Start(r *http.Request, w http.ResponseWriter) (req *Request) {
 	req = &Request{
 		ID:            RequestID(r, w),
 		Time:          time.Now(),
-		Node:          c.Node,
-		Group:         c.Group,
 		Tags:          c.Tags,
 		Host:          r.Host,
 		Path:          r.URL.Path,
 		Method:        r.Method,
 		UserAgent:     r.UserAgent(),
 		RemoteIP:      RealIP(r),
+		NodeName:      c.NodeName,
+		NodeGroup:     c.NodeGroup,
 		Uptime:        time.Now().Unix() - start/1000,
 		CPUPercent:    float32(cpu),
 		MemoryPercent: mem,
