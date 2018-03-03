@@ -20,11 +20,8 @@ type (
 		// LabStack api key
 		APIKey string `json:"api_key"`
 
-		// Node name
-		NodeName string `json:"node_name"`
-
-		// Group name
-		NodeGroup string `json:"node_group"`
+		// Node id
+		Node string `json:"node"`
 
 		// Number of requests in a batch
 		BatchSize int `json:"batch_size"`
@@ -77,8 +74,7 @@ func CubeWithConfig(config Config) echo.MiddlewareFunc {
 	// Initialize
 	client := labstack.NewClient(config.AccountID, config.APIKey)
 	cube := client.Cube()
-	cube.NodeName = config.NodeName
-	cube.NodeGroup = config.NodeGroup
+	cube.Node = config.Node
 	cube.Tags = config.Tags
 	cube.BatchSize = config.BatchSize
 	cube.DispatchInterval = config.DispatchInterval
