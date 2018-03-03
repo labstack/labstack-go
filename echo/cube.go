@@ -1,6 +1,7 @@
 package labstack
 
 import (
+	"os"
 	"time"
 
 	"github.com/labstack/echo"
@@ -63,6 +64,9 @@ func CubeWithConfig(config Config) echo.MiddlewareFunc {
 	}
 	if config.Skipper == nil {
 		config.Skipper = DefaultConfig.Skipper
+	}
+	if config.Node == "" {
+		config.Node, _ = os.Hostname()
 	}
 	if config.BatchSize == 0 {
 		config.BatchSize = DefaultConfig.BatchSize
