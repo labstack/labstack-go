@@ -43,26 +43,27 @@ type (
 
 	// Request defines a request payload to be corded.
 	Request struct {
-		ID            string    `json:"id"`
-		Time          time.Time `json:"time"`
-		Tags          []string  `json:"tags,omitempty"`
-		Host          string    `json:"host"`
-		Path          string    `json:"path"`
-		Method        string    `json:"method"`
-		Status        int       `json:"status"`
-		BytesIn       int64     `json:"bytes_in"`
-		BytesOut      int64     `json:"bytes_out"`
-		Latency       int64     `json:"latency"`
-		ClientID      string    `json:"client_id"`
-		RemoteIP      string    `json:"remote_ip"`
-		UserAgent     string    `json:"user_agent"`
-		Active        int64     `json:"active"`
-		Error         string    `json:"error"`
-		StackTrace    string    `json:"stack_trace"`
-		Node          string    `json:"node"`
-		Uptime        int64     `json:"uptime"`
-		CPUPercent    float32   `json:"cpu_percent"`
-		MemoryPercent float32   `json:"memory_percent"`
+		time          time.Time
+		ID            string   `json:"id"`
+		Time          int64    `json:"time"`
+		Tags          []string `json:"tags,omitempty"`
+		Host          string   `json:"host"`
+		Path          string   `json:"path"`
+		Method        string   `json:"method"`
+		Status        int      `json:"status"`
+		BytesIn       int64    `json:"bytes_in"`
+		BytesOut      int64    `json:"bytes_out"`
+		Latency       int64    `json:"latency"`
+		ClientID      string   `json:"client_id"`
+		RemoteIP      string   `json:"remote_ip"`
+		UserAgent     string   `json:"user_agent"`
+		Active        int64    `json:"active"`
+		Error         string   `json:"error"`
+		StackTrace    string   `json:"stack_trace"`
+		Node          string   `json:"node"`
+		Uptime        int64    `json:"uptime"`
+		CPUPercent    float32  `json:"cpu_percent"`
+		MemoryPercent float32  `json:"memory_percent"`
 	}
 )
 
@@ -120,6 +121,9 @@ func (c *Cube) Dispatch() error {
 
 // Start starts cording an HTTP request.
 func (c *Cube) Start(r *http.Request, w http.ResponseWriter) (req *Request) {
+	atomic.AddInt64(&c.activeRequests, 1)
+
+	// Daemon
 	if c.started == 0 {
 		go func() {
 			d := time.Duration(c.DispatchInterval) * time.Second
@@ -135,9 +139,11 @@ func (c *Cube) Start(r *http.Request, w http.ResponseWriter) (req *Request) {
 	start, _ := c.process.CreateTime()
 	cpu, _ := c.process.CPUPercent()
 	mem, _ := c.process.MemoryPercent()
+	now := time.Now()
 	req = &Request{
+		time:          now,
 		ID:            RequestID(r, w),
-		Time:          time.Now(),
+		Time:          now.UnixNano() / 1000000,
 		Tags:          c.Tags,
 		Host:          r.Host,
 		Path:          r.URL.Path,
@@ -150,7 +156,6 @@ func (c *Cube) Start(r *http.Request, w http.ResponseWriter) (req *Request) {
 		MemoryPercent: mem,
 	}
 	req.ClientID = req.RemoteIP
-	atomic.AddInt64(&c.activeRequests, 1)
 	req.Active = c.activeRequests
 	cl := r.Header.Get("Content-Length")
 	if cl == "" {
@@ -170,7 +175,7 @@ func (a *Cube) Stop(r *Request, status int, size int64) {
 	atomic.AddInt64(&a.activeRequests, -1)
 	r.Status = status
 	r.BytesOut = size
-	r.Latency = int64(time.Now().Sub(r.Time))
+	r.Latency = int64(time.Now().Sub(r.time))
 
 	// Dispatch batch
 	if a.requestsLength() >= a.BatchSize {
