@@ -43,27 +43,27 @@ type (
 
 	// Request defines a request payload to be corded.
 	Request struct {
-		time          time.Time
-		ID            string   `json:"id"`
-		Time          int64    `json:"time"`
-		Tags          []string `json:"tags,omitempty"`
-		Host          string   `json:"host"`
-		Path          string   `json:"path"`
-		Method        string   `json:"method"`
-		Status        int      `json:"status"`
-		BytesIn       int64    `json:"bytes_in"`
-		BytesOut      int64    `json:"bytes_out"`
-		Latency       int64    `json:"latency"`
-		ClientID      string   `json:"client_id"`
-		RemoteIP      string   `json:"remote_ip"`
-		UserAgent     string   `json:"user_agent"`
-		Active        int64    `json:"active"`
-		Error         string   `json:"error"`
-		StackTrace    string   `json:"stack_trace"`
-		Node          string   `json:"node"`
-		Uptime        int64    `json:"uptime"`
-		CPUPercent    float32  `json:"cpu_percent"`
-		MemoryPercent float32  `json:"memory_percent"`
+		time       time.Time
+		ID         string   `json:"id"`
+		Time       int64    `json:"time"`
+		Tags       []string `json:"tags,omitempty"`
+		Host       string   `json:"host"`
+		Path       string   `json:"path"`
+		Method     string   `json:"method"`
+		Status     int      `json:"status"`
+		BytesIn    int64    `json:"bytes_in"`
+		BytesOut   int64    `json:"bytes_out"`
+		Latency    int64    `json:"latency"`
+		ClientID   string   `json:"client_id"`
+		RemoteIP   string   `json:"remote_ip"`
+		UserAgent  string   `json:"user_agent"`
+		Active     int64    `json:"active"`
+		Error      string   `json:"error"`
+		StackTrace string   `json:"stack_trace"`
+		Node       string   `json:"node"`
+		Uptime     int64    `json:"uptime"`
+		CPU        float32  `json:"cpu"`
+		Memory     float32  `json:"memory"`
 	}
 )
 
@@ -141,19 +141,19 @@ func (c *Cube) Start(r *http.Request, w http.ResponseWriter) (req *Request) {
 	mem, _ := c.process.MemoryPercent()
 	now := time.Now()
 	req = &Request{
-		time:          now,
-		ID:            RequestID(r, w),
-		Time:          now.UnixNano() / 1000000,
-		Tags:          c.Tags,
-		Host:          r.Host,
-		Path:          r.URL.Path,
-		Method:        r.Method,
-		UserAgent:     r.UserAgent(),
-		RemoteIP:      RealIP(r),
-		Node:          c.Node,
-		Uptime:        time.Now().Unix() - start/1000,
-		CPUPercent:    float32(cpu),
-		MemoryPercent: mem,
+		time:      now,
+		ID:        RequestID(r, w),
+		Time:      now.UnixNano() / 1000000,
+		Tags:      c.Tags,
+		Host:      r.Host,
+		Path:      r.URL.Path,
+		Method:    r.Method,
+		UserAgent: r.UserAgent(),
+		RemoteIP:  RealIP(r),
+		Node:      c.Node,
+		Uptime:    time.Now().Unix() - start/1000,
+		CPU:       float32(cpu),
+		Memory:    mem,
 	}
 	req.ClientID = req.RemoteIP
 	req.Active = c.activeRequests
