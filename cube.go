@@ -44,26 +44,26 @@ type (
 	// Request defines a request payload to be corded.
 	Request struct {
 		time       time.Time
-		ID         string   `json:"id"`
-		Time       int64    `json:"time"`
+		ID         string   `json:"id,omitempty"`
+		Time       int64    `json:"time,omitempty"`
 		Tags       []string `json:"tags,omitempty"`
-		Host       string   `json:"host"`
-		Path       string   `json:"path"`
-		Method     string   `json:"method"`
-		Status     int      `json:"status"`
-		BytesIn    int64    `json:"bytes_in"`
-		BytesOut   int64    `json:"bytes_out"`
-		Latency    int64    `json:"latency"`
-		ClientID   string   `json:"client_id"`
-		RemoteIP   string   `json:"remote_ip"`
-		UserAgent  string   `json:"user_agent"`
-		Active     int64    `json:"active"`
-		Error      string   `json:"error"`
-		StackTrace string   `json:"stack_trace"`
-		Node       string   `json:"node"`
-		Uptime     int64    `json:"uptime"`
-		CPU        float32  `json:"cpu"`
-		Memory     float32  `json:"memory"`
+		Host       string   `json:"host,omitempty"`
+		Path       string   `json:"path,omitempty"`
+		Method     string   `json:"method,omitempty"`
+		Status     int      `json:"status,omitempty"`
+		BytesIn    int64    `json:"bytes_in,omitempty"`
+		BytesOut   int64    `json:"bytes_out,omitempty"`
+		Latency    int64    `json:"latency,omitempty"`
+		ClientID   string   `json:"client_id,omitempty"`
+		RemoteIP   string   `json:"remote_ip,omitempty"`
+		UserAgent  string   `json:"user_agent,omitempty"`
+		Active     int64    `json:"active,omitempty"`
+		Error      string   `json:"error,omitempty"`
+		StackTrace string   `json:"stack_trace,omitempty"`
+		Node       string   `json:"node,omitempty"`
+		Uptime     int64    `json:"uptime,omitempty"`
+		CPU        float32  `json:"cpu,omitempty"`
+		Memory     float32  `json:"memory,omitempty"`
 	}
 )
 
