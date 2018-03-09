@@ -8,7 +8,6 @@ import (
 
 	"github.com/go-resty/resty"
 	"github.com/labstack/gommon/log"
-	"github.com/shirou/gopsutil/host"
 	"github.com/shirou/gopsutil/process"
 )
 
@@ -98,8 +97,10 @@ func New(key string, options Options) *Cube {
 	// System daemon
 	go func() {
 		p, _ := process.NewProcess(int32(os.Getpid()))
+		t, _ := p.CreateTime()
+
 		for range time.Tick(time.Second) {
-			c.uptime, _ = host.Uptime()
+			c.uptime = uint64(time.Now().Unix() - t/1000)
 			c.cpu, _ = p.CPUPercent()
 			mem, _ := p.MemoryInfo()
 			c.memory = mem.RSS
