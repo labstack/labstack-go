@@ -36,9 +36,6 @@ type (
 
 		// Interval in seconds to dispatch the batch
 		DispatchInterval time.Duration
-
-		// TODO: To be implemented
-		ClientLookup string
 	}
 
 	Request struct {

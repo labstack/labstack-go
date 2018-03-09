@@ -23,7 +23,7 @@ func Cube(key string, options cube.Options) echo.MiddlewareFunc {
 				Method:    req.Method,
 				BytesIn:   bytesIn,
 				RemoteIP:  ctx.RealIP(),
-				ClientID:  ctx.RealIP(),
+				ClientID:  req.Header.Get("X-Client-ID"),
 				UserAgent: req.UserAgent(),
 			}
 			c.Start(r)
