@@ -1,4 +1,4 @@
-package labstack
+package echo
 
 import (
 	"strconv"
