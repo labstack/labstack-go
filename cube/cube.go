@@ -15,7 +15,7 @@ type (
 	Cube struct {
 		Options
 		uptime         uint64
-		cpu            float64
+		cpu            float32
 		memory         uint64
 		requests       []*Request
 		activeRequests int64
@@ -57,7 +57,7 @@ type (
 		StackTrace string   `json:"stack_trace,omitempty"`
 		Node       string   `json:"node,omitempty"`
 		Uptime     uint64   `json:"uptime,omitempty"`
-		CPU        float64  `json:"cpu,omitempty"`
+		CPU        float32  `json:"cpu,omitempty"`
 		Memory     uint64   `json:"memory,omitempty"`
 	}
 
@@ -67,10 +67,13 @@ type (
 	// }
 )
 
-func New(key string, options Options) *Cube {
+func New(apiKey string, options Options) *Cube {
 	c := new(Cube)
 	c.Options = options
-	c.client = resty.New().SetHostURL("https://api.labstack.com").SetAuthToken(key)
+	c.client = resty.New().
+		SetHostURL("https://api.labstack.com").
+		SetAuthToken(apiKey).
+		SetHeader("User-Agent", "labstack/cube")
 
 	// Defaults
 	if c.Node == "" {
@@ -98,7 +101,8 @@ func New(key string, options Options) *Cube {
 
 		for range time.Tick(time.Second) {
 			c.uptime = uint64(time.Now().Unix() - t/1000)
-			c.cpu, _ = p.CPUPercent()
+			cpu, _ := p.CPUPercent()
+			c.cpu = float32(cpu)
 			mem, _ := p.MemoryInfo()
 			c.memory = mem.RSS
 		}

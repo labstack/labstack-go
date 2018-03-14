@@ -5,10 +5,15 @@ import (
 
 	"github.com/labstack/echo"
 	"github.com/labstack/labstack-go/cube"
+	"github.com/labstack/labstack-go/util"
 )
 
-func Cube(key string, options cube.Options) echo.MiddlewareFunc {
-	c := cube.New(key, options)
+func Cube(apiKey string) {
+	CubeWithOptions(apiKey, cube.Options{})
+}
+
+func CubeWithOptions(apiKey string, options cube.Options) echo.MiddlewareFunc {
+	c := cube.New(apiKey, options)
 
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(ctx echo.Context) (err error) {
@@ -18,7 +23,7 @@ func Cube(key string, options cube.Options) echo.MiddlewareFunc {
 			bytesIn, err := strconv.ParseInt(req.Header.Get("Content-Length"), 10, 64)
 			r := &cube.Request{
 				ID:        req.Header.Get(echo.HeaderXRequestID),
-				Host:      req.Host,
+				Host:      util.StripPort(req.Host),
 				Path:      req.URL.Path,
 				Method:    req.Method,
 				BytesIn:   bytesIn,
