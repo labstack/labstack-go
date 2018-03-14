@@ -8,8 +8,8 @@ import (
 	"github.com/labstack/labstack-go/util"
 )
 
-func Cube(apiKey string) {
-	CubeWithOptions(apiKey, cube.Options{})
+func Cube(apiKey string) echo.MiddlewareFunc {
+	return CubeWithOptions(apiKey, cube.Options{})
 }
 
 func CubeWithOptions(apiKey string, options cube.Options) echo.MiddlewareFunc {
