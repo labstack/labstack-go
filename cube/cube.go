@@ -74,6 +74,7 @@ func New(apiKey string, options Options) *Cube {
 		SetHostURL("https://api.labstack.com").
 		SetAuthToken(apiKey).
 		SetHeader("User-Agent", "labstack/cube")
+	c.logger = log.New("cube")
 
 	// Defaults
 	if c.Node == "" {
