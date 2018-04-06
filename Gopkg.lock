@@ -19,20 +19,14 @@
 [[projects]]
   name = "github.com/go-resty/resty"
   packages = ["."]
-  revision = "65798e030a35b911602b4d1d743d6f50ac93b665"
-  version = "v1.3"
-
-[[projects]]
-  name = "github.com/json-iterator/go"
-  packages = ["."]
-  revision = "3353055b2a1a5ae1b6a8dfde887a524e7088f3a2"
-  version = "1.1.2"
+  revision = "f8815663de1e64d57cdd4ee9e2b2fa96977a030e"
+  version = "v1.4"
 
 [[projects]]
   name = "github.com/labstack/echo"
   packages = ["."]
-  revision = "7f44549f0216124806cf63a3a546bb5996d21a89"
-  version = "3.3.3"
+  revision = "a5d81b8d4a627f3f49dcb3164ef2bb5239682227"
+  version = "3.3.4"
 
 [[projects]]
   name = "github.com/labstack/gommon"
@@ -56,18 +50,6 @@
   version = "v0.0.3"
 
 [[projects]]
-  name = "github.com/modern-go/concurrent"
-  packages = ["."]
-  revision = "bacd9c7ef1dd9b15be4a9909b8ac7a4e313eec94"
-  version = "1.0.3"
-
-[[projects]]
-  name = "github.com/modern-go/reflect2"
-  packages = ["."]
-  revision = "1df9eeb2bb81f327b96228865c5687bc2194af3f"
-  version = "1.0.0"
-
-[[projects]]
   name = "github.com/shirou/gopsutil"
   packages = [
     "cpu",
@@ -77,8 +59,8 @@
     "net",
     "process"
   ]
-  revision = "5776ff9c7c5d063d574ef53d740f75c68b448e53"
-  version = "v2.18.02"
+  revision = "fc04d2dd9a512906a2604242b35275179e250eda"
+  version = "v2.18.03"
 
 [[projects]]
   branch = "master"
@@ -105,7 +87,7 @@
     "acme",
     "acme/autocert"
   ]
-  revision = "b4956d363a8b14623cc81db401707679605930a3"
+  revision = "b2aa35443fbc700ab74c586ae79b81c171851023"
 
 [[projects]]
   branch = "master"
@@ -114,7 +96,7 @@
     "idna",
     "publicsuffix"
   ]
-  revision = "e0c57d8f86c17f0724497efcb3bc617e82834821"
+  revision = "b3c676e531a6dc479fa1b35ac961c13f5e2b4d2e"
 
 [[projects]]
   branch = "master"
@@ -123,7 +105,7 @@
     "unix",
     "windows"
   ]
-  revision = "cc7307a45468e49eaf2997c890f14aa03a26917b"
+  revision = "1d206c9fa8975fb4cf00df1dc8bf3283dc24ba0e"
 
 [[projects]]
   name = "golang.org/x/text"
@@ -149,6 +131,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "fc230f47827f33164b6f0fb3e1f07a09b4990e7797a0c5067408ef9b4ac69f18"
+  inputs-digest = "850f2e4366ed49f18aa8686ad08df0a4c66622a3865e3f49981237c1c43fb551"
   solver-name = "gps-cdcl"
   solver-version = 1
