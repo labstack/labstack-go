@@ -34,8 +34,8 @@
     "color",
     "log"
   ]
-  revision = "6fe1405d73ec4bd4cd8a4ac8e2a2b2bf95d03954"
-  version = "0.2.4"
+  revision = "588f4e8bddc6cb45c27b448e925c7fd6a5545434"
+  version = "0.2.5"
 
 [[projects]]
   name = "github.com/mattn/go-colorable"
@@ -59,8 +59,8 @@
     "net",
     "process"
   ]
-  revision = "fc04d2dd9a512906a2604242b35275179e250eda"
-  version = "v2.18.03"
+  revision = "c95755e4bcd7a62bb8bd33f3a597a7c7f35e2cf3"
+  version = "v2.18.04"
 
 [[projects]]
   branch = "master"
@@ -87,7 +87,7 @@
     "acme",
     "acme/autocert"
   ]
-  revision = "d6449816ce06963d9d136eee5a56fca5b0616e7e"
+  revision = "ae8bce0030810cf999bb2b9868ae5c7c58e6343b"
 
 [[projects]]
   branch = "master"
@@ -96,7 +96,7 @@
     "idna",
     "publicsuffix"
   ]
-  revision = "61147c48b25b599e5b561d2e9c4f3e1ef489ca41"
+  revision = "5f9ae10d9af5b1c89ae6904293b14b064d4ada23"
 
 [[projects]]
   branch = "master"
@@ -105,7 +105,7 @@
     "unix",
     "windows"
   ]
-  revision = "3b87a42e500a6dc65dae1a55d0b641295971163e"
+  revision = "4adea008a5e5f820b6028611ae0b6b3fbcec534b"
 
 [[projects]]
   name = "golang.org/x/text"
@@ -131,6 +131,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "32deb7ba554f6d0178594deb14fd93986937afb9604d063ed0fc3b6ceba31e26"
+  inputs-digest = "30596ae909af9fb14841e9724ad72a1a2688ed70d4e649d9104505666239dcb3"
   solver-name = "gps-cdcl"
   solver-version = 1
