@@ -22,7 +22,7 @@ import (
 )
 
 func main() {
-	client := labstack.NewClient("<ACCOUNT_ID>", "<API_KEY>")
+	client := labstack.NewClient("<API_KEY>")
 	res, err := client.GeocodeAddress(&labstack.GeocodeAddressRequest{
 		Location:  "eiffel tower",
 	})
