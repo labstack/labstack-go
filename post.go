@@ -10,11 +10,12 @@ type (
 	}
 
 	PostVerifyResponse struct {
-		Syntax     bool   `json:"syntax"`
-		Disposable bool   `json:"disposable"`
-		Domain     bool   `json:"domain"`
-		Mailbox    bool   `json:"mailbox"`
-		Error      string `json:"error"`
+		ValidSyntax bool `json:"valid_syntax"`
+		Deliverable bool `json:"deliverable"`
+		InboxFull   bool `json:"inbox_full"`
+		ValidDomain bool `json:"valid_domain"`
+		Disposable  bool `json:"disposable"`
+		CatchAll    bool `json:"catch_all"`
 	}
 )
 
@@ -27,7 +28,7 @@ func (p *Post) Verify(req *PostVerifyRequest) (*PostVerifyResponse, *APIError) {
 		}).
 		SetResult(res).
 		SetError(err).
-		Get("/email/verify")
+		Get("/post/verify")
 	if e != nil {
 		return nil, &APIError{
 			Message: e.Error(),

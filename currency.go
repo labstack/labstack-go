@@ -17,8 +17,8 @@ type (
 	}
 
 	CurrencyConvertResponse struct {
-		Value     float64   `json:"value" db:"value"`
-		UpdatedAt time.Time `json:"updated_at" db:"updated_at"`
+		Value     float64   `json:"value"`
+		UpdatedAt time.Time `json:"updated_at"`
 	}
 
 	CurrencyRatesRequest struct {
