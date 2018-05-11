@@ -6,6 +6,10 @@ import (
 )
 
 type (
+	Currency struct {
+		*Client
+	}
+
 	CurrencyConvertRequest struct {
 		From  string
 		To    string
@@ -27,7 +31,7 @@ type (
 	}
 )
 
-func (c *Client) CurrencyConvert(req *CurrencyConvertRequest) (*CurrencyConvertResponse, *APIError) {
+func (c *Currency) Convert(req *CurrencyConvertRequest) (*CurrencyConvertResponse, *APIError) {
 	res := new(CurrencyConvertResponse)
 	err := new(APIError)
 	r, e := c.resty.R().
@@ -50,7 +54,7 @@ func (c *Client) CurrencyConvert(req *CurrencyConvertRequest) (*CurrencyConvertR
 	return res, nil
 }
 
-func (c *Client) CurrencyRates(req *CurrencyRatesRequest) (*CurrencyRatesResponse, *APIError) {
+func (c *Currency) Rates(req *CurrencyRatesRequest) (*CurrencyRatesResponse, *APIError) {
 	res := new(CurrencyRatesResponse)
 	err := new(APIError)
 	r, e := c.resty.R().

@@ -3,6 +3,10 @@ package labstack
 import "strconv"
 
 type (
+	Geocode struct {
+		*Client
+	}
+
 	GeocodeAddressRequest struct {
 		Location  string
 		Longitude float64
@@ -40,10 +44,10 @@ type (
 	}
 )
 
-func (c *Client) GeocodeAddress(req *GeocodeAddressRequest) (*GeocodeResponse, *APIError) {
+func (g *Geocode) Address(req *GeocodeAddressRequest) (*GeocodeResponse, *APIError) {
 	res := new(GeocodeResponse)
 	err := new(APIError)
-	r, e := c.resty.R().
+	r, e := g.resty.R().
 		SetQueryParams(map[string]string{
 			"location":  req.Location,
 			"longitude": strconv.FormatFloat(req.Longitude, 'f', -1, 64),
@@ -60,16 +64,16 @@ func (c *Client) GeocodeAddress(req *GeocodeAddressRequest) (*GeocodeResponse, *
 			Message: e.Error(),
 		}
 	}
-	if c.error(r) {
+	if g.error(r) {
 		return nil, err
 	}
 	return res, nil
 }
 
-func (c *Client) GeocodeIP(req *GeocodeIPRequest) (*GeocodeResponse, *APIError) {
+func (g *Geocode) IP(req *GeocodeIPRequest) (*GeocodeResponse, *APIError) {
 	res := new(GeocodeResponse)
 	err := new(APIError)
-	r, e := c.resty.R().
+	r, e := g.resty.R().
 		SetQueryParams(map[string]string{
 			"ip": req.IP,
 		}).
@@ -81,16 +85,16 @@ func (c *Client) GeocodeIP(req *GeocodeIPRequest) (*GeocodeResponse, *APIError) 
 			Message: e.Error(),
 		}
 	}
-	if c.error(r) {
+	if g.error(r) {
 		return nil, err
 	}
 	return res, nil
 }
 
-func (c *Client) GeocodeReverse(req *GeocodeReverseRequest) (*GeocodeResponse, *APIError) {
+func (g *Geocode) Reverse(req *GeocodeReverseRequest) (*GeocodeResponse, *APIError) {
 	res := new(GeocodeResponse)
 	err := new(APIError)
-	r, e := c.resty.R().
+	r, e := g.resty.R().
 		SetQueryParams(map[string]string{
 			"longitude": strconv.FormatFloat(req.Longitude, 'f', -1, 64),
 			"latitude":  strconv.FormatFloat(req.Latitude, 'f', -1, 64),
@@ -105,7 +109,7 @@ func (c *Client) GeocodeReverse(req *GeocodeReverseRequest) (*GeocodeResponse, *
 			Message: e.Error(),
 		}
 	}
-	if c.error(r) {
+	if g.error(r) {
 		return nil, err
 	}
 	return res, nil

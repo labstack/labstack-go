@@ -3,6 +3,10 @@ package labstack
 import "strconv"
 
 type (
+	Watermark struct {
+		*Client
+	}
+
 	WatermarkImageRequest struct {
 		File     string
 		Text     string
@@ -19,10 +23,10 @@ type (
 	}
 )
 
-func (c *Client) WatermarkImage(req *WatermarkImageRequest) (*WatermarkImageResponse, *APIError) {
+func (w *Watermark) Image(req *WatermarkImageRequest) (*WatermarkImageResponse, *APIError) {
 	res := new(WatermarkImageResponse)
 	err := new(APIError)
-	r, e := c.resty.R().
+	r, e := w.resty.R().
 		SetFile("file", req.File).
 		SetFormData(map[string]string{
 			"text":     req.Text,
@@ -41,7 +45,7 @@ func (c *Client) WatermarkImage(req *WatermarkImageRequest) (*WatermarkImageResp
 			Message: e.Error(),
 		}
 	}
-	if c.error(r) {
+	if w.error(r) {
 		return nil, err
 	}
 	return res, nil

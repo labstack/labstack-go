@@ -1,11 +1,15 @@
 package labstack
 
 type (
-	EmailVerifyRequest struct {
+	Post struct {
+		*Client
+	}
+
+	PostVerifyRequest struct {
 		Email string
 	}
 
-	EmailVerifyResponse struct {
+	PostVerifyResponse struct {
 		Syntax     bool   `json:"syntax"`
 		Disposable bool   `json:"disposable"`
 		Domain     bool   `json:"domain"`
@@ -14,10 +18,10 @@ type (
 	}
 )
 
-func (c *Client) EmailVerify(req *EmailVerifyRequest) (*EmailVerifyResponse, *APIError) {
-	res := new(EmailVerifyResponse)
+func (p *Post) Verify(req *PostVerifyRequest) (*PostVerifyResponse, *APIError) {
+	res := new(PostVerifyResponse)
 	err := new(APIError)
-	r, e := c.resty.R().
+	r, e := p.resty.R().
 		SetQueryParams(map[string]string{
 			"email": req.Email,
 		}).
@@ -29,7 +33,7 @@ func (c *Client) EmailVerify(req *EmailVerifyRequest) (*EmailVerifyResponse, *AP
 			Message: e.Error(),
 		}
 	}
-	if c.error(r) {
+	if p.error(r) {
 		return nil, err
 	}
 	return res, nil

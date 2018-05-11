@@ -43,6 +43,18 @@ func (c *Client) error(r *resty.Response) bool {
 	return r.StatusCode() < 200 || r.StatusCode() >= 300
 }
 
+func (c *Client) Currency() *Currency {
+	return &Currency{c}
+}
+
+func (c *Client) Geocode() *Geocode {
+	return &Geocode{c}
+}
+
+func (c *Client) Post() *Post {
+	return &Post{c}
+}
+
 func (c *Client) Download(id string, path string) (err *APIError) {
 	_, e := c.resty.R().
 		SetOutput(path).

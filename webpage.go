@@ -1,6 +1,10 @@
 package labstack
 
 type (
+	Webpage struct {
+		*Client
+	}
+
 	WebpagePDFRequest struct {
 		URL    string
 		Layout string
@@ -12,10 +16,10 @@ type (
 	}
 )
 
-func (c *Client) WebpagePDF(req *WebpagePDFRequest) (*WebpagePDFResponse, *APIError) {
+func (w *Webpage) PDF(req *WebpagePDFRequest) (*WebpagePDFResponse, *APIError) {
 	res := new(WebpagePDFResponse)
 	err := new(APIError)
-	r, e := c.resty.R().
+	r, e := w.resty.R().
 		SetQueryParams(map[string]string{
 			"url":    req.URL,
 			"layout": req.Layout,
@@ -29,7 +33,7 @@ func (c *Client) WebpagePDF(req *WebpagePDFRequest) (*WebpagePDFResponse, *APIEr
 			Message: e.Error(),
 		}
 	}
-	if c.error(r) {
+	if w.error(r) {
 		return nil, err
 	}
 	return res, nil
