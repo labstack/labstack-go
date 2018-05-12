@@ -11,7 +11,7 @@ type (
 	}
 
 	CurrencyConvertResponse struct {
-		Value     float64   `json:"value"`
+		Amount    float64   `json:"amount"`
 		UpdatedAt time.Time `json:"updated_at"`
 	}
 
@@ -21,14 +21,14 @@ type (
 	}
 )
 
-func (c *Currency) Convert(from, to string, value float64) (*CurrencyConvertResponse, *APIError) {
+func (c *Currency) Convert(from, to string, amount float64) (*CurrencyConvertResponse, *APIError) {
 	res := new(CurrencyConvertResponse)
 	err := new(APIError)
 	r, e := c.resty.R().
 		SetQueryParams(map[string]string{
 			"from":  from,
 			"to":    to,
-			"value": strconv.FormatFloat(value, 'f', -1, 64),
+			"value": strconv.FormatFloat(amount, 'f', -1, 64),
 		}).
 		SetResult(res).
 		SetError(err).
