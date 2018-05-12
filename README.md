@@ -24,9 +24,7 @@ import (
 func main() {
   client := labstack.NewClient("<API_KEY>")
   geocode := client.Geocode()
-  res, err := geocode.Address(&labstack.GeocodeAddressRequest{
-    Location:  "eiffel tower",
-  })
+  res, err := geocode.Address("eiffel tower")
   if err != nil {
     fmt.Println(err)
   } else {

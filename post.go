@@ -5,10 +5,6 @@ type (
 		*Client
 	}
 
-	PostVerifyRequest struct {
-		Email string
-	}
-
 	PostVerifyResponse struct {
 		ValidSyntax bool `json:"valid_syntax"`
 		Deliverable bool `json:"deliverable"`
@@ -19,12 +15,12 @@ type (
 	}
 )
 
-func (p *Post) Verify(req *PostVerifyRequest) (*PostVerifyResponse, *APIError) {
+func (p *Post) Verify(email string) (*PostVerifyResponse, *APIError) {
 	res := new(PostVerifyResponse)
 	err := new(APIError)
 	r, e := p.resty.R().
 		SetQueryParams(map[string]string{
-			"email": req.Email,
+			"email": email,
 		}).
 		SetResult(res).
 		SetError(err).

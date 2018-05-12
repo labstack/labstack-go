@@ -10,19 +10,9 @@ type (
 		*Client
 	}
 
-	CurrencyConvertRequest struct {
-		From  string
-		To    string
-		Value float64
-	}
-
 	CurrencyConvertResponse struct {
 		Value     float64   `json:"value"`
 		UpdatedAt time.Time `json:"updated_at"`
-	}
-
-	CurrencyRatesRequest struct {
-		Base string
 	}
 
 	CurrencyRatesResponse struct {
@@ -31,14 +21,14 @@ type (
 	}
 )
 
-func (c *Currency) Convert(req *CurrencyConvertRequest) (*CurrencyConvertResponse, *APIError) {
+func (c *Currency) Convert(from, to string, value float64) (*CurrencyConvertResponse, *APIError) {
 	res := new(CurrencyConvertResponse)
 	err := new(APIError)
 	r, e := c.resty.R().
 		SetQueryParams(map[string]string{
-			"from":  req.From,
-			"to":    req.To,
-			"value": strconv.FormatFloat(req.Value, 'f', -1, 64),
+			"from":  from,
+			"to":    to,
+			"value": strconv.FormatFloat(value, 'f', -1, 64),
 		}).
 		SetResult(res).
 		SetError(err).
@@ -54,12 +44,12 @@ func (c *Currency) Convert(req *CurrencyConvertRequest) (*CurrencyConvertRespons
 	return res, nil
 }
 
-func (c *Currency) Rates(req *CurrencyRatesRequest) (*CurrencyRatesResponse, *APIError) {
+func (c *Currency) Rates(base string) (*CurrencyRatesResponse, *APIError) {
 	res := new(CurrencyRatesResponse)
 	err := new(APIError)
 	r, e := c.resty.R().
 		SetQueryParams(map[string]string{
-			"base": req.Base,
+			"base": base,
 		}).
 		SetResult(res).
 		SetError(err).

@@ -5,8 +5,7 @@ type (
 		*Client
 	}
 
-	WebpagePDFRequest struct {
-		URL    string
+	WebpagePDFOptions struct {
 		Layout string
 		Format string
 	}
@@ -16,14 +15,14 @@ type (
 	}
 )
 
-func (w *Webpage) PDF(req *WebpagePDFRequest) (*WebpagePDFResponse, *APIError) {
+func (w *Webpage) PDF(url string, options WebpagePDFOptions) (*WebpagePDFResponse, *APIError) {
 	res := new(WebpagePDFResponse)
 	err := new(APIError)
 	r, e := w.resty.R().
 		SetQueryParams(map[string]string{
-			"url":    req.URL,
-			"layout": req.Layout,
-			"foramt": req.Format,
+			"url":    url,
+			"layout": options.Layout,
+			"foramt": options.Format,
 		}).
 		SetResult(res).
 		SetError(err).

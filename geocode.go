@@ -7,8 +7,7 @@ type (
 		*Client
 	}
 
-	GeocodeAddressRequest struct {
-		Location  string
+	GeocodeAddressOptions struct {
 		Longitude float64
 		Latitude  float64
 		OSMTag    string
@@ -16,15 +15,8 @@ type (
 		Limit     int
 	}
 
-	GeocodeIPRequest struct {
-		IP string
-	}
-
-	GeocodeReverseRequest struct {
-		Longitude float64
-		Latitude  float64
-		Language  string
-		Limit     int
+	GeocodeReverseOptions struct {
+		Limit int
 	}
 
 	GeocodeGeometry struct {
@@ -44,17 +36,17 @@ type (
 	}
 )
 
-func (g *Geocode) Address(req *GeocodeAddressRequest) (*GeocodeResponse, *APIError) {
+func (g *Geocode) Address(location string, options GeocodeAddressOptions) (*GeocodeResponse, *APIError) {
 	res := new(GeocodeResponse)
 	err := new(APIError)
 	r, e := g.resty.R().
 		SetQueryParams(map[string]string{
-			"location":  req.Location,
-			"longitude": strconv.FormatFloat(req.Longitude, 'f', -1, 64),
-			"latitude":  strconv.FormatFloat(req.Latitude, 'f', -1, 64),
-			"osm_tag":   req.OSMTag,
-			"language":  req.Language,
-			"limit":     strconv.Itoa(req.Limit),
+			"location":  location,
+			"longitude": strconv.FormatFloat(options.Longitude, 'f', -1, 64),
+			"latitude":  strconv.FormatFloat(options.Latitude, 'f', -1, 64),
+			"osm_tag":   options.OSMTag,
+			"language":  options.Language,
+			"limit":     strconv.Itoa(options.Limit),
 		}).
 		SetResult(res).
 		SetError(err).
@@ -70,12 +62,12 @@ func (g *Geocode) Address(req *GeocodeAddressRequest) (*GeocodeResponse, *APIErr
 	return res, nil
 }
 
-func (g *Geocode) IP(req *GeocodeIPRequest) (*GeocodeResponse, *APIError) {
+func (g *Geocode) IP(ip string) (*GeocodeResponse, *APIError) {
 	res := new(GeocodeResponse)
 	err := new(APIError)
 	r, e := g.resty.R().
 		SetQueryParams(map[string]string{
-			"ip": req.IP,
+			"ip": ip,
 		}).
 		SetResult(res).
 		SetError(err).
@@ -91,15 +83,14 @@ func (g *Geocode) IP(req *GeocodeIPRequest) (*GeocodeResponse, *APIError) {
 	return res, nil
 }
 
-func (g *Geocode) Reverse(req *GeocodeReverseRequest) (*GeocodeResponse, *APIError) {
+func (g *Geocode) Reverse(longitude, latitude float64, options GeocodeReverseOptions) (*GeocodeResponse, *APIError) {
 	res := new(GeocodeResponse)
 	err := new(APIError)
 	r, e := g.resty.R().
 		SetQueryParams(map[string]string{
-			"longitude": strconv.FormatFloat(req.Longitude, 'f', -1, 64),
-			"latitude":  strconv.FormatFloat(req.Latitude, 'f', -1, 64),
-			"language":  req.Language,
-			"limit":     strconv.Itoa(req.Limit),
+			"longitude": strconv.FormatFloat(longitude, 'f', -1, 64),
+			"latitude":  strconv.FormatFloat(latitude, 'f', -1, 64),
+			"limit":     strconv.Itoa(options.Limit),
 		}).
 		SetResult(res).
 		SetError(err).

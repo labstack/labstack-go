@@ -7,7 +7,7 @@ type (
 		*Client
 	}
 
-	WatermarkImageRequest struct {
+	WatermarkImageOptions struct {
 		File     string
 		Text     string
 		Font     string
@@ -23,19 +23,19 @@ type (
 	}
 )
 
-func (w *Watermark) Image(req *WatermarkImageRequest) (*WatermarkImageResponse, *APIError) {
+func (w *Watermark) Image(file, text string, options WatermarkImageOptions) (*WatermarkImageResponse, *APIError) {
 	res := new(WatermarkImageResponse)
 	err := new(APIError)
 	r, e := w.resty.R().
-		SetFile("file", req.File).
+		SetFile("file", file).
 		SetFormData(map[string]string{
-			"text":     req.Text,
-			"font":     req.Font,
-			"size":     strconv.Itoa(req.Size),
-			"color":    req.Color,
-			"opacity":  strconv.Itoa(req.Opacity),
-			"position": req.Position,
-			"margin":   strconv.Itoa(req.Margin),
+			"text":     text,
+			"font":     options.Font,
+			"size":     strconv.Itoa(options.Size),
+			"color":    options.Color,
+			"opacity":  strconv.Itoa(options.Opacity),
+			"position": options.Position,
+			"margin":   strconv.Itoa(options.Margin),
 		}).
 		SetResult(res).
 		SetError(err).
