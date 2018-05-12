@@ -24,7 +24,7 @@ import (
 func main() {
   client := labstack.NewClient("<API_KEY>")
   geocode := client.Geocode()
-  res, err := geocode.Address("eiffel tower", labstack.GeocodeAddressOptions{})
+  res, err := geocode.Address("eiffel tower")
   if err != nil {
     fmt.Println(err)
   } else {
@@ -39,4 +39,4 @@ From terminal run your app:
 go run app.go
 ```
 
-## [Docs](https://labstack.com/docs) | [Forum](https://forum.labstack.com)
+## [Docs](https://labstack.com/docs/api) | [Forum](https://forum.labstack.com)

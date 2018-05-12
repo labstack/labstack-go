@@ -8,8 +8,6 @@ type (
 	}
 
 	WatermarkImageOptions struct {
-		File     string
-		Text     string
 		Font     string
 		Size     int
 		Color    string
@@ -23,7 +21,11 @@ type (
 	}
 )
 
-func (w *Watermark) Image(file, text string, options WatermarkImageOptions) (*WatermarkImageResponse, *APIError) {
+func (w *Watermark) Image(file, text string) (*WatermarkImageResponse, *APIError) {
+	return w.ImageWithOptions(file, text, WatermarkImageOptions{})
+}
+
+func (w *Watermark) ImageWithOptions(file, text string, options WatermarkImageOptions) (*WatermarkImageResponse, *APIError) {
 	res := new(WatermarkImageResponse)
 	err := new(APIError)
 	r, e := w.resty.R().

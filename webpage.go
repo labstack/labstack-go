@@ -15,7 +15,11 @@ type (
 	}
 )
 
-func (w *Webpage) PDF(url string, options WebpagePDFOptions) (*WebpagePDFResponse, *APIError) {
+func (w *Webpage) PDF(url string) (*WebpagePDFResponse, *APIError) {
+	return w.PDFWithOptions(url, WebpagePDFOptions{})
+}
+
+func (w *Webpage) PDFWithOptions(url string, options WebpagePDFOptions) (*WebpagePDFResponse, *APIError) {
 	res := new(WebpagePDFResponse)
 	err := new(APIError)
 	r, e := w.resty.R().
