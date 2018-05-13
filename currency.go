@@ -21,14 +21,14 @@ type (
 	}
 )
 
-func (c *Currency) Convert(from, to string, amount float64) (*CurrencyConvertResponse, *APIError) {
+func (c *Currency) Convert(amount float64, from, to string) (*CurrencyConvertResponse, *APIError) {
 	res := new(CurrencyConvertResponse)
 	err := new(APIError)
 	r, e := c.resty.R().
 		SetQueryParams(map[string]string{
+			"value": strconv.FormatFloat(amount, 'f', -1, 64),
 			"from":  from,
 			"to":    to,
-			"value": strconv.FormatFloat(amount, 'f', -1, 64),
 		}).
 		SetResult(res).
 		SetError(err).
