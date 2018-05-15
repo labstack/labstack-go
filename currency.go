@@ -11,13 +11,13 @@ type (
 	}
 
 	CurrencyConvertResponse struct {
-		Amount    float64   `json:"amount"`
-		UpdatedAt time.Time `json:"updated_at"`
+		Time   time.Time `json:"time"`
+		Amount float64   `json:"amount"`
 	}
 
 	CurrencyRatesResponse struct {
-		Rates     map[string]float64 `json:"rates"`
-		UpdatedAt time.Time          `json:"updated_at"`
+		Time  time.Time          `json:"time"`
+		Rates map[string]float64 `json:"rates"`
 	}
 )
 
