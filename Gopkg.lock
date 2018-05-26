@@ -23,6 +23,12 @@
   version = "v1.5"
 
 [[projects]]
+  name = "github.com/labstack/echo"
+  packages = ["."]
+  revision = "6d227dfea4d2e52cb76856120b3c17f758139b4e"
+  version = "3.3.5"
+
+[[projects]]
   name = "github.com/labstack/gommon"
   packages = [
     "color",
@@ -76,12 +82,21 @@
 
 [[projects]]
   branch = "master"
+  name = "golang.org/x/crypto"
+  packages = [
+    "acme",
+    "acme/autocert"
+  ]
+  revision = "a3beeb748656e13e54256fd2cde19e058f41f60f"
+
+[[projects]]
+  branch = "master"
   name = "golang.org/x/net"
   packages = [
     "idna",
     "publicsuffix"
   ]
-  revision = "f73e4c9ed3b7ebdd5f699a16a880c2b1994e50dd"
+  revision = "dfa909b99c79129e1100513e5cd36307665e5723"
 
 [[projects]]
   branch = "master"
@@ -90,7 +105,7 @@
     "unix",
     "windows"
   ]
-  revision = "7dfd1290c7917b7ba22824b9d24954ab3002fe24"
+  revision = "c11f84a56e43e20a78cee75a7c034031ecf57d1f"
 
 [[projects]]
   name = "golang.org/x/text"
@@ -116,6 +131,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "fc5d62ef4ddcbd63d291a42d5d77b24c21c0f667f849ed858d2038b4cb604250"
+  inputs-digest = "e54208e299d0e5d2750321c69cd49646bd8f78a2ddee476160db63d55e4da7bf"
   solver-name = "gps-cdcl"
   solver-version = 1

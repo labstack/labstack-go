@@ -39,4 +39,4 @@ From terminal run your app:
 go run app.go
 ```
 
-## [Docs](https://labstack.com/docs/api) | [Forum](https://forum.labstack.com)
+## [Docs](https://labstack.com/docs) | [Forum](https://forum.labstack.com)
