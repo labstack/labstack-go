@@ -1,11 +1,11 @@
 package labstack
 
 type (
-	Post struct {
+	Email struct {
 		*Client
 	}
 
-	PostVerifyResponse struct {
+	EmailVerifyResponse struct {
 		ValidSyntax bool `json:"valid_syntax"`
 		Deliverable bool `json:"deliverable"`
 		InboxFull   bool `json:"inbox_full"`
@@ -15,23 +15,23 @@ type (
 	}
 )
 
-func (p *Post) Verify(email string) (*PostVerifyResponse, *APIError) {
-	res := new(PostVerifyResponse)
-	err := new(APIError)
-	r, e := p.resty.R().
+func (e *Email) Verify(email string) (*EmailVerifyResponse, *APIError) {
+	res := new(EmailVerifyResponse)
+	ae := new(APIError)
+	r, err := e.resty.R().
 		SetQueryParams(map[string]string{
 			"email": email,
 		}).
 		SetResult(res).
-		SetError(err).
+		SetError(ae).
 		Get("/post/verify")
-	if e != nil {
+	if err != nil {
 		return nil, &APIError{
-			Message: e.Error(),
+			Message: err.Error(),
 		}
 	}
-	if p.error(r) {
-		return nil, err
+	if e.error(r) {
+		return nil, ae
 	}
 	return res, nil
 }

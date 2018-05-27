@@ -51,17 +51,17 @@ func (c *Client) Geocode() *Geocode {
 	return &Geocode{c}
 }
 
-func (c *Client) Post() *Post {
-	return &Post{c}
+func (c *Client) Email() *Email {
+	return &Email{c}
 }
 
-func (c *Client) Download(id string, path string) (err *APIError) {
-	_, e := c.resty.R().
+func (c *Client) Download(id string, path string) (ae *APIError) {
+	_, err := c.resty.R().
 		SetOutput(path).
 		Get(fmt.Sprintf("%s/download/%s", apiURL, id))
-	if e != nil {
-		err = new(APIError)
-		err.Message = e.Error()
+	if err != nil {
+		ae = new(APIError)
+		ae.Message = err.Error()
 	}
 	return
 }
