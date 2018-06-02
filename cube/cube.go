@@ -68,7 +68,11 @@ type (
 	// }
 )
 
-func New(apiKey string, options Options) *Cube {
+func New(apiKey string) *Cube {
+	return NewWithOptions(apiKey, Options{})
+}
+
+func NewWithOptions(apiKey string, options Options) *Cube {
 	c := &Cube{
 		startTime: time.Now().Unix(),
 		client: resty.New().

@@ -13,7 +13,7 @@ func Cube(apiKey string) echo.MiddlewareFunc {
 }
 
 func CubeWithOptions(apiKey string, options cube.Options) echo.MiddlewareFunc {
-	c := cube.New(apiKey, options)
+	c := cube.NewWithOptions(apiKey, options)
 
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(ctx echo.Context) (err error) {
