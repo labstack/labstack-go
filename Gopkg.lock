@@ -8,6 +8,15 @@
   version = "1.0.0"
 
 [[projects]]
+  name = "github.com/eclipse/paho.mqtt.golang"
+  packages = [
+    ".",
+    "packets"
+  ]
+  revision = "36d01c2b4cbeb3d2a12063e4880ce30800af9560"
+  version = "v1.1.1"
+
+[[projects]]
   name = "github.com/go-ole/go-ole"
   packages = [
     ".",
@@ -94,7 +103,10 @@
   name = "golang.org/x/net"
   packages = [
     "idna",
-    "publicsuffix"
+    "internal/socks",
+    "proxy",
+    "publicsuffix",
+    "websocket"
   ]
   revision = "dfa909b99c79129e1100513e5cd36307665e5723"
 
@@ -131,6 +143,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "e54208e299d0e5d2750321c69cd49646bd8f78a2ddee476160db63d55e4da7bf"
+  inputs-digest = "bb5c01fc11f5eda27b9abc27edc008e55fd203a6c3624473434e9f627b1aa95b"
   solver-name = "gps-cdcl"
   solver-version = 1
