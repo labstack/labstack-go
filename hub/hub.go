@@ -13,11 +13,11 @@ type (
 		Options
 		accountID string
 		apiKey    string
+		deviceID  string
 		client    mqtt.Client
 	}
 
 	Options struct {
-		DeviceID       string
 		MessageHandler MessageHandler
 	}
 
@@ -26,25 +26,30 @@ type (
 	MessageHandler func(topic string, message []byte)
 )
 
-func New(accountID, apiKey string) *Hub {
-	return NewWithOptions(accountID, apiKey, Options{})
+func New(accountID, apiKey, deviceID string) *Hub {
+	return NewWithOptions(accountID, apiKey, deviceID, Options{})
 }
 
-func NewWithOptions(accountID, apiKey string, options Options) *Hub {
+func NewWithOptions(accountID, apiKey, deviceID string, options Options) *Hub {
 	h := &Hub{
 		accountID: accountID,
 		apiKey:    apiKey,
 	}
+	h.deviceID = h.normalizeDeviceID(deviceID)
 	h.Options = options
 	return h
 }
 
-func (h *Hub) normalizeTopic(topic string) string {
-	return fmt.Sprintf("%s/%s", h.accountID, topic)
+func (h *Hub) normalizeDeviceID(id string) string {
+	return fmt.Sprintf("%s:%s", h.accountID, id)
 }
 
-func (h *Hub) denormalizeTopic(topic string) string {
-	return strings.TrimPrefix(topic, h.accountID+"/")
+func (h *Hub) normalizeTopic(name string) string {
+	return fmt.Sprintf("%s/%s", h.accountID, name)
+}
+
+func (h *Hub) denormalizeTopic(name string) string {
+	return strings.TrimPrefix(name, h.accountID+"/")
 }
 
 func (h *Hub) Connect() error {
@@ -55,10 +60,8 @@ func (h *Hub) ConnectWithHandler(handler ConnectHandler) error {
 	o := mqtt.NewClientOptions().
 		AddBroker("tcp://hub.labstack.com:1883").
 		SetUsername(h.accountID).
-		SetPassword(h.apiKey)
-	if h.DeviceID != "" {
-		o.SetClientID(h.DeviceID)
-	}
+		SetPassword(h.apiKey).
+		SetClientID(h.deviceID)
 	if handler != nil {
 		o.OnConnect = func(_ mqtt.Client) {
 			handler()
