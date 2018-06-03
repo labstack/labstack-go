@@ -26,8 +26,12 @@
 
 
 [[constraint]]
+  name = "github.com/eclipse/paho.mqtt.golang"
+  version = "1.1.1"
+
+[[constraint]]
   name = "github.com/go-resty/resty"
-  version = "1.5.0"
+  version = "1.6.0"
 
 [[constraint]]
   name = "github.com/labstack/echo"
@@ -44,7 +48,3 @@
 [prune]
   go-tests = true
   unused-packages = true
-
-[[constraint]]
-  name = "github.com/eclipse/paho.mqtt.golang"
-  version = "1.1.1"

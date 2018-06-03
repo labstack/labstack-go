@@ -70,7 +70,7 @@ func (h *Hub) ConnectWithHandler(handler ConnectHandler) error {
 	return t.Error()
 }
 
-func (h *Hub) Publish(topic string, message []byte) error {
+func (h *Hub) Publish(topic string, message interface{}) error {
 	t := h.client.Publish(h.normalizeTopic(topic), 0, false, message)
 	t.Wait()
 	return t.Error()

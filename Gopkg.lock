@@ -28,8 +28,8 @@
 [[projects]]
   name = "github.com/go-resty/resty"
   packages = ["."]
-  revision = "f0976a825c7520308909ce5a9e8b4f8675fdd6de"
-  version = "v1.5"
+  revision = "fc3ad735b5565cada42d34bc298573fd3fe5adc6"
+  version = "v1.6"
 
 [[projects]]
   name = "github.com/labstack/echo"
@@ -96,7 +96,7 @@
     "acme",
     "acme/autocert"
   ]
-  revision = "a3beeb748656e13e54256fd2cde19e058f41f60f"
+  revision = "df8d4716b3472e4a531c33cedbe537dae921a1a9"
 
 [[projects]]
   branch = "master"
@@ -108,7 +108,7 @@
     "publicsuffix",
     "websocket"
   ]
-  revision = "dfa909b99c79129e1100513e5cd36307665e5723"
+  revision = "1e491301e022f8f977054da4c2d852decd59571f"
 
 [[projects]]
   branch = "master"
@@ -143,6 +143,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "bb5c01fc11f5eda27b9abc27edc008e55fd203a6c3624473434e9f627b1aa95b"
+  inputs-digest = "067b8fce6251583f2d6504fcf1315de086df7c1d2e7fb34940eecdabb0cce5d7"
   solver-name = "gps-cdcl"
   solver-version = 1
