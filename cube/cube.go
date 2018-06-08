@@ -93,6 +93,7 @@ func NewWithOptions(apiKey string, options Options) *Cube {
 	if c.DispatchInterval == 0 {
 		c.DispatchInterval = 60
 	}
+	c.requests = make([]*Request, 0, c.BatchSize)
 
 	// Dispatch daemon
 	go func() {
@@ -118,19 +119,13 @@ func NewWithOptions(apiKey string, options Options) *Cube {
 	return c
 }
 
-func (c *Cube) resetRequests() {
-	c.mutex.Lock()
-	defer c.mutex.Unlock()
-	c.requests = make([]*Request, 0, c.BatchSize)
-}
-
-func (c *Cube) appendRequest(r *Request) {
+func (c *Cube) addRequest(r *Request) {
 	c.mutex.Lock()
 	defer c.mutex.Unlock()
 	c.requests = append(c.requests, r)
 }
 
-func (c *Cube) listRequests() []*Request {
+func (c *Cube) readRequests() []*Request {
 	c.mutex.Lock()
 	defer c.mutex.Unlock()
 	requests := make([]*Request, len(c.requests))
@@ -146,6 +141,12 @@ func (c *Cube) requestsLength() int {
 	return len(c.requests)
 }
 
+func (c *Cube) resetRequests() {
+	c.mutex.Lock()
+	defer c.mutex.Unlock()
+	c.requests = make([]*Request, 0, c.BatchSize)
+}
+
 // Dispatch dispatches the requests batch.
 func (c *Cube) Dispatch() {
 	if len(c.requests) == 0 {
@@ -154,7 +155,7 @@ func (c *Cube) Dispatch() {
 
 	// err := new(APIError)
 	res, err := c.client.R().
-		SetBody(c.listRequests()).
+		SetBody(c.readRequests()).
 		// SetError(err).
 		Post("/cube")
 	if err != nil {
@@ -172,7 +173,7 @@ func (c *Cube) Dispatch() {
 func (c *Cube) Start(r *Request) {
 	atomic.AddInt64(&c.activeRequests, 1)
 
-	r.Time = time.Now().UnixNano() / 1000
+	r.Time = time.Now().UnixNano() / 1e3
 	r.Active = c.activeRequests
 	r.Node = c.Node
 	r.Uptime = c.uptime
@@ -180,14 +181,14 @@ func (c *Cube) Start(r *Request) {
 	r.Memory = c.memory
 	r.Tags = c.Tags
 
-	c.appendRequest(r)
+	c.addRequest(r)
 }
 
 // Stop stops recording an HTTP request.
 func (c *Cube) Stop(r *Request) {
 	atomic.AddInt64(&c.activeRequests, -1)
 
-	r.Latency = time.Now().UnixNano()/1000 - r.Time
+	r.Latency = time.Now().UnixNano()/1e3 - r.Time
 
 	// Dispatch batch
 	if c.requestsLength() >= c.BatchSize {
