@@ -1,6 +1,10 @@
 package pulse
 
 import (
+	"fmt"
+	"os"
+
+	"github.com/go-errors/errors"
 	"github.com/go-resty/resty"
 	"github.com/labstack/gommon/log"
 )
@@ -14,31 +18,28 @@ type (
 	}
 
 	Options struct {
+		App    *App
 		Device *Device
 	}
 
-	User struct {
+	App struct {
+		Version string
 	}
 
 	Device struct {
+		Hostname string
 	}
-
-	Data struct {
-	}
-
-	Context struct {
-		user *User
-		data *Data
-	}
-
-	// APIError struct {
-	// 	Code    int    `json:"code"`
-	// 	Message string `json:"message"`
-	// }
 )
 
 var (
-	global *Pulse
+	p *Pulse
+)
+
+// Severity
+var (
+	SeverityInfo  = severity("info")
+	SeverityWarn  = severity("warn")
+	SeverityError = severity("error")
 )
 
 func Register(apiKey string) {
@@ -46,56 +47,79 @@ func Register(apiKey string) {
 }
 
 func RegisterWithOptions(apiKey string, options Options) {
-	global = &Pulse{
+	p = &Pulse{
 		client: resty.New().
 			SetHostURL("https://api.labstack.com").
 			SetAuthToken(apiKey).
 			SetHeader("User-Agent", "labstack/pulse"),
 		logger: log.New("pulse"),
 	}
-	global.Options = options
+	p.Options = options
 
 	// Defaults
+	if p.Device == nil {
+		p.Device = new(Device)
+	}
+	if p.Device.Hostname == "" {
+		p.Device.Hostname, _ = os.Hostname()
+	}
 }
 
-func (p *Pulse) Report() *Context {
-	return new(Context)
+func (p *Pulse) dispatch(err *errors.Error, ctx *Context) {
+	fmt.Println(err.ErrorStack())
+	// event := newEvent(err, ctx)
+	// b, _ := json.MarshalIndent(event, "", " ")
+	// fmt.Printf("%s", b)
+	// for _, f := range e.StackFrames() {
+	// 	fmt.Println(f.File, f.LineNumber, f.Name)
+	// }
+	// res, err := p.client.R().
+	// 	SetBody(event).
+	// 	// SetError(err).
+	// 	Post("/pulse")
+	// if err != nil {
+	// 	p.logger.Error(err)
+	// 	return
+	// }
+	// if res.StatusCode() < 200 || res.StatusCode() >= 300 {
+	// 	p.logger.Error(res.Body())
+	// }
 }
 
-func (p *Pulse) AutoReport() {
+func Report(err error) {
+	ReportWithContext(err, new(Context))
 }
 
-func (p *Pulse) Recover() {
+func ReportWithContext(err error, ctx *Context) {
+	if ee, ok := err.(*errors.Error); ok {
+		p.dispatch(ee, ctx)
+	} else {
+		p.dispatch(errors.Wrap(err, 1), ctx)
+	}
 }
 
-func (c *Context) SetUser(u *User) *Context {
-	c.user = u
-	return c
+func AutoReport() {
+	if err := recover(); err != nil {
+		ReportWithContext(errors.Wrap(err, 1), new(Context))
+		panic(err)
+	}
 }
 
-func (c *Context) SetData(d *Data) *Context {
-	c.data = d
-	return c
+func AutoReportWithContext(ctx *Context) {
+	if err := recover(); err != nil {
+		ReportWithContext(errors.Wrap(err, 1), ctx)
+		panic(err)
+	}
 }
 
-// // Dispatch dispatches the requests batch.
-// func (c *Cube) Dispatch() {
-// 	if len(c.requests) == 0 {
-// 		return
-// 	}
+func Recover() {
+	if err := recover(); err != nil {
+		ReportWithContext(errors.Wrap(err, 1), new(Context))
+	}
+}
 
-// 	// err := new(APIError)
-// 	res, err := c.client.R().
-// 		SetBody(c.readRequests()).
-// 		// SetError(err).
-// 		Post("/cube")
-// 	if err != nil {
-// 		c.logger.Error(err)
-// 		return
-// 	}
-// 	if res.StatusCode() < 200 || res.StatusCode() >= 300 {
-// 		c.logger.Error(res.Body())
-// 	}
-
-// 	c.resetRequests()
-// }
+func RecoverWithContext(ctx *Context) {
+	if err := recover(); err != nil {
+		ReportWithContext(errors.Wrap(err, 1), ctx)
+	}
+}

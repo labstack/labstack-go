@@ -17,6 +17,12 @@
   version = "v1.1.1"
 
 [[projects]]
+  name = "github.com/go-errors/errors"
+  packages = ["."]
+  revision = "a6af135bd4e28680facf08a3d206b454abc877a4"
+  version = "v1.0.1"
+
+[[projects]]
   name = "github.com/go-ole/go-ole"
   packages = [
     ".",
@@ -40,7 +46,6 @@
 [[projects]]
   name = "github.com/labstack/gommon"
   packages = [
-    ".",
     "color",
     "log"
   ]
@@ -144,6 +149,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "ec1fcf05b7dc8979e45a9c83c3d67804ff5fe6e7b58103990622622e8939e1a0"
+  inputs-digest = "a0fc5e4d9da460a9f2d0aab63cc7c9a42f4cb654d9c44a1e29edd6039360e15e"
   solver-name = "gps-cdcl"
   solver-version = 1
