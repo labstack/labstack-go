@@ -1,23 +1,29 @@
-package pulse
+package bolt
 
-import "github.com/go-errors/errors"
+import (
+	"path/filepath"
+
+	"github.com/go-errors/errors"
+	labstack "github.com/labstack/labstack-go"
+)
 
 type (
 	Event struct {
-		*Context
-		App       *App       `json:"app" db:"app"`
-		Device    *Device    `json:"device" db:"device"`
-		Exception *Exception `json:"exception" db:"exception"`
+		*Data
+		App       *App       `json:"app"`
+		Device    *Device    `json:"device"`
+		Exception *Exception `json:"exception"`
 	}
 
-	Context struct {
-		Severity severity `json:"severity" db:"severity"`
-		User     *User    `json:"user" db:"user"`
-		Request  *Request `json:"request" db:"request"`
-		Data     Data     `json:"data" db:"data"`
+	Data struct {
+		Severity Severity     `json:"severity"`
+		User     *User        `json:"user"`
+		Request  *Request     `json:"request"`
+		Tags     []string     `json:"tags"`
+		Extra    labstack.Map `json:"extra"`
 	}
 
-	severity string
+	Severity string
 
 	User struct {
 		ID string `json:"id"`
@@ -25,8 +31,6 @@ type (
 
 	Request struct {
 	}
-
-	Data map[string]interface{}
 
 	Exception struct {
 		Class      string        `json:"class"`
@@ -43,11 +47,11 @@ type (
 	}
 )
 
-func newEvent(err *errors.Error, ctx *Context) (e *Event) {
+func newEvent(err *errors.Error, data *Data) (e *Event) {
 	e = &Event{
-		Context: ctx,
-		App:     p.App,
-		Device:  p.Device,
+		Data:   data,
+		App:    b.App,
+		Device: b.Device,
 		Exception: &Exception{
 			Class:      err.TypeName(),
 			Message:    err.Error(),
@@ -62,7 +66,7 @@ func newEvent(err *errors.Error, ctx *Context) (e *Event) {
 
 	for i, f := range err.StackFrames() {
 		e.Exception.StackTrace[i] = &StackFrame{
-			File:     f.File,
+			File:     filepath.Base(f.File),
 			Line:     f.LineNumber,
 			Function: f.Name,
 		}
