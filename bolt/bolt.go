@@ -35,7 +35,7 @@ var (
 )
 
 // Severity
-var (
+const (
 	SeverityInfo  = Severity("info")
 	SeverityWarn  = Severity("warn")
 	SeverityError = Severity("error")
