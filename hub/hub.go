@@ -1,8 +1,8 @@
 package hub
 
 import (
+	"errors"
 	"fmt"
-	"os"
 	"strings"
 	"time"
 
@@ -15,19 +15,20 @@ import (
 type (
 	Hub struct {
 		Options
-		resty  *resty.Client
-		key    *Key
-		client mqtt.Client
-		logger *log.Logger
+		apiKey    string
+		deviceID  string
+		projectID string
+		resty     *resty.Client
+		client    mqtt.Client
+		logger    *log.Logger
 	}
 
 	Options struct {
-		DeviceID       string
 		MessageHandler MessageHandler
 	}
 
 	Key struct {
-		ID        string `json:"id"`
+		Value     string `json:"value"`
 		ProjectID string `json:"project_id"`
 	}
 
@@ -36,46 +37,32 @@ type (
 	MessageHandler func(topic string, message []byte)
 )
 
-func New(apiKey string) *Hub {
-	return NewWithOptions(apiKey, Options{})
+func New(apiKey, deviceID string) *Hub {
+	return NewWithOptions(apiKey, deviceID, Options{})
 }
 
-func NewWithOptions(apiKey string, options Options) (h *Hub) {
+func NewWithOptions(apiKey, deviceID string, options Options) (h *Hub) {
 	h = &Hub{
-		key: &Key{
-			ID: apiKey,
-		},
-		resty:  resty.New().SetHostURL("https://api.labstack.com").SetAuthToken(apiKey),
-		logger: log.New("hub"),
+		apiKey:   apiKey,
+		deviceID: deviceID,
+		resty:    resty.New().SetHostURL("https://api.labstack.com").SetAuthToken(apiKey),
+		logger:   log.New("hub"),
 	}
 	h.Options = options
-	if h.DeviceID == "" {
-		h.DeviceID, _ = os.Hostname()
-	}
-	res, err := h.resty.R().
-		SetResult(h.key).
-		Get("/keys")
-	if err != nil {
-		h.logger.Fatal(err)
-	}
-	if res.StatusCode() < 200 || res.StatusCode() >= 300 {
-		h.logger.Fatal(err)
-	}
-	h.DeviceID = h.normalizeDeviceID(h.DeviceID)
 	return
 }
 
-func (h *Hub) normalizeDeviceID(id string) string {
-	return fmt.Sprintf("%s:%s", h.key.ProjectID, id)
+func (h *Hub) normalizeDeviceID() string {
+	return fmt.Sprintf("%s:%s", h.projectID, h.deviceID)
 
 }
 
 func (h *Hub) normalizeTopic(name string) string {
-	return fmt.Sprintf("%s/%s", h.key.ProjectID, name)
+	return fmt.Sprintf("%s/%s", h.projectID, name)
 }
 
 func (h *Hub) denormalizeTopic(name string) string {
-	return strings.TrimPrefix(name, h.key.ProjectID+"/")
+	return strings.TrimPrefix(name, h.projectID+"/")
 }
 
 func (h *Hub) Connect() error {
@@ -83,11 +70,20 @@ func (h *Hub) Connect() error {
 }
 
 func (h *Hub) ConnectWithHandler(handler ConnectHandler) error {
+	key := new(Key)
+	res, err := h.resty.R().
+		SetResult(key).
+		Get("/keys")
+	if err != nil || res.StatusCode() < 200 || res.StatusCode() >= 300 {
+		return errors.New("Unable to find the project")
+	}
+	h.projectID = key.ProjectID
+
 	o := mqtt.NewClientOptions().
 		AddBroker("tcp://hub.labstack.com:1883").
-		SetUsername(h.key.ProjectID).
-		SetPassword(h.key.ID).
-		SetClientID(h.DeviceID)
+		SetUsername(h.projectID).
+		SetPassword(h.apiKey).
+		SetClientID(h.normalizeDeviceID())
 	if handler != nil {
 		o.OnConnect = func(_ mqtt.Client) {
 			handler()
