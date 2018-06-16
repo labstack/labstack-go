@@ -54,7 +54,7 @@ func NewWithOptions(apiKey string, options Options) (h *Hub) {
 	}
 	res, err := h.resty.R().
 		SetResult(h.key).
-		Get("/keys/" + h.key.ID)
+		Get("/keys")
 	if err != nil {
 		h.logger.Fatal(err)
 	}
