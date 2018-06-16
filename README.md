@@ -6,37 +6,4 @@
 
 `go get github.com/labstack/labstack-go`
 
-## Quick Start
-
-[Sign up](https://labstack.com/signup) to get an API key
-
-Create a file `app.go` with the following content:
-
-```go
-package main
-
-import (
-	"fmt"
-
-	"github.com/labstack/labstack-go"
-)
-
-func main() {
-  client := labstack.NewClient("<API_KEY>")
-  geocode := client.Geocode()
-  res, err := geocode.Address("eiffel tower")
-  if err != nil {
-    fmt.Println(err)
-  } else {
-    fmt.Printf("%+v", res)
-  }
-}
-```
-
-From terminal run your app:
-
-```sh
-go run app.go
-```
-
 ## [Docs](https://labstack.com/docs) | [Forum](https://forum.labstack.com)
