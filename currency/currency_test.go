@@ -1,13 +1,17 @@
-package labstack
+package currency
 
 import (
-	"github.com/labstack/labstack-go/currency"
 	"github.com/stretchr/testify/assert"
+	"os"
 	"testing"
 )
 
+var (
+	client = New(os.Getenv("KEY"))
+)
+
 func TestClient_CurrencyConvert(t *testing.T) {
-	res, err := client.CurrencyConvert(&currency.ConvertRequest{
+	res, err := client.Convert(&ConvertRequest{
 		Amount: 10,
 		From:   "USD",
 		To:     "INR",
@@ -18,7 +22,7 @@ func TestClient_CurrencyConvert(t *testing.T) {
 }
 
 func TestClient_CurrencyList(t *testing.T) {
-	res, err := client.CurrencyList(&currency.ListRequest{})
+	res, err := client.List(&ListRequest{})
 	if assert.Nil(t, err) {
 		assert.NotZero(t, len(res.Currencies))
 	}

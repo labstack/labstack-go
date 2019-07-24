@@ -1,9 +1,13 @@
 package labstack
 
-import "github.com/go-resty/resty/v2"
+import (
+	"github.com/go-resty/resty/v2"
+	"github.com/labstack/labstack-go/currency"
+)
 
 type (
 	Client struct {
+		key           string
 		apiResty      *resty.Client
 		currencyResty *resty.Client
 		domainResty   *resty.Client
@@ -12,14 +16,11 @@ type (
 		webpageResty  *resty.Client
 	}
 
-	Error struct {
-		Code    int    `json:"code"`
-		Message string `json:"message"`
-	}
 )
 
 func New(key string) *Client {
 	return &Client{
+		key:           key,
 		apiResty:      resty.New().SetHostURL("https://api.labstack.com").SetAuthToken(key),
 		currencyResty: resty.New().SetHostURL("https://currency.labstack.com/api/v1").SetAuthToken(key),
 		domainResty:   resty.New().SetHostURL("https://domain.labstack.com/api/v1").SetAuthToken(key),
@@ -29,10 +30,7 @@ func New(key string) *Client {
 	}
 }
 
-func isError(r *resty.Response) bool {
-	return r.StatusCode() < 200 || r.StatusCode() >= 300
+func (c *Client) Currency() *currency.Client {
+	return currency.New(c.key)
 }
 
-func (e *Error) Error() string {
-	return e.Message
-}
