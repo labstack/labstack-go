@@ -7,7 +7,9 @@ import (
 )
 
 func TestClient_IPLookup(t *testing.T) {
-	res, err := client.IPLookup(&ip.LookupRequest{IP: "24.5.240.141"})
+	res, err := client.IPLookup(&ip.LookupRequest{
+		IP: "96.45.83.67",
+	})
 	if assert.Nil(t, err) {
 		assert.NotEmpty(t, res.Country)
 	}

@@ -8,7 +8,7 @@ import (
 
 func TestClient_WebpageImage(t *testing.T) {
 	res, err := client.WebpageImage(&webpage.ImageRequest{
-		URL: "http://google.com",
+		URL: "amazon.com",
 	})
 	if assert.Nil(t, err) {
 		assert.NotEmpty(t, res.Image)
@@ -17,7 +17,7 @@ func TestClient_WebpageImage(t *testing.T) {
 
 func TestClient_WebpagePDF(t *testing.T) {
 	res, err := client.WebpagePDF(&webpage.PDFRequest{
-		URL: "http://google.com",
+		URL: "amazon.com",
 	})
 	if assert.Nil(t, err) {
 		assert.NotEmpty(t, res.PDF)

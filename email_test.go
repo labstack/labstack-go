@@ -7,7 +7,9 @@ import (
 )
 
 func TestClient_EmailVerify(t *testing.T) {
-	res, err := client.EmailVerify(&email.VerifyRequest{Email: "vr@labstack.com"})
+	res, err := client.EmailVerify(&email.VerifyRequest{
+		Email: "jon@labstack.com",
+	})
 	if assert.Nil(t, err) {
 		assert.Equal(t, "deliverable", res.Result)
 	}
