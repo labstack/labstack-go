@@ -2,7 +2,6 @@ package labstack
 
 import (
 	"github.com/labstack/labstack-go/currency"
-	"github.com/labstack/labstack-go/util"
 	"strconv"
 )
 
@@ -23,7 +22,7 @@ func (c *Client) CurrencyConvert(req *currency.ConvertRequest) (*currency.Conver
 			Message: e.Error(),
 		}
 	}
-	if util.Error(r) {
+	if isError(r) {
 		return nil, err
 	}
 	return res, nil
@@ -41,7 +40,7 @@ func (c *Client) CurrencyList(req *currency.ListRequest) (*currency.ListResponse
 			Message: e.Error(),
 		}
 	}
-	if util.Error(r) {
+	if isError(r) {
 		return nil, err
 	}
 	return res, nil

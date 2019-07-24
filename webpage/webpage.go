@@ -1,47 +1,39 @@
 package webpage
 
-import (
-	"github.com/go-resty/resty/v2"
-	"github.com/labstack/labstack-go"
-)
-
 type (
-	Webpage struct {
-		resty *resty.Client
+	ImageRequest struct {
+		URL      string
+		Language string
+		TTL      int
+		FullPage bool
+		Retina   bool
+		Width    int
+		Height   int
+		Delay    int
 	}
 
-	WebpagePDFOptions struct {
-		Layout string
-		Format string
+	ImageResponse struct {
+		Image       string `json:"image"`
+		Cached      bool   `json:"cached"`
+		Tool        int    `json:"tool"`
+		GeneratedAt string `json:"generated_at"`
 	}
 
-	WebpagePDFResponse struct {
+	PDFRequest struct {
+		URL         string
+		Language    string
+		TTL         int
+		Size        string
+		Width       int
+		Height      int
+		Orientation string
+		Delay       int
+	}
+
+	PDFResponse struct {
+		PDF         string `json:"pdf"`
+		Cached      bool   `json:"cached"`
+		Took        int    `json:"took"`
+		GeneratedAt string `json:"generated_at"`
 	}
 )
-
-func (w *Webpage) PDF(url string) (*WebpagePDFResponse, *labstack.APIError) {
-	return w.PDFWithOptions(url, WebpagePDFOptions{})
-}
-
-func (w *Webpage) PDFWithOptions(url string, options WebpagePDFOptions) (*WebpagePDFResponse, *labstack.APIError) {
-	res := new(WebpagePDFResponse)
-	err := new(labstack.APIError)
-	r, e := w.resty.R().
-		SetQueryParams(map[string]string{
-			"url":    url,
-			"layout": options.Layout,
-			"foramt": options.Format,
-		}).
-		SetResult(res).
-		SetError(err).
-		Get("/webpage/pdf")
-	if e != nil {
-		return nil, &labstack.APIError{
-			Message: e.Error(),
-		}
-	}
-	if w.Error(r) {
-		return nil, err
-	}
-	return res, nil
-}

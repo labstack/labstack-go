@@ -13,4 +13,3 @@ type (
 		Flags    []string `json:"flags"`
 	}
 )
-

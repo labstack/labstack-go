@@ -2,7 +2,6 @@ package labstack
 
 import (
 	"github.com/labstack/labstack-go/ip"
-	"github.com/labstack/labstack-go/util"
 )
 
 func (c *Client) IPLookup(req *ip.LookupRequest) (*ip.LookupResponse, error) {
@@ -20,7 +19,7 @@ func (c *Client) IPLookup(req *ip.LookupRequest) (*ip.LookupResponse, error) {
 			Message: e.Error(),
 		}
 	}
-	if util.Error(r) {
+	if isError(r) {
 		return nil, err
 	}
 	return res, nil

@@ -2,26 +2,25 @@ package labstack
 
 import (
 	"github.com/labstack/labstack-go/email"
-	"github.com/labstack/labstack-go/util"
 )
 
 func (c *Client) EmailVerify(req *email.VerifyRequest) (*email.VerifyResponse, *Error) {
 	res := new(email.VerifyResponse)
-	ae := new(Error)
-	r, err := c.emailResty.R().
+	err := new(Error)
+	r, e := c.emailResty.R().
 		SetPathParams(map[string]string{
 			"email": req.Email,
 		}).
 		SetResult(res).
-		SetError(ae).
+		SetError(err).
 		Get("/verify/{email}")
-	if err != nil {
+	if e != nil {
 		return nil, &Error{
 			Message: err.Error(),
 		}
 	}
-	if util.Error(r) {
-		return nil, ae
+	if isError(r) {
+		return nil, err
 	}
 	return res, nil
 }

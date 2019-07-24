@@ -13,8 +13,8 @@ type (
 
 	Flag struct {
 		Image        string `json:"image"`
-		Emoji        string `json:"emoji"`;
-		EmojiUnicode string `json:"emoji_unicode"`;
+		Emoji        string `json:"emoji"`
+		EmojiUnicode string `json:"emoji_unicode"`
 	}
 
 	TimeZone struct {
@@ -55,8 +55,8 @@ type (
 		Organization *Organization `json:"organization"`
 		Flag         *Flag         `json:"flag"`
 		Currency     *Currency     `json:"currency"`
-		TimeZone     *TimeZone     `json:"time_zone"`;
-		Language     []*Language   `json:"languages"`;
+		TimeZone     *TimeZone     `json:"time_zone"`
+		Language     []*Language   `json:"languages"`
 		AS           *AS           `json:"as"`
 		Flags        []string      `json:"flags"`
 	}
