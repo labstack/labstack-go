@@ -1,6 +1,15 @@
 package ip
 
+import (
+	"github.com/go-resty/resty/v2"
+	"github.com/labstack/labstack-go"
+)
+
 type (
+	Client struct {
+		resty *resty.Client
+	}
+
 	Currency struct {
 		Name   string `json:"name"`
 		Code   string `json:"code"`
@@ -61,3 +70,34 @@ type (
 		Flags        []string      `json:"flags"`
 	}
 )
+
+const (
+	url = "https://ip.labstack.com/api/v1"
+)
+
+func New(key string) *Client {
+	return &Client{
+		resty: resty.New().SetHostURL(url).SetAuthToken(key),
+	}
+}
+
+func (c *Client) Lookup(req *LookupRequest) (*LookupResponse, error) {
+	res := new(LookupResponse)
+	err := new(labstack.Error)
+	r, e := c.resty.R().
+		SetPathParams(map[string]string{
+			"ip": req.IP,
+		}).
+		SetResult(res).
+		SetError(err).
+		Get("/{ip}")
+	if e != nil {
+		return nil, &labstack.Error{
+			Message: e.Error(),
+		}
+	}
+	if labstack.IsError(r.StatusCode()) {
+		return nil, err
+	}
+	return res, nil
+}

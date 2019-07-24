@@ -10,7 +10,7 @@ var (
 	client = New(os.Getenv("KEY"))
 )
 
-func TestClient_EmailVerify(t *testing.T) {
+func TestClient_Verify(t *testing.T) {
 	res, err := client.Verify(&VerifyRequest{
 		Email: "jon@labstack.com",
 	})

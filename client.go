@@ -2,35 +2,33 @@ package labstack
 
 import (
 	"github.com/go-resty/resty/v2"
-	"github.com/labstack/labstack-go/currency"
 )
 
 type (
 	Client struct {
-		key           string
-		apiResty      *resty.Client
-		currencyResty *resty.Client
-		domainResty   *resty.Client
-		emailResty    *resty.Client
-		ipResty       *resty.Client
-		webpageResty  *resty.Client
+		resty *resty.Client
 	}
 
+	Error struct {
+		Code    int    `json:"code"`
+		Message string `json:"message"`
+	}
+)
+
+const (
+	url = "https://api.labstack.com"
 )
 
 func New(key string) *Client {
 	return &Client{
-		key:           key,
-		apiResty:      resty.New().SetHostURL("https://api.labstack.com").SetAuthToken(key),
-		currencyResty: resty.New().SetHostURL("https://currency.labstack.com/api/v1").SetAuthToken(key),
-		domainResty:   resty.New().SetHostURL("https://domain.labstack.com/api/v1").SetAuthToken(key),
-		emailResty:    resty.New().SetHostURL("https://email.labstack.com/api/v1").SetAuthToken(key),
-		ipResty:       resty.New().SetHostURL("https://ip.labstack.com/api/v1").SetAuthToken(key),
-		webpageResty:  resty.New().SetHostURL("https://webpage.labstack.com/api/v1").SetAuthToken(key),
+		resty: resty.New().SetHostURL(url).SetAuthToken(key),
 	}
 }
 
-func (c *Client) Currency() *currency.Client {
-	return currency.New(c.key)
+func IsError(status int) bool {
+	return status < 200 || status >= 300
 }
 
+func (e *Error) Error() string {
+	return e.Message
+}

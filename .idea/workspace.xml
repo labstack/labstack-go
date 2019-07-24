@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8b88fe9d-9777-4760-b3b4-d0a80062a649" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/common/common.go" afterDir="false" />
+    <list default="true" id="d0e9ac2b-b41b-4140-bd49-0ac0b6eea276" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/currency.go" beforeDir="false" afterPath="$PROJECT_DIR$/currency.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/common.go" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/currency/currency.go" beforeDir="false" afterPath="$PROJECT_DIR$/currency/currency.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/currency_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/currency/currency_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/email.go" beforeDir="false" afterPath="$PROJECT_DIR$/email.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/currency/currency_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/currency/currency_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/domain.go" beforeDir="false" afterPath="$PROJECT_DIR$/domain/domain.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/domain/domain_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/email/email.go" beforeDir="false" afterPath="$PROJECT_DIR$/email/email.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/email_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/email/email_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/labstack.go" beforeDir="false" afterPath="$PROJECT_DIR$/client.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/labstack_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/client_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/email/email_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/email/email_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ip.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ip/ip.go" beforeDir="false" afterPath="$PROJECT_DIR$/ip/ip.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ip_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/ip/ip_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webpage.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/webpage/webpage.go" beforeDir="false" afterPath="$PROJECT_DIR$/webpage/webpage.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webpage_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/webpage/webpage_test.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,75 +36,28 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client.go">
+        <entry file="file://$PROJECT_DIR$/ip/ip_test.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
-              <folding>
-                <element signature="e#18#104#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/common.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="7" column="16" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.travis.yml">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client_test.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="6" column="1" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/email.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="44">
-              <caret line="4" column="1" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/email/email.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="9">
-              <caret line="38" column="24" selection-start-line="38" selection-start-column="24" selection-end-line="38" selection-end-column="24" />
-              <folding>
-                <element signature="e#15#99#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="39">
+              <caret line="10" selection-start-line="10" selection-end-line="10" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/currency.go">
+        <entry file="file://$PROJECT_DIR$/email/email_test.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="44">
-              <caret line="5" column="1" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
+            <state relative-caret-position="176">
+              <caret line="12" column="16" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/currency/currency_test.go">
+        <entry file="file://$PROJECT_DIR$/domain/domain_test.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="88">
-              <caret line="8" selection-start-line="8" selection-end-line="8" />
+            <state relative-caret-position="42">
+              <caret line="13" column="24" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -106,8 +65,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/domain/domain.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="773">
-              <caret line="99" column="43" selection-start-line="99" selection-start-column="43" selection-end-line="99" selection-end-column="43" />
+            <state relative-caret-position="84">
+              <caret line="113" column="25" selection-start-line="113" selection-start-column="25" selection-end-line="113" selection-end-column="25" />
+              <folding>
+                <element signature="e#16#93#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -115,11 +77,38 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/currency/currency.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="186">
-              <caret line="9" selection-start-line="9" selection-end-line="9" />
+            <state relative-caret-position="905">
+              <caret line="69" column="1" lean-forward="true" selection-start-line="69" selection-start-column="1" selection-end-line="69" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/email/email.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="225">
+              <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ip/ip.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="347">
+              <caret line="83" column="17" selection-start-line="83" selection-start-column="17" selection-end-line="83" selection-end-column="17" />
               <folding>
-                <element signature="e#18#71#0" expanded="true" />
+                <element signature="e#12#89#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/webpage/webpage.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1412">
+              <caret line="110" column="38" selection-start-line="110" selection-start-column="38" selection-end-line="110" selection-end-column="38" />
             </state>
           </provider>
         </entry>
@@ -138,6 +127,7 @@
       <find>util</find>
       <find>util.</find>
       <find>isError</find>
+      <find>common</find>
     </findStrings>
   </component>
   <component name="GOROOT" path="/usr/local/Cellar/go/1.12.7/libexec" />
@@ -150,26 +140,29 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/webpage/webpage.go" />
-        <option value="$PROJECT_DIR$/ip/ip.go" />
-        <option value="$PROJECT_DIR$/domain/domain.go" />
         <option value="$PROJECT_DIR$/util/util.go" />
         <option value="$PROJECT_DIR$/labstack.go" />
-        <option value="$PROJECT_DIR$/ip.go" />
-        <option value="$PROJECT_DIR$/domain.go" />
-        <option value="$PROJECT_DIR$/webpage.go" />
         <option value="$PROJECT_DIR$/webpage_test.go" />
         <option value="$PROJECT_DIR$/email_test.go" />
         <option value="$PROJECT_DIR$/ip_test.go" />
         <option value="$PROJECT_DIR$/domain_test.go" />
         <option value="$PROJECT_DIR$/currency.go" />
-        <option value="$PROJECT_DIR$/currency/currency_test.go" />
-        <option value="$PROJECT_DIR$/client.go" />
         <option value="$PROJECT_DIR$/common/common.go" />
-        <option value="$PROJECT_DIR$/currency/currency.go" />
         <option value="$PROJECT_DIR$/email.go" />
+        <option value="$PROJECT_DIR$/client.go" />
+        <option value="$PROJECT_DIR$/domain.go" />
+        <option value="$PROJECT_DIR$/ip.go" />
+        <option value="$PROJECT_DIR$/currency/currency.go" />
         <option value="$PROJECT_DIR$/email/email.go" />
+        <option value="$PROJECT_DIR$/webpage.go" />
+        <option value="$PROJECT_DIR$/webpage/webpage.go" />
+        <option value="$PROJECT_DIR$/ip/ip.go" />
+        <option value="$PROJECT_DIR$/ip/ip_test.go" />
         <option value="$PROJECT_DIR$/email/email_test.go" />
+        <option value="$PROJECT_DIR$/domain/domain_test.go" />
+        <option value="$PROJECT_DIR$/currency/currency_test.go" />
+        <option value="$PROJECT_DIR$/webpage/webpage_test.go" />
+        <option value="$PROJECT_DIR$/domain/domain.go" />
       </list>
     </option>
   </component>
@@ -184,8 +177,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -200,7 +193,23 @@
             </path>
             <path>
               <item name="labstack-go" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="labstack-go" type="462c0819:PsiDirectoryNode" />
+              <item name="domain" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="labstack-go" type="b2602c69:ProjectViewProjectNode" />
+              <item name="labstack-go" type="462c0819:PsiDirectoryNode" />
+              <item name="email" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="labstack-go" type="b2602c69:ProjectViewProjectNode" />
+              <item name="labstack-go" type="462c0819:PsiDirectoryNode" />
+              <item name="ip" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="labstack-go" type="b2602c69:ProjectViewProjectNode" />
+              <item name="labstack-go" type="462c0819:PsiDirectoryNode" />
+              <item name="webpage" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -215,15 +224,18 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="go.gopath.indexing.explicitly.defined" value="true" />
     <property name="go.import.settings.migrated" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/domain" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/domain" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/webpage" />
+      <recent name="$PROJECT_DIR$/ip" />
       <recent name="$PROJECT_DIR$/email" />
       <recent name="$PROJECT_DIR$/currency" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -238,41 +250,19 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Go Test.TestClient_EmailVerify in github.com/labstack/labstack-go/email">
-    <configuration name="TestClient_CurrencyConvert in github.com/labstack/labstack-go/currency" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Go Test.ip_test.go">
+    <configuration name="TestClient_PDF in github.com/labstack/labstack-go/webpage" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="labstack-go" />
-      <working_directory value="$PROJECT_DIR$/currency" />
+      <working_directory value="$PROJECT_DIR$/webpage" />
       <framework value="gotest" />
       <kind value="PACKAGE" />
-      <package value="github.com/labstack/labstack-go/currency" />
+      <package value="github.com/labstack/labstack-go/webpage" />
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestClient_CurrencyConvert$" />
+      <pattern value="^TestClient_PDF$" />
       <method v="2" />
     </configuration>
-    <configuration name="TestClient_CurrencyList in github.com/labstack/labstack-go/currency" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="labstack-go" />
-      <working_directory value="$PROJECT_DIR$/currency" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="github.com/labstack/labstack-go/currency" />
-      <directory value="$PROJECT_DIR$/" />
-      <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestClient_CurrencyList$" />
-      <method v="2" />
-    </configuration>
-    <configuration name="TestClient_DomainWhois in github.com/labstack/labstack-go" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="labstack-go" />
-      <working_directory value="$PROJECT_DIR$" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="github.com/labstack/labstack-go" />
-      <directory value="$PROJECT_DIR$/" />
-      <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestClient_DomainWhois$" />
-      <method v="2" />
-    </configuration>
-    <configuration name="TestClient_EmailVerify in github.com/labstack/labstack-go/email" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="TestClient_Verify in github.com/labstack/labstack-go/email" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="labstack-go" />
       <working_directory value="$PROJECT_DIR$/email" />
       <framework value="gotest" />
@@ -280,27 +270,46 @@
       <package value="github.com/labstack/labstack-go/email" />
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestClient_EmailVerify$" />
+      <pattern value="^TestClient_Verify$" />
       <method v="2" />
     </configuration>
-    <configuration name="TestClient_IPLookup in github.com/labstack/labstack-go" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="domain_test.go" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="labstack-go" />
-      <working_directory value="$PROJECT_DIR$" />
+      <working_directory value="$PROJECT_DIR$/domain" />
       <framework value="gotest" />
-      <kind value="PACKAGE" />
+      <kind value="FILE" />
       <package value="github.com/labstack/labstack-go" />
       <directory value="$PROJECT_DIR$/" />
-      <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestClient_IPLookup$" />
+      <filePath value="$PROJECT_DIR$/domain/domain_test.go" />
+      <method v="2" />
+    </configuration>
+    <configuration name="ip_test.go" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="labstack-go" />
+      <working_directory value="$PROJECT_DIR$/ip" />
+      <framework value="gotest" />
+      <kind value="FILE" />
+      <package value="github.com/labstack/labstack-go" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/ip/ip_test.go" />
+      <method v="2" />
+    </configuration>
+    <configuration name="webpage_test.go" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="labstack-go" />
+      <working_directory value="$PROJECT_DIR$/webpage" />
+      <framework value="gotest" />
+      <kind value="FILE" />
+      <package value="github.com/labstack/labstack-go" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/webpage/webpage_test.go" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Go Test.TestClient_EmailVerify in github.com/labstack/labstack-go/email" />
-        <item itemvalue="Go Test.TestClient_CurrencyList in github.com/labstack/labstack-go/currency" />
-        <item itemvalue="Go Test.TestClient_CurrencyConvert in github.com/labstack/labstack-go/currency" />
-        <item itemvalue="Go Test.TestClient_IPLookup in github.com/labstack/labstack-go" />
-        <item itemvalue="Go Test.TestClient_DomainWhois in github.com/labstack/labstack-go" />
+        <item itemvalue="Go Test.ip_test.go" />
+        <item itemvalue="Go Test.domain_test.go" />
+        <item itemvalue="Go Test.TestClient_Verify in github.com/labstack/labstack-go/email" />
+        <item itemvalue="Go Test.webpage_test.go" />
+        <item itemvalue="Go Test.TestClient_PDF in github.com/labstack/labstack-go/webpage" />
       </list>
     </recent_temporary>
   </component>
@@ -320,44 +329,45 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="TestClient_DomainDNS_in_github_com_labstack_labstack-go - 2019.07.23 at 20h 45m 13s.xml">
-      <configuration name="TestClient_DomainDNS in github.com/labstack/labstack-go" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestClient_DomainDNS_in_github_com_labstack_labstack-go - 2019.07.23 at 20h 45m 29s.xml">
-      <configuration name="TestClient_DomainDNS in github.com/labstack/labstack-go" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestClient_WebpagePDF_in_github_com_labstack_labstack-go - 2019.07.23 at 20h 54m 23s.xml">
-      <configuration name="TestClient_WebpagePDF in github.com/labstack/labstack-go" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestClient_WebpagePDF_in_github_com_labstack_labstack-go - 2019.07.23 at 20h 54m 54s.xml">
-      <configuration name="TestClient_WebpagePDF in github.com/labstack/labstack-go" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestClient_DomainWhois_in_github_com_labstack_labstack-go - 2019.07.23 at 21h 05m 34s.xml">
-      <configuration name="TestClient_DomainWhois in github.com/labstack/labstack-go" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestClient_DomainWhois_in_github_com_labstack_labstack-go - 2019.07.23 at 21h 06m 18s.xml">
-      <configuration name="TestClient_DomainWhois in github.com/labstack/labstack-go" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestClient_IPLookup_in_github_com_labstack_labstack-go - 2019.07.24 at 06h 50m 07s.xml">
-      <configuration name="TestClient_IPLookup in github.com/labstack/labstack-go" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestClient_CurrencyConvert_in_github_com_labstack_labstack-go_currency - 2019.07.24 at 08h 05m 25s.xml">
-      <configuration name="TestClient_CurrencyConvert in github.com/labstack/labstack-go/currency" configurationId="GoTestRunConfiguration" />
-    </history-entry>
     <history-entry file="TestClient_CurrencyList_in_github_com_labstack_labstack-go_currency - 2019.07.24 at 08h 05m 30s.xml">
       <configuration name="TestClient_CurrencyList in github.com/labstack/labstack-go/currency" configurationId="GoTestRunConfiguration" />
     </history-entry>
     <history-entry file="TestClient_EmailVerify_in_github_com_labstack_labstack-go_email - 2019.07.24 at 08h 07m 59s.xml">
       <configuration name="TestClient_EmailVerify in github.com/labstack/labstack-go/email" configurationId="GoTestRunConfiguration" />
     </history-entry>
+    <history-entry file="TestClient_PDF_in_github_com_labstack_labstack-go_webpage - 2019.07.24 at 11h 13m 05s.xml">
+      <configuration name="TestClient_PDF in github.com/labstack/labstack-go/webpage" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="webpage_test_go - 2019.07.24 at 11h 13m 49s.xml">
+      <configuration name="webpage_test.go" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="ip_test_go - 2019.07.24 at 11h 13m 50s.xml">
+      <configuration name="ip_test.go" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TestClient_Verify_in_github_com_labstack_labstack-go_email - 2019.07.24 at 11h 14m 23s.xml">
+      <configuration name="TestClient_Verify in github.com/labstack/labstack-go/email" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="domain_test_go - 2019.07.24 at 11h 14m 30s.xml">
+      <configuration name="domain_test.go" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="domain_test_go - 2019.07.24 at 11h 15m 34s.xml">
+      <configuration name="domain_test.go" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="domain_test_go - 2019.07.24 at 11h 15m 39s.xml">
+      <configuration name="domain_test.go" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="ip_test_go - 2019.07.24 at 11h 15m 44s.xml">
+      <configuration name="ip_test.go" configurationId="GoTestRunConfiguration" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11330000" />
+    <option name="totallyTimeSpent" value="14090000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="36" y="35" width="1353" height="831" extended-state="0" />
+    <frame x="0" y="334" width="1680" height="716" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27765065" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26190478" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -367,7 +377,7 @@
       <window_info id="Learn" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32882273" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32746956" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32852563" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39783493" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -418,64 +428,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/webpage/webpage.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-128">
-          <caret line="18" column="46" selection-start-line="18" selection-start-column="46" selection-end-line="18" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/email/email_test.go" />
-    <entry file="file://$PROJECT_DIR$/ip/ip.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="749">
-          <caret line="58" column="53" selection-start-line="58" selection-start-column="53" selection-end-line="58" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/util/util.go" />
-    <entry file="file://$PROJECT_DIR$/domain.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="18" column="26" selection-start-line="18" selection-start-column="26" selection-end-line="18" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ip.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ip_test.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webpage.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="638">
-          <caret line="32" column="18" selection-start-line="32" selection-start-column="18" selection-end-line="32" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/domain_test.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="11" column="8" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webpage_test.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="20" column="5" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.travis.yml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -486,75 +439,129 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client.go">
+    <entry file="file://$PROJECT_DIR$/email.go" />
+    <entry file="file://$PROJECT_DIR$/currency.go" />
+    <entry file="file://$PROJECT_DIR$/common/common.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
-          <folding>
-            <element signature="e#18#104#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="374">
+          <caret line="17" selection-start-line="17" selection-end-line="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/email.go">
+    <entry file="file://$PROJECT_DIR$/domain.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="44">
           <caret line="4" column="1" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/currency/currency.go">
+    <entry file="file://$PROJECT_DIR$/domain_test.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="9" selection-start-line="9" selection-end-line="9" />
+        <state relative-caret-position="154">
+          <caret line="11" column="8" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="83">
+          <caret line="26" selection-start-line="26" selection-end-line="26" />
           <folding>
-            <element signature="e#18#71#0" expanded="true" />
+            <element signature="e#18#104#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/email/email.go">
+    <entry file="file://$PROJECT_DIR$/ip.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9">
-          <caret line="38" column="24" selection-start-line="38" selection-start-column="24" selection-end-line="38" selection-end-column="24" />
-          <folding>
-            <element signature="e#15#99#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="44">
+          <caret line="4" column="1" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webpage.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="5" column="1" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/currency/currency_test.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
+        <state relative-caret-position="127">
+          <caret line="23" column="16" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/email/email_test.go">
+    <entry file="file://$PROJECT_DIR$/webpage/webpage_test.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="13" column="23" selection-start-line="13" selection-start-column="23" selection-end-line="13" selection-end-column="23" />
+        <state relative-caret-position="105">
+          <caret line="22" column="23" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
+          <folding>
+            <element signature="e#18#120#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ip/ip_test.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="39">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/domain/domain.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="773">
-          <caret line="99" column="43" selection-start-line="99" selection-start-column="43" selection-end-line="99" selection-end-column="43" />
+        <state relative-caret-position="84">
+          <caret line="113" column="25" selection-start-line="113" selection-start-column="25" selection-end-line="113" selection-end-column="25" />
+          <folding>
+            <element signature="e#16#93#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/common.go">
+    <entry file="file://$PROJECT_DIR$/currency/currency.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="7" column="16" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
+        <state relative-caret-position="905">
+          <caret line="69" column="1" lean-forward="true" selection-start-line="69" selection-start-column="1" selection-end-line="69" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/currency.go">
+    <entry file="file://$PROJECT_DIR$/email/email.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="5" column="1" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
+        <state relative-caret-position="225">
+          <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ip/ip.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="347">
+          <caret line="83" column="17" selection-start-line="83" selection-start-column="17" selection-end-line="83" selection-end-column="17" />
+          <folding>
+            <element signature="e#12#89#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webpage/webpage.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1412">
+          <caret line="110" column="38" selection-start-line="110" selection-start-column="38" selection-end-line="110" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/domain/domain_test.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="13" column="24" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/email/email_test.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="12" column="16" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
         </state>
       </provider>
     </entry>

@@ -1,6 +1,15 @@
 package domain
 
+import (
+	"github.com/go-resty/resty/v2"
+	"github.com/labstack/labstack-go"
+)
+
 type (
+	Client struct {
+		resty *resty.Client
+	}
+
 	Record struct {
 		Domain   string   `json:"domain"`
 		Type     string   `json:"type"`
@@ -100,3 +109,98 @@ type (
 		Raw         string      `json:"raw"`
 	}
 )
+
+const (
+	url = "https://domain.labstack.com/api/v1"
+)
+
+func New(key string) *Client {
+	return &Client{
+		resty: resty.New().SetHostURL(url).SetAuthToken(key),
+	}
+}
+
+func (c *Client) DNS(req *DNSRequest) (*DNSResponse, error) {
+	res := new(DNSResponse)
+	err := new(labstack.Error)
+	r, e := c.resty.R().
+		SetPathParams(map[string]string{
+			"type":   req.Type,
+			"domain": req.Domain,
+		}).
+		SetResult(res).
+		SetError(err).
+		Get("/{type}/{domain}")
+	if e != nil {
+		return nil, &labstack.Error{
+			Message: err.Error(),
+		}
+	}
+	if labstack.IsError(r.StatusCode()) {
+		return nil, err
+	}
+	return res, nil
+}
+
+func (c *Client) Search(req *SearchRequest) (*SearchResponse, error) {
+	res := new(SearchResponse)
+	err := new(labstack.Error)
+	r, e := c.resty.R().
+		SetPathParams(map[string]string{
+			"domain": req.Domain,
+		}).
+		SetResult(res).
+		SetError(err).
+		Get("/search/{domain}")
+	if e != nil {
+		return nil, &labstack.Error{
+			Message: err.Error(),
+		}
+	}
+	if labstack.IsError(r.StatusCode()) {
+		return nil, err
+	}
+	return res, nil
+}
+
+func (c *Client) Status(req *StatusRequest) (*StatusResponse, error) {
+	res := new(StatusResponse)
+	err := new(labstack.Error)
+	r, e := c.resty.R().
+		SetPathParams(map[string]string{
+			"domain": req.Domain,
+		}).
+		SetResult(res).
+		SetError(err).
+		Get("/status/{domain}")
+	if e != nil {
+		return nil, &labstack.Error{
+			Message: err.Error(),
+		}
+	}
+	if labstack.IsError(r.StatusCode()) {
+		return nil, err
+	}
+	return res, nil
+}
+
+func (c *Client) Whois(req *WhoisRequest) (*WhoisResponse, error) {
+	res := new(WhoisResponse)
+	err := new(labstack.Error)
+	r, e := c.resty.R().
+		SetPathParams(map[string]string{
+			"domain": req.Domain,
+		}).
+		SetResult(res).
+		SetError(err).
+		Get("/whois/{domain}")
+	if e != nil {
+		return nil, &labstack.Error{
+			Message: err.Error(),
+		}
+	}
+	if labstack.IsError(r.StatusCode()) {
+		return nil, err
+	}
+	return res, nil
+}

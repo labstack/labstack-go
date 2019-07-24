@@ -2,7 +2,7 @@ package email
 
 import (
 	"github.com/go-resty/resty/v2"
-	"github.com/labstack/labstack-go/common"
+	"github.com/labstack/labstack-go"
 )
 
 type (
@@ -33,9 +33,9 @@ func New(key string) *Client {
 	}
 }
 
-func (c *Client) Verify(req *VerifyRequest) (*VerifyResponse, *common.Error) {
+func (c *Client) Verify(req *VerifyRequest) (*VerifyResponse, error) {
 	res := new(VerifyResponse)
-	err := new(common.Error)
+	err := new(labstack.Error)
 	r, e := c.resty.R().
 		SetPathParams(map[string]string{
 			"email": req.Email,
@@ -44,11 +44,11 @@ func (c *Client) Verify(req *VerifyRequest) (*VerifyResponse, *common.Error) {
 		SetError(err).
 		Get("/verify/{email}")
 	if e != nil {
-		return nil, &common.Error{
+		return nil, &labstack.Error{
 			Message: err.Error(),
 		}
 	}
-	if common.IsError(r) {
+	if labstack.IsError(r.StatusCode()) {
 		return nil, err
 	}
 	return res, nil

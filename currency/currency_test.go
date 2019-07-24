@@ -10,7 +10,7 @@ var (
 	client = New(os.Getenv("KEY"))
 )
 
-func TestClient_CurrencyConvert(t *testing.T) {
+func TestClient_Convert(t *testing.T) {
 	res, err := client.Convert(&ConvertRequest{
 		Amount: 10,
 		From:   "USD",
@@ -21,7 +21,7 @@ func TestClient_CurrencyConvert(t *testing.T) {
 	}
 }
 
-func TestClient_CurrencyList(t *testing.T) {
+func TestClient_List(t *testing.T) {
 	res, err := client.List(&ListRequest{})
 	if assert.Nil(t, err) {
 		assert.NotZero(t, len(res.Currencies))

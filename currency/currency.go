@@ -2,7 +2,7 @@ package currency
 
 import (
 	"github.com/go-resty/resty/v2"
-	"github.com/labstack/labstack-go/common"
+	"github.com/labstack/labstack-go"
 	"strconv"
 )
 
@@ -46,9 +46,9 @@ func New(key string) *Client {
 	}
 }
 
-func (c *Client) Convert(req *ConvertRequest) (*ConvertResponse, *common.Error) {
+func (c *Client) Convert(req *ConvertRequest) (*ConvertResponse, error) {
 	res := new(ConvertResponse)
-	err := new(common.Error)
+	err := new(labstack.Error)
 	r, e := c.resty.R().
 		SetPathParams(map[string]string{
 			"amount": strconv.FormatFloat(req.Amount, 'f', -1, 64),
@@ -59,29 +59,29 @@ func (c *Client) Convert(req *ConvertRequest) (*ConvertResponse, *common.Error) 
 		SetError(err).
 		Get("/convert/{amount}/{from}/{to}")
 	if e != nil {
-		return nil, &common.Error{
+		return nil, &labstack.Error{
 			Message: e.Error(),
 		}
 	}
-	if common.IsError(r) {
+	if labstack.IsError(r.StatusCode()) {
 		return nil, err
 	}
 	return res, nil
 }
 
-func (c *Client) List(req *ListRequest) (*ListResponse, *common.Error) {
+func (c *Client) List(req *ListRequest) (*ListResponse, error) {
 	res := new(ListResponse)
-	err := new(common.Error)
+	err := new(labstack.Error)
 	r, e := c.resty.R().
 		SetResult(res).
 		SetError(err).
 		Get("/list")
 	if e != nil {
-		return nil, &common.Error{
+		return nil, &labstack.Error{
 			Message: e.Error(),
 		}
 	}
-	if common.IsError(r) {
+	if labstack.IsError(r.StatusCode()) {
 		return nil, err
 	}
 	return res, nil
