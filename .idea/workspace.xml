@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d0e9ac2b-b41b-4140-bd49-0ac0b6eea276" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/vr.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/vr.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webpage/webpage.go" beforeDir="false" afterPath="$PROJECT_DIR$/webpage/webpage.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/currency/currency.go" beforeDir="false" afterPath="$PROJECT_DIR$/currency/currency.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/domain.go" beforeDir="false" afterPath="$PROJECT_DIR$/domain/domain.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ip/ip.go" beforeDir="false" afterPath="$PROJECT_DIR$/ip/ip.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,14 +31,6 @@
         <option value="Go File" />
       </list>
     </option>
-  </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>util</find>
-      <find>util.</find>
-      <find>isError</find>
-      <find>common</find>
-    </findStrings>
   </component>
   <component name="GOROOT" path="/usr/local/Cellar/go/1.12.7/libexec" />
   <component name="Git.Settings">
@@ -83,16 +76,16 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Go Test.ip_test.go">
-    <configuration name="TestClient_PDF in github.com/labstack/labstack-go/webpage" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Go Test.TestClient_Convert in github.com/labstack/labstack-go/currency">
+    <configuration name="TestClient_Convert in github.com/labstack/labstack-go/currency" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="labstack-go" />
-      <working_directory value="$PROJECT_DIR$/webpage" />
+      <working_directory value="$PROJECT_DIR$/currency" />
       <framework value="gotest" />
       <kind value="PACKAGE" />
-      <package value="github.com/labstack/labstack-go/webpage" />
+      <package value="github.com/labstack/labstack-go/currency" />
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestClient_PDF$" />
+      <pattern value="^TestClient_Convert$" />
       <method v="2" />
     </configuration>
     <configuration name="TestClient_Verify in github.com/labstack/labstack-go/email" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
@@ -138,11 +131,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Test.TestClient_Convert in github.com/labstack/labstack-go/currency" />
         <item itemvalue="Go Test.ip_test.go" />
         <item itemvalue="Go Test.domain_test.go" />
         <item itemvalue="Go Test.TestClient_Verify in github.com/labstack/labstack-go/email" />
         <item itemvalue="Go Test.webpage_test.go" />
-        <item itemvalue="Go Test.TestClient_PDF in github.com/labstack/labstack-go/webpage" />
       </list>
     </recent_temporary>
   </component>
@@ -159,40 +152,11 @@
       <workItem from="1563934803363" duration="6632000" />
       <workItem from="1563946019262" duration="4122000" />
       <workItem from="1564094125705" duration="921000" />
+      <workItem from="1564106887165" duration="1685000" />
+      <workItem from="1564113431310" duration="19000" />
+      <workItem from="1564114708269" duration="6725000" />
     </task>
     <servers />
-  </component>
-  <component name="TestHistory">
-    <history-entry file="TestClient_CurrencyList_in_github_com_labstack_labstack-go_currency - 2019.07.24 at 08h 05m 30s.xml">
-      <configuration name="TestClient_CurrencyList in github.com/labstack/labstack-go/currency" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestClient_EmailVerify_in_github_com_labstack_labstack-go_email - 2019.07.24 at 08h 07m 59s.xml">
-      <configuration name="TestClient_EmailVerify in github.com/labstack/labstack-go/email" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestClient_PDF_in_github_com_labstack_labstack-go_webpage - 2019.07.24 at 11h 13m 05s.xml">
-      <configuration name="TestClient_PDF in github.com/labstack/labstack-go/webpage" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="webpage_test_go - 2019.07.24 at 11h 13m 49s.xml">
-      <configuration name="webpage_test.go" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="ip_test_go - 2019.07.24 at 11h 13m 50s.xml">
-      <configuration name="ip_test.go" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestClient_Verify_in_github_com_labstack_labstack-go_email - 2019.07.24 at 11h 14m 23s.xml">
-      <configuration name="TestClient_Verify in github.com/labstack/labstack-go/email" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="domain_test_go - 2019.07.24 at 11h 14m 30s.xml">
-      <configuration name="domain_test.go" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="domain_test_go - 2019.07.24 at 11h 15m 34s.xml">
-      <configuration name="domain_test.go" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="domain_test_go - 2019.07.24 at 11h 15m 39s.xml">
-      <configuration name="domain_test.go" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="ip_test_go - 2019.07.24 at 11h 15m 44s.xml">
-      <configuration name="ip_test.go" configurationId="GoTestRunConfiguration" />
-    </history-entry>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -202,7 +166,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>

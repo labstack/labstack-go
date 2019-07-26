@@ -4,6 +4,7 @@ import (
 	"github.com/go-resty/resty/v2"
 	"github.com/labstack/labstack-go"
 	"strconv"
+	"time"
 )
 
 type (
@@ -24,8 +25,8 @@ type (
 	}
 
 	ConvertResponse struct {
-		Time   string  `json:"time"`
-		Amount float64 `json:"amount"`
+		Time   time.Time `json:"time"`
+		Amount float64   `json:"amount"`
 	}
 
 	ListRequest struct {

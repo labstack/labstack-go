@@ -3,6 +3,7 @@ package ip
 import (
 	"github.com/go-resty/resty/v2"
 	"github.com/labstack/labstack-go"
+	"time"
 )
 
 type (
@@ -27,11 +28,11 @@ type (
 	}
 
 	TimeZone struct {
-		ID           string `json:"id"`
-		Name         string `json:"name"`
-		Abbreviation string `json:"abbreviation"`
-		Offset       int32  `json:"offset"`
-		Time         string `json:"time"`
+		ID           string    `json:"id"`
+		Name         string    `json:"name"`
+		Abbreviation string    `json:"abbreviation"`
+		Offset       int       `json:"offset"`
+		Time         time.Time `json:"time"`
 	}
 
 	Language struct {
@@ -40,7 +41,7 @@ type (
 	}
 
 	AS struct {
-		Number       int64  `json:"number"`
+		Number       int    `json:"number"`
 		Name         string `json:"name"`
 		Organization string `json:"organization"`
 	}
