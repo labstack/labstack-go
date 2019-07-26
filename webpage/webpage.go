@@ -25,7 +25,7 @@ type (
 	ImageResponse struct {
 		Image       string `json:"image"`
 		Cached      bool   `json:"cached"`
-		Tool        int    `json:"tool"`
+		Took        int    `json:"took"`
 		GeneratedAt string `json:"generated_at"`
 	}
 
