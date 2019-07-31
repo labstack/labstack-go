@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d0e9ac2b-b41b-4140-bd49-0ac0b6eea276" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/vr.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/vr.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/currency/currency.go" beforeDir="false" afterPath="$PROJECT_DIR$/currency/currency.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/domain.go" beforeDir="false" afterPath="$PROJECT_DIR$/domain/domain.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ip/ip.go" beforeDir="false" afterPath="$PROJECT_DIR$/ip/ip.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -76,7 +73,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Go Test.TestClient_Convert in github.com/labstack/labstack-go/currency">
+  <component name="RunManager" selected="Go Test.TestClient_Lookup in github.com/labstack/labstack-go/ip">
     <configuration name="TestClient_Convert in github.com/labstack/labstack-go/currency" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="labstack-go" />
       <working_directory value="$PROJECT_DIR$/currency" />
@@ -86,6 +83,17 @@
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
       <pattern value="^TestClient_Convert$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestClient_Lookup in github.com/labstack/labstack-go/ip" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="labstack-go" />
+      <working_directory value="$PROJECT_DIR$/ip" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/labstack/labstack-go/ip" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/" />
+      <pattern value="^TestClient_Lookup$" />
       <method v="2" />
     </configuration>
     <configuration name="TestClient_Verify in github.com/labstack/labstack-go/email" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
@@ -119,23 +127,13 @@
       <filePath value="$PROJECT_DIR$/ip/ip_test.go" />
       <method v="2" />
     </configuration>
-    <configuration name="webpage_test.go" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="labstack-go" />
-      <working_directory value="$PROJECT_DIR$/webpage" />
-      <framework value="gotest" />
-      <kind value="FILE" />
-      <package value="github.com/labstack/labstack-go" />
-      <directory value="$PROJECT_DIR$/" />
-      <filePath value="$PROJECT_DIR$/webpage/webpage_test.go" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Test.TestClient_Lookup in github.com/labstack/labstack-go/ip" />
         <item itemvalue="Go Test.TestClient_Convert in github.com/labstack/labstack-go/currency" />
         <item itemvalue="Go Test.ip_test.go" />
         <item itemvalue="Go Test.domain_test.go" />
         <item itemvalue="Go Test.TestClient_Verify in github.com/labstack/labstack-go/email" />
-        <item itemvalue="Go Test.webpage_test.go" />
       </list>
     </recent_temporary>
   </component>
@@ -155,6 +153,8 @@
       <workItem from="1564106887165" duration="1685000" />
       <workItem from="1564113431310" duration="19000" />
       <workItem from="1564114708269" duration="6725000" />
+      <workItem from="1564244637072" duration="3474000" />
+      <workItem from="1564538603431" duration="568000" />
     </task>
     <servers />
   </component>

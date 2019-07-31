@@ -11,20 +11,14 @@ type (
 		resty *resty.Client
 	}
 
-	Currency struct {
-		Name   string `json:"name"`
-		Code   string `json:"code"`
-		Symbol string `json:"symbol"`
-	}
-
 	Organization struct {
 		Name string `json:"name"`
 	}
 
 	Flag struct {
-		Image        string `json:"image"`
-		Emoji        string `json:"emoji"`
-		EmojiUnicode string `json:"emoji_unicode"`
+		SVG   string `json:"svg"`
+		PNG   string `json:"png"`
+		Emoji string `json:"emoji"`
 	}
 
 	TimeZone struct {
@@ -33,11 +27,6 @@ type (
 		Abbreviation string    `json:"abbreviation"`
 		Offset       int       `json:"offset"`
 		Time         time.Time `json:"time"`
-	}
-
-	Language struct {
-		Name string `json:"name"`
-		Code string `json:"code"`
 	}
 
 	AS struct {
@@ -64,9 +53,9 @@ type (
 		Longitude    float64       `json:"longitude"`
 		Organization *Organization `json:"organization"`
 		Flag         *Flag         `json:"flag"`
-		Currency     *Currency     `json:"currency"`
+		Currencies   []string      `json:"currencies"`
 		TimeZone     *TimeZone     `json:"time_zone"`
-		Language     []*Language   `json:"languages"`
+		Language     []string      `json:"languages"`
 		AS           *AS           `json:"as"`
 		Flags        []string      `json:"flags"`
 	}
