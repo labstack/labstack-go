@@ -2,11 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d0e9ac2b-b41b-4140-bd49-0ac0b6eea276" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/vr.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/vr.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/currency.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/domain.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/email.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ip.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webpage.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/client_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/currency/currency.go" beforeDir="false" afterPath="$PROJECT_DIR$/currency/currency.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/currency/currency_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/currency_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/domain/domain.go" beforeDir="false" afterPath="$PROJECT_DIR$/domain/domain.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/domain_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/domain_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/email/email.go" beforeDir="false" afterPath="$PROJECT_DIR$/email/email.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/email/email_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/email_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ip/ip.go" beforeDir="false" afterPath="$PROJECT_DIR$/ip/ip.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ip/ip_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/ip_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webpage/webpage.go" beforeDir="false" afterPath="$PROJECT_DIR$/webpage/webpage.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webpage/webpage_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/webpage_test.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -50,18 +63,19 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="go.gopath.indexing.explicitly.defined" value="true" />
     <property name="go.import.settings.migrated" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/domain" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/domain" />
-      <recent name="$PROJECT_DIR$" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/webpage" />
       <recent name="$PROJECT_DIR$/ip" />
       <recent name="$PROJECT_DIR$/email" />
       <recent name="$PROJECT_DIR$/currency" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/domain" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -76,66 +90,67 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Go Test.TestClient_Convert in github.com/labstack/labstack-go/currency">
-    <configuration name="TestClient_Convert in github.com/labstack/labstack-go/currency" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Go Test.webpage_test.go">
+    <configuration name="TestClient_Lookup in github.com/labstack/labstack-go" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="labstack-go" />
-      <working_directory value="$PROJECT_DIR$/currency" />
+      <working_directory value="$PROJECT_DIR$" />
       <framework value="gotest" />
       <kind value="PACKAGE" />
-      <package value="github.com/labstack/labstack-go/currency" />
+      <package value="github.com/labstack/labstack-go" />
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestClient_Convert$" />
+      <pattern value="^TestClient_Lookup$" />
       <method v="2" />
     </configuration>
-    <configuration name="TestClient_Verify in github.com/labstack/labstack-go/email" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="TestClient_Verify in github.com/labstack/labstack-go" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="labstack-go" />
-      <working_directory value="$PROJECT_DIR$/email" />
+      <working_directory value="$PROJECT_DIR$" />
       <framework value="gotest" />
       <kind value="PACKAGE" />
-      <package value="github.com/labstack/labstack-go/email" />
+      <package value="github.com/labstack/labstack-go" />
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
       <pattern value="^TestClient_Verify$" />
       <method v="2" />
     </configuration>
-    <configuration name="domain_test.go" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="TestClient_Whois in github.com/labstack/labstack-go" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="labstack-go" />
-      <working_directory value="$PROJECT_DIR$/domain" />
+      <working_directory value="$PROJECT_DIR$" />
       <framework value="gotest" />
-      <kind value="FILE" />
+      <kind value="PACKAGE" />
       <package value="github.com/labstack/labstack-go" />
       <directory value="$PROJECT_DIR$/" />
-      <filePath value="$PROJECT_DIR$/domain/domain_test.go" />
+      <filePath value="$PROJECT_DIR$/" />
+      <pattern value="^TestClient_Whois$" />
       <method v="2" />
     </configuration>
-    <configuration name="ip_test.go" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="domain_test.go" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="labstack-go" />
-      <working_directory value="$PROJECT_DIR$/ip" />
+      <working_directory value="$PROJECT_DIR$" />
       <framework value="gotest" />
       <kind value="FILE" />
       <package value="github.com/labstack/labstack-go" />
       <directory value="$PROJECT_DIR$/" />
-      <filePath value="$PROJECT_DIR$/ip/ip_test.go" />
+      <filePath value="$PROJECT_DIR$/domain_test.go" />
       <method v="2" />
     </configuration>
     <configuration name="webpage_test.go" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="labstack-go" />
-      <working_directory value="$PROJECT_DIR$/webpage" />
+      <working_directory value="$PROJECT_DIR$" />
       <framework value="gotest" />
       <kind value="FILE" />
       <package value="github.com/labstack/labstack-go" />
       <directory value="$PROJECT_DIR$/" />
-      <filePath value="$PROJECT_DIR$/webpage/webpage_test.go" />
+      <filePath value="$PROJECT_DIR$/webpage_test.go" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Go Test.TestClient_Convert in github.com/labstack/labstack-go/currency" />
-        <item itemvalue="Go Test.ip_test.go" />
-        <item itemvalue="Go Test.domain_test.go" />
-        <item itemvalue="Go Test.TestClient_Verify in github.com/labstack/labstack-go/email" />
         <item itemvalue="Go Test.webpage_test.go" />
+        <item itemvalue="Go Test.TestClient_Lookup in github.com/labstack/labstack-go" />
+        <item itemvalue="Go Test.TestClient_Verify in github.com/labstack/labstack-go" />
+        <item itemvalue="Go Test.TestClient_Whois in github.com/labstack/labstack-go" />
+        <item itemvalue="Go Test.domain_test.go" />
       </list>
     </recent_temporary>
   </component>
@@ -155,6 +170,8 @@
       <workItem from="1564106887165" duration="1685000" />
       <workItem from="1564113431310" duration="19000" />
       <workItem from="1564114708269" duration="6725000" />
+      <workItem from="1564244637072" duration="3474000" />
+      <workItem from="1564538603431" duration="9367000" />
     </task>
     <servers />
   </component>
@@ -176,5 +193,16 @@
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/domain.go</url>
+          <line>87</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

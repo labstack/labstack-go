@@ -1,17 +1,13 @@
-package webpage
+package labstack
 
 import (
+	"github.com/labstack/labstack-go/webpage"
 	"github.com/stretchr/testify/assert"
-	"os"
 	"testing"
 )
 
-var (
-	client = New(os.Getenv("KEY"))
-)
-
 func TestClient_Image(t *testing.T) {
-	res, err := client.Image(&ImageRequest{
+	res, err := ws.Image(&webpage.ImageRequest{
 		URL: "amazon.com",
 	})
 	if assert.Nil(t, err) {
@@ -20,7 +16,7 @@ func TestClient_Image(t *testing.T) {
 }
 
 func TestClient_PDF(t *testing.T) {
-	res, err := client.PDF(&PDFRequest{
+	res, err := ws.PDF(&webpage.PDFRequest{
 		URL: "amazon.com",
 	})
 	if assert.Nil(t, err) {

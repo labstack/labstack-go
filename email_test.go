@@ -1,17 +1,13 @@
-package email
+package labstack
 
 import (
+	"github.com/labstack/labstack-go/email"
 	"github.com/stretchr/testify/assert"
-	"os"
 	"testing"
 )
 
-var (
-	client = New(os.Getenv("KEY"))
-)
-
 func TestClient_Verify(t *testing.T) {
-	res, err := client.Verify(&VerifyRequest{
+	res, err := es.Verify(&email.VerifyRequest{
 		Email: "jon@labstack.com",
 	})
 	if assert.Nil(t, err) {

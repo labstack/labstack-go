@@ -1,17 +1,13 @@
-package domain
+package labstack
 
 import (
+	"github.com/labstack/labstack-go/domain"
 	"github.com/stretchr/testify/assert"
-	"os"
 	"testing"
 )
 
-var (
-	client = New(os.Getenv("KEY"))
-)
-
 func TestClient_DNS(t *testing.T) {
-	res, err := client.DNS(&DNSRequest{
+	res, err := ds.DNS(&domain.DNSRequest{
 		Type:   "A",
 		Domain: "twilio.com",
 	})
@@ -21,7 +17,7 @@ func TestClient_DNS(t *testing.T) {
 }
 
 func TestClient_Search(t *testing.T) {
-	res, err := client.Search(&SearchRequest{
+	res, err := ds.Search(&domain.SearchRequest{
 		Domain: "twilio.com",
 	})
 	if assert.Nil(t, err) {
@@ -30,7 +26,7 @@ func TestClient_Search(t *testing.T) {
 }
 
 func TestClient_Status(t *testing.T) {
-	res, err := client.Status(&StatusRequest{
+	res, err := ds.Status(&domain.StatusRequest{
 		Domain: "twilio.com",
 	})
 	if assert.Nil(t, err) {
@@ -39,7 +35,7 @@ func TestClient_Status(t *testing.T) {
 }
 
 func TestClient_Whois(t *testing.T) {
-	res, err := client.Whois(&WhoisRequest{
+	res, err := ds.Whois(&domain.WhoisRequest{
 		Domain: "twilio.com",
 	})
 	if assert.Nil(t, err) {
