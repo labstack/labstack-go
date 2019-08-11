@@ -11,8 +11,9 @@ type (
 	}
 
 	Error struct {
-		Code    int    `json:"code"`
-		Message string `json:"message"`
+		StatusCode int    `json:"status_code"`
+		Code       int    `json:"code"`
+		Message    string `json:"message"`
 	}
 )
 
@@ -20,7 +21,7 @@ const (
 	url = "https://api.labstack.com"
 )
 
-func New(key string) *Client {
+func NewClient(key string) *Client {
 	return &Client{
 		key:   key,
 		resty: resty.New().SetHostURL(url).SetAuthToken(key),

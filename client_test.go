@@ -3,7 +3,7 @@ package labstack
 import "os"
 
 var (
-	client = New(os.Getenv("KEY"))
+	client = NewClient(os.Getenv("KEY"))
 	cs = client.Currency()
 	ds = client.Domain()
 	es = client.Email()

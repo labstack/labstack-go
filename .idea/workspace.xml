@@ -2,24 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d0e9ac2b-b41b-4140-bd49-0ac0b6eea276" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/currency.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domain.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/email.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ip.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webpage.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/client.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/client_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/currency/currency.go" beforeDir="false" afterPath="$PROJECT_DIR$/currency/currency.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/currency/currency_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/currency_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/domain.go" beforeDir="false" afterPath="$PROJECT_DIR$/domain/domain.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/domain_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/domain_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/email/email.go" beforeDir="false" afterPath="$PROJECT_DIR$/email/email.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/email/email_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/email_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ip/ip.go" beforeDir="false" afterPath="$PROJECT_DIR$/ip/ip.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ip/ip_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/ip_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webpage/webpage.go" beforeDir="false" afterPath="$PROJECT_DIR$/webpage/webpage.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webpage/webpage_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/webpage_test.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -171,7 +155,8 @@
       <workItem from="1564113431310" duration="19000" />
       <workItem from="1564114708269" duration="6725000" />
       <workItem from="1564244637072" duration="3474000" />
-      <workItem from="1564538603431" duration="9367000" />
+      <workItem from="1564538603431" duration="9517000" />
+      <workItem from="1564703380324" duration="4951000" />
     </task>
     <servers />
   </component>
