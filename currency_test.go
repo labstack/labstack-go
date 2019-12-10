@@ -23,3 +23,10 @@ func TestClient_List(t *testing.T) {
 		assert.NotZero(t, len(res.Currencies))
 	}
 }
+
+func TestClient_Rates(t *testing.T) {
+	res, err := cs.Rates(&currency.RatesRequest{})
+	if assert.Nil(t, err) {
+		assert.NotZero(t, len(res.Rates))
+	}
+}

@@ -52,3 +52,21 @@ func (c *CurrencyService) List(req *currency.ListRequest) (*currency.ListRespons
 	}
 	return res, nil
 }
+
+func (c *CurrencyService) Rates(req *currency.RatesRequest) (*currency.RatesResponse, error) {
+	res := new(currency.RatesResponse)
+	err := new(Error)
+	r, e := c.resty.R().
+		SetResult(res).
+		SetError(err).
+		Get("/rates")
+	if e != nil {
+		return nil, &Error{
+			Message: e.Error(),
+		}
+	}
+	if isError(r.StatusCode()) {
+		return nil, err
+	}
+	return res, nil
+}

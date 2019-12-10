@@ -1,31 +1,40 @@
 package currency
 
 import (
-	"time"
+  "time"
 )
 
 type (
-	Currency struct {
-		Name   string `json:"name"`
-		Code   string `json:"code"`
-		Symbol string `json:"symbol"`
-	}
+  Currency struct {
+    Name   string `json:"name"`
+    Code   string `json:"code"`
+    Symbol string `json:"symbol"`
+  }
 
-	ConvertRequest struct {
-		Amount float64
-		From   string
-		To     string
-	}
+  ConvertRequest struct {
+    Amount float64
+    From   string
+    To     string
+  }
 
-	ConvertResponse struct {
-		Time   time.Time `json:"time"`
-		Amount float64   `json:"amount"`
-	}
+  ConvertResponse struct {
+    Time   time.Time `json:"time"`
+    Amount float64   `json:"amount"`
+  }
 
-	ListRequest struct {
-	}
+  ListRequest struct {
+  }
 
-	ListResponse struct {
-		Currencies []*Currency `json:"currencies"`
-	}
+  ListResponse struct {
+    Currencies []*Currency `json:"currencies"`
+  }
+
+  RatesRequest struct {
+  }
+
+  RatesResponse struct {
+    Time  time.Time          `json:"time"`
+    Base  string             `json:"base"`
+    Rates map[string]float64 `json:"rates"`
+  }
 )

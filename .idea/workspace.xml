@@ -3,8 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="d0e9ac2b-b41b-4140-bd49-0ac0b6eea276" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/currency.go" beforeDir="false" afterPath="$PROJECT_DIR$/currency.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/currency/currency.go" beforeDir="false" afterPath="$PROJECT_DIR$/currency/currency.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/currency_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/currency_test.go" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -28,7 +30,7 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" path="/usr/local/Cellar/go/1.12.7/libexec" />
+  <component name="GOROOT" path="/usr/local/opt/go/libexec" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -39,6 +41,13 @@
     <option name="version" value="1" />
   </component>
   <component name="ProjectId" id="1OWX36Pjlas1QL4OrG6b0jaPJL8" />
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="autoscrollToSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="DefaultGoTemplateProperty" value="Go File" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
@@ -61,19 +70,7 @@
       <recent name="$PROJECT_DIR$/domain" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
-  <component name="RunManager" selected="Go Test.webpage_test.go">
+  <component name="RunManager" selected="Go Test.TestClient_Rates in github.com/labstack/labstack-go">
     <configuration name="TestClient_Lookup in github.com/labstack/labstack-go" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="labstack-go" />
       <working_directory value="$PROJECT_DIR$" />
@@ -83,6 +80,17 @@
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
       <pattern value="^TestClient_Lookup$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestClient_Rates in github.com/labstack/labstack-go" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="labstack-go" />
+      <working_directory value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/labstack/labstack-go" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/" />
+      <pattern value="^TestClient_Rates$" />
       <method v="2" />
     </configuration>
     <configuration name="TestClient_Verify in github.com/labstack/labstack-go" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
@@ -107,16 +115,6 @@
       <pattern value="^TestClient_Whois$" />
       <method v="2" />
     </configuration>
-    <configuration name="domain_test.go" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="labstack-go" />
-      <working_directory value="$PROJECT_DIR$" />
-      <framework value="gotest" />
-      <kind value="FILE" />
-      <package value="github.com/labstack/labstack-go" />
-      <directory value="$PROJECT_DIR$/" />
-      <filePath value="$PROJECT_DIR$/domain_test.go" />
-      <method v="2" />
-    </configuration>
     <configuration name="webpage_test.go" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="labstack-go" />
       <working_directory value="$PROJECT_DIR$" />
@@ -129,13 +127,25 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Test.TestClient_Rates in github.com/labstack/labstack-go" />
         <item itemvalue="Go Test.webpage_test.go" />
         <item itemvalue="Go Test.TestClient_Lookup in github.com/labstack/labstack-go" />
         <item itemvalue="Go Test.TestClient_Verify in github.com/labstack/labstack-go" />
         <item itemvalue="Go Test.TestClient_Whois in github.com/labstack/labstack-go" />
-        <item itemvalue="Go Test.domain_test.go" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -157,6 +167,7 @@
       <workItem from="1564538603431" duration="9517000" />
       <workItem from="1564703380324" duration="4951000" />
       <workItem from="1565558900883" duration="391000" />
+      <workItem from="1575995533294" duration="146000" />
     </task>
     <servers />
   </component>
@@ -178,6 +189,44 @@
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="320" y="127" key="#GOROOT" timestamp="1575995542316">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="320" y="127" key="#GOROOT/0.23.1440.877@0.23.1440.877" timestamp="1575995542316" />
+    <state width="1358" height="269" key="GridCell.Tab.0.bottom" timestamp="1575995686556">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1358" height="269" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1575995686556" />
+    <state width="1358" height="269" key="GridCell.Tab.0.center" timestamp="1575995686556">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1358" height="269" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1575995686556" />
+    <state width="1358" height="269" key="GridCell.Tab.0.left" timestamp="1575995686555">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1358" height="269" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1575995686555" />
+    <state width="1358" height="269" key="GridCell.Tab.0.right" timestamp="1575995686556">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1358" height="269" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1575995686556" />
+    <state width="1358" height="269" key="GridCell.Tab.1.bottom" timestamp="1575995688286">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1358" height="269" key="GridCell.Tab.1.bottom/0.23.1440.877@0.23.1440.877" timestamp="1575995688286" />
+    <state width="1358" height="269" key="GridCell.Tab.1.center" timestamp="1575995688274">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1358" height="269" key="GridCell.Tab.1.center/0.23.1440.877@0.23.1440.877" timestamp="1575995688274" />
+    <state width="1358" height="269" key="GridCell.Tab.1.left" timestamp="1575995688274">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1358" height="269" key="GridCell.Tab.1.left/0.23.1440.877@0.23.1440.877" timestamp="1575995688274" />
+    <state width="1358" height="269" key="GridCell.Tab.1.right" timestamp="1575995688279">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1358" height="269" key="GridCell.Tab.1.right/0.23.1440.877@0.23.1440.877" timestamp="1575995688279" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
