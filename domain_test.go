@@ -1,9 +1,10 @@
 package labstack
 
 import (
+	"testing"
+
 	"github.com/labstack/labstack-go/domain"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestClient_DNS(t *testing.T) {
@@ -18,7 +19,7 @@ func TestClient_DNS(t *testing.T) {
 
 func TestClient_Search(t *testing.T) {
 	res, err := ds.Search(&domain.SearchRequest{
-		Domain: "twilio.com",
+		Q: "twilio",
 	})
 	if assert.Nil(t, err) {
 		assert.NotZero(t, len(res.Results))

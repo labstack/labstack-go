@@ -37,12 +37,10 @@ func (d *DomainService) Search(req *domain.SearchRequest) (*domain.SearchRespons
 	res := new(domain.SearchResponse)
 	err := new(Error)
 	r, e := d.resty.R().
-		SetPathParams(map[string]string{
-			"domain": req.Domain,
-		}).
+		SetQueryParam("q", req.Q).
 		SetResult(res).
 		SetError(err).
-		Get("/search/{domain}")
+		Get("/search")
 	if e != nil {
 		return nil, &Error{
 			Message: err.Error(),

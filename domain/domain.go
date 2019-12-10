@@ -61,7 +61,7 @@ type (
 	}
 
 	SearchRequest struct {
-		Domain string
+		Q string
 	}
 
 	SearchResponse struct {
